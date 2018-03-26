@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="CricketScoreSheetPro.Droid.CricketScoreSheetPro.Droid" android:versionCode="1" android:versionName="1.0">
-  <uses-sdk android:minSdkVersion="16" />
-  <application android:label="CricketScoreSheetPro.Droid"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.jjkst.cricketscoresheetpro" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" />
+	<application android:label="CricketScoreSheetPro.Droid"></application>
 </manifest>

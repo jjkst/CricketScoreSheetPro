@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_home"
+      android:title="Home" />
+    <item
+      android:id="@+id/nav_tournaments"
+      android:title="@string/TournamentFragment" />
+    <item
+      android:id="@+id/nav_teams"
+      android:title="@string/TeamFragment" />
+    <item
+      android:id="@+id/nav_matches"
+      android:title="@string/MatchFragment" />
+  </group>
+  <item android:title="Statistics">
+    <menu>
+    <item
+      android:id="@+id/nav_teamstatistics"
+      android:title="@string/TeamStatisticsFragment" />
+    <item
+      android:id="@+id/nav_batsmanstatistics"
+      android:title="@string/BatsmanStatisticsFragment" />
+	<item
+      android:id="@+id/nav_bowlerstatistics"
+      android:title="@string/BowlerStatisticsFragment" />
+	<item
+      android:id="@+id/nav_fielderstatistics"
+      android:title="@string/FielderStatisticsFragment" />
+    </menu>
+  </item>
+</menu>

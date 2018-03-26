@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">CricketScoreSheetPro.Droid</string>
+    <string name="ApplicationName">Cricket Score Sheet</string>
+	
+	<string name="TournamentFragment">Tournaments</string>
+	<string name="TeamFragment">Teams</string>
+	<string name="MatchFragment">Matches</string>
+	<string name="TeamStatisticsFragment">Team Statistics</string>
+	<string name="BatsmanStatisticsFragment">Batsman Statistics</string>
+	<string name="BowlerStatisticsFragment">Bowler Statistics</string>
+	<string name="FielderStatisticsFragment">Fielder Statistics</string>
+	
+	<string name="TournamentDetailActivity">Tournament Detail</string>
+	<string name="NameHeader">Name</string>
+	<string name="SponsorHeader">Sponsor</string>
+	<string name="StatusHeader">Status</string>
+	<string name="StartDateHeader">Start Date</string>
+	<string name="EntryFeeHeader">Entry Fee</string>
+	<string name="PrizesHeader">Prize(s)</string>
+	<string name="FacilitiesHeader">Facilities</string>
+	<string name="VenuesHeader">Venues</string>
+	<string name="TeamsHeader">Teams</string>
+	
+	<string name="CompletedMatches">Completed Matches</string>
+	<string name="SavedMatches">Saved Matches</string>
+	<string name="BatsmanStats">Batsman Statistics</string>
+	<string name="BowlerStats">Bowler Statistics</string>
+	
+	<string name="Menu">Match/Player Statistics</string>
+	<string name="action_score">Score</string>
+	<string name="action_addplayer">AddPlayer</string>
+	<string name="action_addbatsman">AddBatsman</string>
+	<string name="action_addbowler">AddBowler</string>
+	<string name="action_search">Search</string>
+	<string name="action_help">Help</string>
+	<string name="action_other">Other</string>
+	
 </resources>

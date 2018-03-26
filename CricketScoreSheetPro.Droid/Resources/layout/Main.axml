@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:fitsSystemWindows="true">
+  <android.support.v4.widget.DrawerLayout 
+      android:id="@+id/drawer_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+      <include
+        android:id="@+id/toolbar"
+          layout="@layout/toolbar" />
+      <!-- Actual content of the screen -->
+      <FrameLayout
+          android:id="@+id/content_frame"
+          android:background="@drawable/cricfieldbackground"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+    </LinearLayout>
+    <!-- The menu placeholder -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/left_drawer"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"        
+        app:menu="@menu/menu_navigation"
+        app:headerLayout="@layout/navigationmenu" />
+  </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

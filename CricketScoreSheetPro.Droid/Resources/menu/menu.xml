@@ -1,0 +1,14 @@
+﻿<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+    android:id="@+id/searchText"
+    android:icon="@drawable/search"
+    android:visible="false"
+    android:title="@string/action_search"
+    app:showAsAction="always"/>
+  
+  <item android:id="@+id/help"
+        android:title="@string/action_help"
+        android:showAsAction="ifRoom" />
+</menu>
