@@ -7,6 +7,9 @@ using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 using Android.Support.Design.Widget;
 using Android.Views;
+using Android.Content;
+using System;
+using Android.Gms.Common;
 
 namespace CricketScoreSheetPro.Droid
 {
@@ -41,6 +44,9 @@ namespace CricketScoreSheetPro.Droid
                 ft.Add(Resource.Id.content_frame, new HomeFragment());
                 ft.Commit();
             }
+
+            //Create unique Id and store in database
+            var iid = GoogleApiAvailability.Instance;
         }
 
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)

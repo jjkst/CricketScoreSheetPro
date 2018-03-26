@@ -1,3 +1,4 @@
+using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 
@@ -20,13 +21,13 @@ namespace CricketScoreSheetPro.Droid
         #region Tournament
 
         private TournamentService tournamentService;
-        //private TournamentService SetTournamentService()
-        //{
-        //    if (tournamentService == null)
-        //        tournamentService = new TournamentService(new TournamentRepository(_client, UniqueUserId), 
-        //            new TournamentDetailRepository(_client));
-        //    return tournamentService;
-        //}
+        private TournamentService SetTournamentService()
+        {
+            if (tournamentService == null)
+                tournamentService = new TournamentService(new Repository<Tournament>(),
+                new Repository<TournamentDetail>());
+            return tournamentService;
+        }
 
         private TournamentViewModel tournamentViewModel;
         public TournamentViewModel TournamentViewModel()
