@@ -13,20 +13,43 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     [TestClass]
     public class TournamentPageTest
     {
-        private TournamentViewModel _tournamentViewModel;
+        private TournamentListViewModel _tournamentViewModel;
 
         public TournamentPageTest()
         {
-            var tournamentService = new TournamentService(new Repository<Tournament>(),
+            var tournamentService = new TournamentService(new Repository<Tournament>() { UUID = "UUID" },
                 new Repository<TournamentDetail>());
-            _tournamentViewModel = new TournamentViewModel(tournamentService);
+            _tournamentViewModel = new TournamentListViewModel(tournamentService);            
+        }
+
+        [TestCleanup]
+        public void MethodCleanup()
+        {
+            var database = new Repository<object>();
+            database.DeleteDatabase();
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTournamentListTest()
+        {
+            //Arrange
+            _tournamentViewModel.AddTournament("TournamentTest", "UUID");
+            
+            //Act           
+            var existingTournaments = _tournamentViewModel.Tournaments;
+
+            //Assert
+            existingTournaments.Should().NotBeNull();
+            existingTournaments.Count.Should().Be(1);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void AddTournamentTest()
         {
             //Act
-            var newtournament = _tournamentViewModel.AddTournament("TournamentTest");
+            var newtournament = _tournamentViewModel.AddTournament("TournamentTest", "UUID");
 
             //Assert
             newtournament.Should().NotBeNull();
@@ -35,17 +58,19 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         }
 
         [TestMethod]
-        public void GetTournamentListTest()
+        [TestCategory("IntegrationTest")]
+        public void DeleteTournamentTest()
         {
             //Arrange
-            _tournamentViewModel.AddTournament("TournamentTest");
+            var newtournament = _tournamentViewModel.AddTournament("TournamentTest", "UUID");
+            var beforecount = _tournamentViewModel.Tournaments.Count;
 
             //Act
-            var existingTournament = _tournamentViewModel.Tournaments;
+            _tournamentViewModel.DeleteTournament(newtournament.Id);
+            var aftercount = _tournamentViewModel.Tournaments.Count;
 
             //Assert
-            existingTournament.Should().NotBeNull();
-            existingTournament.Count.Should().BeGreaterOrEqualTo(1);
+            aftercount.Should().Be(beforecount-1);
         }
     }
 }

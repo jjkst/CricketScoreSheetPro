@@ -18,7 +18,7 @@ namespace CricketScoreSheetPro.Droid.Activity
     {
         protected override int GetLayoutResourceId => Resource.Layout.TournamentDetailView;
 
-        private TournamentDetailViewModel ViewModel { get; set; }
+        private TournamentViewModel ViewModel { get; set; }
         private TextView Name { get; set; }
         private TextView Sponsor { get; set; }
         private TextView Status { get; set; }

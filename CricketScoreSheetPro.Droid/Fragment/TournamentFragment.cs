@@ -20,7 +20,7 @@ namespace CricketScoreSheetPro.Droid
     {
         protected override int GetLayoutResourceId => Resource.Layout.TournamentsView;
 
-        private TournamentViewModel ViewModel { get; set; }
+        private TournamentListViewModel ViewModel { get; set; }
         private TournamentAdapter TournamentsAdapter { get; set; }
         private RecyclerView TournamentsRecyclerView { get; set; }
 
@@ -66,7 +66,7 @@ namespace CricketScoreSheetPro.Droid
             inputDialog.SetView(userInput);
             
             inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
-                var newtournament = ViewModel.AddTournament(userInput.Text);
+                var newtournament = ViewModel.AddTournament(userInput.Text, Singleton.Instance.UniqueUserId);
                 var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
                 detailActivity.PutExtra("TournamentId", newtournament.Id);
                 StartActivity(detailActivity);
@@ -153,7 +153,6 @@ namespace CricketScoreSheetPro.Droid
                     Name = "Tournament Name two",
                     AddDate = DateTime.Today,
                     Status = "Open",
-                    ImportedFlg = true
                     }
             };
         }        

@@ -6,6 +6,7 @@ namespace CricketScoreSheetPro.Core.Service.Interface
     public interface ITournamentService
     {
         IList<Tournament> GetTournaments();
-        Tournament AddTournament(string tournamentName);
+        TournamentDetail AddTournament(string tournamentName, string uuid);
+        void DeleteTournament(string id);
     }
 }

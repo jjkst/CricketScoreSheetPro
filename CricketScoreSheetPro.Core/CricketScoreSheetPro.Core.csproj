@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Helper\Function.cs" />
+    <Compile Include="Model\Enum.cs" />
     <Compile Include="Model\Ball.cs" />
     <Compile Include="Model\ErrorResponse.cs" />
     <Compile Include="Model\Match.cs" />
@@ -47,13 +48,12 @@
     <Compile Include="Model\Tournament.cs" />
     <Compile Include="Model\TournamentDetail.cs" />
     <Compile Include="Model\Umpire.cs" />
-    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Interface\IRepository.cs" />
     <Compile Include="Service\Implementation\TournamentService.cs" />
     <Compile Include="Service\Interface\ITournamentService.cs" />
-    <Compile Include="ViewModel\TournamentDetailViewModel.cs" />
     <Compile Include="ViewModel\TournamentViewModel.cs" />
+    <Compile Include="ViewModel\TournamentListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

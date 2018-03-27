@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Content;
 using System;
 using Android.Gms.Common;
+using System.IO;
 
 namespace CricketScoreSheetPro.Droid
 {
@@ -46,7 +47,18 @@ namespace CricketScoreSheetPro.Droid
             }
 
             //Create unique Id and store in database
-            var iid = GoogleApiAvailability.Instance;
+            var uiniqueUserIdfile = Path.Combine(Helper.DownloadPath, "UniqueUserId.txt");
+            if (File.Exists(uiniqueUserIdfile))
+            {
+                var existingGuid = File.ReadAllText(uiniqueUserIdfile);
+                Singleton.Instance.UniqueUserId = existingGuid;
+            }
+            else
+            {
+                var newGuid = Guid.NewGuid().ToString();
+                Singleton.Instance.UniqueUserId = newGuid;
+                File.WriteAllText(uiniqueUserIdfile, newGuid);
+            }            
         }
 
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)

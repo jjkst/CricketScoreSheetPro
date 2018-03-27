@@ -31,8 +31,8 @@ namespace CricketScoreSheetPro.Droid.Adapter
             vh.Name.Text = _tournaments[position].Name;
             vh.Status.Text = _tournaments[position].Status;
 
-            if (_tournaments[position].ImportedFlg)
-                vh.Delete.Visibility = ViewStates.Gone;
+            //if (_tournaments[position].ImportedFlg)
+            //    vh.Delete.Visibility = ViewStates.Gone;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

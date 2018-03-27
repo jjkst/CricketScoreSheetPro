@@ -1,12 +1,13 @@
 using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
+using System;
 
 namespace CricketScoreSheetPro.Droid
 {
     public class Singleton
     {
-        public string UniqueUserId { get; set; } = "UUID";
+        public string UniqueUserId { get; set; }
 
         #region Singleton
 
@@ -29,15 +30,15 @@ namespace CricketScoreSheetPro.Droid
             return tournamentService;
         }
 
-        private TournamentViewModel tournamentViewModel;
-        public TournamentViewModel TournamentViewModel()
+        private TournamentListViewModel tournamentViewModel;
+        public TournamentListViewModel TournamentViewModel()
         {
             //SetTournamentService();
-            tournamentViewModel = tournamentViewModel ?? new TournamentViewModel(tournamentService);
+            tournamentViewModel = tournamentViewModel ?? new TournamentListViewModel(tournamentService);
             return tournamentViewModel;
         }
 
-        private TournamentDetailViewModel _tournamentDetailViewModel;
+        private TournamentViewModel _tournamentDetailViewModel;
         //public TournamentDetailViewModel TournamentDetailViewModel(string tournamentId)
         //{
         //    if (_tournamentDetailViewModel == null || _tournamentDetailViewModel.Tournament.Id != tournamentId)

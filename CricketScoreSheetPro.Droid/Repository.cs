@@ -5,17 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace CricketScoreSheetPro.Test
+namespace CricketScoreSheetPro.Droid
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private Database Database;
-        public string UUID { get; set; }
 
         public Repository()
         {
-            var manager = new Manager(new DirectoryInfo(Environment.CurrentDirectory.ToLower()), Manager.DefaultOptions);
-            Database = manager.GetDatabase("testdb");
+            var manager = new Manager(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Personal).ToLower()), Manager.DefaultOptions);
+            Database = manager.GetDatabase("cricketscoresheetprodb");
             GenerateViews();
         }
 
@@ -50,8 +49,8 @@ namespace CricketScoreSheetPro.Test
             T result = null;
             foreach (var row in rows)
             {
-               result = JsonConvert.DeserializeObject<T>(row.Document.GetProperty("value").ToString());
-            }                
+                result = JsonConvert.DeserializeObject<T>(row.Document.GetProperty("value").ToString());
+            }
             return result;
         }
 
@@ -84,7 +83,7 @@ namespace CricketScoreSheetPro.Test
         {
             var query = Database.CreateAllDocumentsQuery();
             var documents = query.Run();
-            foreach(var document in documents)
+            foreach (var document in documents)
                 document.Document.Delete();
         }
 
@@ -107,7 +106,7 @@ namespace CricketScoreSheetPro.Test
             var tournamentlist = Database.GetView(typeof(T).Name);
             tournamentlist.SetMap((doc, emit) =>
             {
-                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == UUID &&
+                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == Singleton.Instance.UniqueUserId &&
                     doc.ContainsKey("type") && doc["type"].ToString() == typeof(T).Name)
                     emit(doc["type"], doc["value"]);
             }, "1");
