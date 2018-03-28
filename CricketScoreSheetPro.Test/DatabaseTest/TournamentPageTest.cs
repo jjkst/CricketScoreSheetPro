@@ -13,13 +13,15 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     [TestClass]
     public class TournamentPageTest
     {
-        private TournamentListViewModel _tournamentViewModel;
+        private TournamentListViewModel _listViewModel;
+        private TournamentViewModel _viewModel;
 
         public TournamentPageTest()
         {
             var tournamentService = new TournamentService(new Repository<Tournament>() { UUID = "UUID" },
                 new Repository<TournamentDetail>());
-            _tournamentViewModel = new TournamentListViewModel(tournamentService);            
+            _listViewModel = new TournamentListViewModel(tournamentService);
+            _viewModel = new TournamentViewModel(tournamentService);
         }
 
         [TestCleanup]
@@ -34,10 +36,10 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void GetTournamentListTest()
         {
             //Arrange
-            _tournamentViewModel.AddTournament("GetTournamentListTest", "UUID");
+            _listViewModel.AddTournament("GetTournamentListTest", "UUID");
             
             //Act           
-            var existingTournaments = _tournamentViewModel.Tournaments;
+            var existingTournaments = _listViewModel.Tournaments;
 
             //Assert
             existingTournaments.Should().NotBeNull();
@@ -49,7 +51,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void AddTournamentTest()
         {
             //Act
-            var newtournament = _tournamentViewModel.AddTournament("AddTournamentTest", "UUID");
+            var newtournament = _listViewModel.AddTournament("AddTournamentTest", "UUID");
 
             //Assert
             newtournament.Should().NotBeNull();
@@ -62,12 +64,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void DeleteTournamentTest()
         {
             //Arrange
-            var newtournament = _tournamentViewModel.AddTournament("DeleteTournamentTest", "UUID");
-            var beforecount = _tournamentViewModel.Tournaments.Count;
+            var newtournament = _listViewModel.AddTournament("DeleteTournamentTest", "UUID");
+            var beforecount = _listViewModel.Tournaments.Count;
 
             //Act
-            _tournamentViewModel.DeleteTournament(newtournament.Id);
-            var aftercount = _tournamentViewModel.Tournaments.Count;
+            _listViewModel.DeleteTournament(newtournament.Id);
+            var aftercount = _listViewModel.Tournaments.Count;
 
             //Assert
             aftercount.Should().Be(beforecount-1);
@@ -78,10 +80,11 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void ImportTournamentTest()
         {
             //Arrange
-            var newtournament = _tournamentViewModel.AddTournament("ImportTournamentTest", "UUID");
+            var newtournament = _listViewModel.AddTournament("ImportTournamentTest", "UUID2");
+            var 
 
             //Act
-            var tournament = _tournamentViewModel.ImportTournament(newtournament.Id);
+            var tournament = _listViewModel.ImportTournament(newtournament.Id);
 
             //Arrange
             tournament.Should().NotBeNull();
