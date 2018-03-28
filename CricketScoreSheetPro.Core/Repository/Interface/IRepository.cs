@@ -10,10 +10,15 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
     {
         T Create(Dictionary<string, object> property);
 
+        T ImportCreate(Dictionary<string, object> property);
+
         bool Update(string id, T val);
 
         IList<T> GetList();
+
         T GetItem(string uid);
+
+        T GetChildItem(string uid);
 
         void Delete(string id);
     }

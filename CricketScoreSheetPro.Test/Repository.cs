@@ -29,9 +29,18 @@ namespace CricketScoreSheetPro.Test
             return result;
         }
 
+        public T ImportCreate(Dictionary<string, object> property)
+        {
+            if (property == null) throw new ArgumentNullException($"Object to create is null");
+            var document = Database.CreateDocument();
+            document.PutProperties(property);
+            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            return result;
+        }
+
         public virtual bool Update(string id, T obj)
         {
-            var document = Database.GetDocument(id);
+            var document = Database.GetExistingDocument(id);
             var result = document.Update((UnsavedRevision newRevision) =>
             {
                 var properties = newRevision.Properties;
@@ -43,6 +52,13 @@ namespace CricketScoreSheetPro.Test
 
         public virtual T GetItem(string id)
         {
+            var document = Database.GetExistingDocument(id);
+            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            return result;
+        }
+
+        public virtual T GetChildItem(string id)
+        {
             GenerateChildView(id);
             var query = Database.GetView(typeof(T).Name).CreateQuery();
             var rows = query.Run();
@@ -50,8 +66,8 @@ namespace CricketScoreSheetPro.Test
             T result = null;
             foreach (var row in rows)
             {
-               result = JsonConvert.DeserializeObject<T>(row.Document.GetProperty("value").ToString());
-            }                
+                result = JsonConvert.DeserializeObject<T>(row.Document.GetProperty("value").ToString());
+            }
             return result;
         }
 

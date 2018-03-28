@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseTest\TournamentDetailPageTest.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="DatabaseTest\TournamentPageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

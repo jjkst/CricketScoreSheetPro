@@ -28,9 +28,18 @@ namespace CricketScoreSheetPro.Droid
             return result;
         }
 
+        public T ImportCreate(Dictionary<string, object> property)
+        {
+            if (property == null) throw new ArgumentNullException($"Object to create is null");
+            var document = Database.CreateDocument();
+            document.PutProperties(property);
+            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            return result;
+        }
+
         public virtual bool Update(string id, T obj)
         {
-            var document = Database.GetDocument(id);
+            var document = Database.GetExistingDocument(id);
             var result = document.Update((UnsavedRevision newRevision) =>
             {
                 var properties = newRevision.Properties;
@@ -41,6 +50,13 @@ namespace CricketScoreSheetPro.Droid
         }
 
         public virtual T GetItem(string id)
+        {
+            var document = Database.GetExistingDocument(id);
+            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            return result;
+        }
+
+        public virtual T GetChildItem(string id)
         {
             GenerateChildView(id);
             var query = Database.GetView(typeof(T).Name).CreateQuery();

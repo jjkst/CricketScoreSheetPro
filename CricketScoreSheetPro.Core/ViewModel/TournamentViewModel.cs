@@ -16,9 +16,10 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public TournamentDetail Tournament { get; private set; }
 
-        public void GiveAccessToTournament(string tournamentId)
+        public string ProvideAccess(AccessType accessType)
         {
-
+            return $"{Tournament.Id} {accessType}";
         }
+
     }
 }

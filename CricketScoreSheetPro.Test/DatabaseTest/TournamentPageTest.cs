@@ -1,12 +1,8 @@
-﻿using Couchbase.Lite;
-using CricketScoreSheetPro.Core.Model;
+﻿using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Implementation;
-using CricketScoreSheetPro.Core.Service.Interface;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
 
 namespace CricketScoreSheetPro.Test.DatabaseTest
 {
@@ -14,14 +10,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TournamentPageTest
     {
         private TournamentListViewModel _listViewModel;
-        private TournamentViewModel _viewModel;
 
         public TournamentPageTest()
         {
             var tournamentService = new TournamentService(new Repository<Tournament>() { UUID = "UUID" },
                 new Repository<TournamentDetail>());
-            _listViewModel = new TournamentListViewModel(tournamentService);
-            _viewModel = new TournamentViewModel(tournamentService);
+            _listViewModel = new TournamentListViewModel(tournamentService);            
         }
 
         [TestCleanup]
@@ -81,14 +75,15 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         {
             //Arrange
             var newtournament = _listViewModel.AddTournament("ImportTournamentTest", "UUID2");
-            var 
 
             //Act
-            var tournament = _listViewModel.ImportTournament(newtournament.Id);
+            var importtournament = _listViewModel.ImportTournament($"{newtournament.Id} View", "UUID");
 
             //Arrange
-            tournament.Should().NotBeNull();
-            newtournament.Name.Should().Be("ImportTournamentTest");
+            importtournament.Should().NotBeNull();
+            importtournament.Name.Should().Be("ImportTournamentTest");
+            importtournament.Status.Should().Be(newtournament.Status);
+            importtournament.Id.Should().Be(newtournament.Id);
         }
     }
 }

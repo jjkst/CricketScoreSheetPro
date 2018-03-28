@@ -50,6 +50,27 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             return tournamentdetailAdded;
         }
 
+        public Tournament ImportTournament(string id, AccessType accessType, string UUID)
+        {
+            var existingtournament = _tournamentRepository.GetItem(id);
+            var importtournamentproperties = new Dictionary<string, object>
+            {
+                { "uuid", UUID},
+                { "type", nameof(Tournament)},
+                { "value", new Tournament
+                            {
+                                Id = existingtournament.Id,
+                                Name = existingtournament.Name,
+                                Status = existingtournament.Status,
+                                AccessType = accessType,
+                                Owner = existingtournament.Owner,
+                                AddDate = existingtournament.AddDate
+                            }}
+            };
+            var importedtournament = _tournamentRepository.ImportCreate(importtournamentproperties);
+            return importedtournament;
+        }
+
         public void DeleteTournament(string id)
         {
             _tournamentRepository.Delete(id);
@@ -59,12 +80,6 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
         {
             var result = _tournamentRepository.GetList();
             return result;
-        }
-
-        public Tournament GetTournament(string id)
-        {
-            var importtournament =  _tournamentRepository.GetItem(id);
-            return importtournament;
         }
 
         public TournamentDetail GetTournamentDetail(string tournamentId)

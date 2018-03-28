@@ -3,8 +3,6 @@ using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CricketScoreSheetPro.Core.ViewModel
 {
@@ -19,7 +17,6 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public List<Tournament> Tournaments => _tournamentService.GetTournaments().ToList();
 
-
         public TournamentDetail AddTournament(string tournamentName, string uuid)
         {
             var newtournament = _tournamentService.AddTournament(tournamentName, uuid);
@@ -31,9 +28,10 @@ namespace CricketScoreSheetPro.Core.ViewModel
             _tournamentService.DeleteTournament(id);
         }
 
-        public Tournament ImportTournament(string id)
+        public Tournament ImportTournament(string id_accesstype, string uuid)
         {
-            var importedtournament = _tournamentService.GetTournament(id);
+            var val = id_accesstype.Split(' ');
+            var importedtournament = _tournamentService.ImportTournament(val[0], (AccessType) Enum.Parse(typeof(AccessType), val[1]), uuid);
             return importedtournament;
         }
     }
