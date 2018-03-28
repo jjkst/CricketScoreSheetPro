@@ -30,21 +30,22 @@ namespace CricketScoreSheetPro.Droid
             return tournamentService;
         }
 
-        private TournamentListViewModel tournamentViewModel;
-        public TournamentListViewModel TournamentViewModel()
+        private TournamentListViewModel tournamentListViewModel;
+        public TournamentListViewModel TournamentListViewModel()
         {
-            //SetTournamentService();
-            tournamentViewModel = tournamentViewModel ?? new TournamentListViewModel(tournamentService);
-            return tournamentViewModel;
+            tournamentService = tournamentService ?? SetTournamentService();
+            tournamentListViewModel = tournamentListViewModel ?? new TournamentListViewModel(tournamentService);
+            return tournamentListViewModel;
         }
 
-        private TournamentViewModel _tournamentDetailViewModel;
-        //public TournamentDetailViewModel TournamentDetailViewModel(string tournamentId)
-        //{
-        //    if (_tournamentDetailViewModel == null || _tournamentDetailViewModel.Tournament.Id != tournamentId)
-        //        _tournamentDetailViewModel = new TournamentDetailViewModel(tournamentService, tournamentId);
-        //    return _tournamentDetailViewModel;
-        //}
+        private TournamentViewModel tournamentViewModel;
+        public TournamentViewModel TournamentViewModel(string tournamentId)
+        {
+            tournamentService = tournamentService ?? SetTournamentService();
+            if (tournamentViewModel == null || tournamentViewModel.Tournament.Id != tournamentId)
+                tournamentViewModel = new TournamentViewModel(tournamentService, tournamentId);
+            return tournamentViewModel;
+        }
 
         #endregion Tournament
     }

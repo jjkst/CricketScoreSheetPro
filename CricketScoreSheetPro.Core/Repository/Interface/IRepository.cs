@@ -8,6 +8,8 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
 {
     public interface IRepository<T>
     {
+        string GetUUID();
+
         T Create(Dictionary<string, object> property);
 
         T ImportCreate(Dictionary<string, object> property);

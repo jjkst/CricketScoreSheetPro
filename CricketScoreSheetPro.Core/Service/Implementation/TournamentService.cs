@@ -17,18 +17,19 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             _tournamentdetailRepository = tournamentdetailRepository ?? throw new ArgumentNullException($"TournamentDetailRepository is null");
         }
 
-        public TournamentDetail AddTournament(string tournamentName, string UUID)
+        public TournamentDetail AddTournament(string tournamentName)
         {
+            var uuid = _tournamentRepository.GetUUID();
             var newtournamentproperties = new Dictionary<string, object>
             {
-                { "uuid", UUID},
+                { "uuid", uuid},
                 { "type", nameof(Tournament)},
                 { "value", new Tournament
                             {
                                 Name = tournamentName,
                                 Status = "Open",
                                 AccessType = AccessType.Moderator,
-                                Owner = UUID,
+                                Owner = uuid,
                                 AddDate = DateTime.Today
                             }}
             };            
@@ -50,12 +51,13 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             return tournamentdetailAdded;
         }
 
-        public Tournament ImportTournament(string id, AccessType accessType, string UUID)
+        public Tournament ImportTournament(string id, AccessType accessType)
         {
+            var uuid = _tournamentRepository.GetUUID();
             var existingtournament = _tournamentRepository.GetItem(id);
             var importtournamentproperties = new Dictionary<string, object>
             {
-                { "uuid", UUID},
+                { "uuid", uuid},
                 { "type", nameof(Tournament)},
                 { "value", new Tournament
                             {

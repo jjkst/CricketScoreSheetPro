@@ -27,14 +27,15 @@ namespace CricketScoreSheetPro.Droid
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ViewModel = Singleton.Instance.TournamentViewModel();
+            ViewModel = Singleton.Instance.TournamentListViewModel();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = base.OnCreateView(inflater, container, savedInstanceState);
             TournamentsAdapter = new TournamentAdapter(ViewModel.Tournaments);
-            TournamentsAdapter.ItemClick += OnItemClick;
+            TournamentsAdapter.ItemViewClick += OnItemViewClick;
+            TournamentsAdapter.ItemDeleteClick += OnItemDeleteClick;
 
             FloatingActionButton addTournament = view.FindViewById<FloatingActionButton>(Resource.Id.floating_action_button_fab_with_listview);
             addTournament.Click += ShowAddTournamentDialog;
@@ -51,6 +52,34 @@ namespace CricketScoreSheetPro.Droid
             return view;
         }
 
+        protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<Tournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
+            TournamentsAdapter.RefreshTournaments(tournaments);
+            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
+        }
+
+        private void ImportTournament()
+        {
+            var importtournament = ViewModel.ImportTournament("", Singleton.Instance.UniqueUserId);
+            TournamentsAdapter.RefreshTournaments(ViewModel.Tournaments);
+            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
+        }
+
+        private void OnItemViewClick(object sender, string tournamentId)
+        {
+            var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
+            detailActivity.PutExtra("TournamentId", tournamentId);
+            StartActivity(detailActivity);
+        }
+
+        private void OnItemDeleteClick(object sender, string tournamentId)
+        {
+            ViewModel.DeleteTournament(tournamentId);
+            TournamentsAdapter.RefreshTournaments(ViewModel.Tournaments);
+            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
+        }
+
         private void ShowAddTournamentDialog(object sender, EventArgs e)
         {
             AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
@@ -62,11 +91,11 @@ namespace CricketScoreSheetPro.Droid
                 Top = 5,
                 Focusable = true,
                 ShowSoftInputOnFocus = true
-            };            
+            };
             inputDialog.SetView(userInput);
-            
+
             inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
-                var newtournament = ViewModel.AddTournament(userInput.Text, Singleton.Instance.UniqueUserId);
+                var newtournament = ViewModel.AddTournament(userInput.Text);
                 var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
                 detailActivity.PutExtra("TournamentId", newtournament.Id);
                 StartActivity(detailActivity);
@@ -75,20 +104,6 @@ namespace CricketScoreSheetPro.Droid
                 Toast.MakeText(this.Activity, "Canceled.", ToastLength.Short).Show();
             });
             inputDialog.Show();
-        }
-
-        private void OnItemClick(object sender, string tournamentId)
-        {
-            var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
-            detailActivity.PutExtra("TournamentId", tournamentId);
-            StartActivity(detailActivity);
-        }
-
-        protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<Tournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
-            TournamentsAdapter.RefreshTournaments(tournaments);
-            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
 
         private List<Tournament> DummyList()

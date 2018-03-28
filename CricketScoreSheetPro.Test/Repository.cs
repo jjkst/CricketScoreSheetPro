@@ -10,7 +10,10 @@ namespace CricketScoreSheetPro.Test
     public class Repository<T> : IRepository<T> where T : class
     {
         private Database Database;
-        public string UUID { get; set; }
+        public virtual string GetUUID()
+        {
+            return "UUID";
+        }
 
         public Repository()
         {
@@ -123,7 +126,7 @@ namespace CricketScoreSheetPro.Test
             var tournamentlist = Database.GetView(typeof(T).Name);
             tournamentlist.SetMap((doc, emit) =>
             {
-                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == UUID &&
+                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == GetUUID() &&
                     doc.ContainsKey("type") && doc["type"].ToString() == typeof(T).Name)
                     emit(doc["type"], doc["value"]);
             }, "1");

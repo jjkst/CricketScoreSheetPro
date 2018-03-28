@@ -10,6 +10,10 @@ namespace CricketScoreSheetPro.Droid
     public class Repository<T> : IRepository<T> where T : class
     {
         private Database Database;
+        public string GetUUID()
+        {
+            return Singleton.Instance.UniqueUserId;
+        }
 
         public Repository()
         {
@@ -122,7 +126,7 @@ namespace CricketScoreSheetPro.Droid
             var tournamentlist = Database.GetView(typeof(T).Name);
             tournamentlist.SetMap((doc, emit) =>
             {
-                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == Singleton.Instance.UniqueUserId &&
+                if (doc.ContainsKey("uuid") && doc["uuid"].ToString() == GetUUID() &&
                     doc.ContainsKey("type") && doc["type"].ToString() == typeof(T).Name)
                     emit(doc["type"], doc["value"]);
             }, "1");

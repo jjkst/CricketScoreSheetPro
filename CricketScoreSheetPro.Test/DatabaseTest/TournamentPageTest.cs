@@ -1,4 +1,5 @@
 ﻿using CricketScoreSheetPro.Core.Model;
+using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -13,7 +14,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
         public TournamentPageTest()
         {
-            var tournamentService = new TournamentService(new Repository<Tournament>() { UUID = "UUID" },
+            var tournamentService = new TournamentService(new Repository<Tournament>(),
                 new Repository<TournamentDetail>());
             _listViewModel = new TournamentListViewModel(tournamentService);            
         }
@@ -30,7 +31,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void GetTournamentListTest()
         {
             //Arrange
-            _listViewModel.AddTournament("GetTournamentListTest", "UUID");
+            _listViewModel.AddTournament("GetTournamentListTest");
             
             //Act           
             var existingTournaments = _listViewModel.Tournaments;
@@ -45,7 +46,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void AddTournamentTest()
         {
             //Act
-            var newtournament = _listViewModel.AddTournament("AddTournamentTest", "UUID");
+            var newtournament = _listViewModel.AddTournament("AddTournamentTest");
 
             //Assert
             newtournament.Should().NotBeNull();
@@ -58,7 +59,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void DeleteTournamentTest()
         {
             //Arrange
-            var newtournament = _listViewModel.AddTournament("DeleteTournamentTest", "UUID");
+            var newtournament = _listViewModel.AddTournament("DeleteTournamentTest");
             var beforecount = _listViewModel.Tournaments.Count;
 
             //Act
@@ -69,12 +70,22 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             aftercount.Should().Be(beforecount-1);
         }
 
+        public class FakeRepo : Repository<Tournament>
+        {
+            public override string GetUUID()
+            {
+                return "UUID2";
+            }
+        }
+
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public void ImportTournamentTest()
         {
             //Arrange
-            var newtournament = _listViewModel.AddTournament("ImportTournamentTest", "UUID2");
+            var tournamentService = new TournamentService(new FakeRepo(),
+                new Repository<TournamentDetail>());
+            var newtournament = _listViewModel.AddTournament("ImportTournamentTest");
 
             //Act
             var importtournament = _listViewModel.ImportTournament($"{newtournament.Id} View", "UUID");

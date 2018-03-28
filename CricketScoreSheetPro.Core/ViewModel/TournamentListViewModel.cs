@@ -17,9 +17,9 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public List<Tournament> Tournaments => _tournamentService.GetTournaments().ToList();
 
-        public TournamentDetail AddTournament(string tournamentName, string uuid)
+        public TournamentDetail AddTournament(string tournamentName)
         {
-            var newtournament = _tournamentService.AddTournament(tournamentName, uuid);
+            var newtournament = _tournamentService.AddTournament(tournamentName);
             return newtournament;
         }
 
@@ -31,7 +31,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
         public Tournament ImportTournament(string id_accesstype, string uuid)
         {
             var val = id_accesstype.Split(' ');
-            var importedtournament = _tournamentService.ImportTournament(val[0], (AccessType) Enum.Parse(typeof(AccessType), val[1]), uuid);
+            var importedtournament = _tournamentService.ImportTournament(val[0], (AccessType) Enum.Parse(typeof(AccessType), val[1]));
             return importedtournament;
         }
     }
