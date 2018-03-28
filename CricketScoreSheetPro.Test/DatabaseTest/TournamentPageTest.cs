@@ -34,7 +34,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void GetTournamentListTest()
         {
             //Arrange
-            _tournamentViewModel.AddTournament("TournamentTest", "UUID");
+            _tournamentViewModel.AddTournament("GetTournamentListTest", "UUID");
             
             //Act           
             var existingTournaments = _tournamentViewModel.Tournaments;
@@ -49,11 +49,11 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void AddTournamentTest()
         {
             //Act
-            var newtournament = _tournamentViewModel.AddTournament("TournamentTest", "UUID");
+            var newtournament = _tournamentViewModel.AddTournament("AddTournamentTest", "UUID");
 
             //Assert
             newtournament.Should().NotBeNull();
-            newtournament.Name.Should().Be("TournamentTest");
+            newtournament.Name.Should().Be("AddTournamentTest");
             newtournament.Status.Should().Be("Open");
         }
 
@@ -62,7 +62,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void DeleteTournamentTest()
         {
             //Arrange
-            var newtournament = _tournamentViewModel.AddTournament("TournamentTest", "UUID");
+            var newtournament = _tournamentViewModel.AddTournament("DeleteTournamentTest", "UUID");
             var beforecount = _tournamentViewModel.Tournaments.Count;
 
             //Act
@@ -71,6 +71,21 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             aftercount.Should().Be(beforecount-1);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void ImportTournamentTest()
+        {
+            //Arrange
+            var newtournament = _tournamentViewModel.AddTournament("ImportTournamentTest", "UUID");
+
+            //Act
+            var tournament = _tournamentViewModel.ImportTournament(newtournament.Id);
+
+            //Arrange
+            tournament.Should().NotBeNull();
+            newtournament.Name.Should().Be("ImportTournamentTest");
         }
     }
 }

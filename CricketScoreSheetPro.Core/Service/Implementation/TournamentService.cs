@@ -61,6 +61,10 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             return result;
         }
 
-
+        public Tournament GetTournament(string id)
+        {
+            var importtournament =  _tournamentRepository.GetItem(id);
+            return importtournament;
+        }
     }
 }

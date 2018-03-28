@@ -30,5 +30,11 @@ namespace CricketScoreSheetPro.Core.ViewModel
         {
             _tournamentService.DeleteTournament(id);
         }
+
+        public Tournament ImportTournament(string id)
+        {
+            var importedtournament = _tournamentService.GetTournament(id);
+            return importedtournament;
+        }
     }
 }

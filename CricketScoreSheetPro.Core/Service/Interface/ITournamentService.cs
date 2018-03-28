@@ -8,5 +8,6 @@ namespace CricketScoreSheetPro.Core.Service.Interface
         IList<Tournament> GetTournaments();
         TournamentDetail AddTournament(string tournamentName, string uuid);
         void DeleteTournament(string id);
+        Tournament GetTournament(string id);
     }
 }
