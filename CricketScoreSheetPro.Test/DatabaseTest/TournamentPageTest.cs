@@ -1,5 +1,4 @@
 ﻿using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -85,7 +84,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Arrange
             var tournamentService = new TournamentService(new FakeRepo(),
                 new Repository<TournamentDetail>());
-            var newtournament = _listViewModel.AddTournament("ImportTournamentTest");
+            var newtournament = tournamentService.AddTournament("ImportTournamentTest");
 
             //Act
             var importtournament = _listViewModel.ImportTournament($"{newtournament.Id} View", "UUID");

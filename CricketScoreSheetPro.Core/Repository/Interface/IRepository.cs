@@ -18,6 +18,8 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
 
         IList<T> GetList();
 
+        string GetParentId(string id);
+
         T GetItem(string uid);
 
         T GetChildItem(string uid);

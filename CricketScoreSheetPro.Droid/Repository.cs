@@ -26,7 +26,7 @@ namespace CricketScoreSheetPro.Droid
         {
             if (newproperty == null) throw new ArgumentNullException($"Object to create is null");
             var document = Database.CreateDocument();
-            var propertyupdatedwithId = UpdateGenericObjectProperty(newproperty, document.Id);
+            UpdateGenericObjectProperty(newproperty, document.Id);
             document.PutProperties(newproperty);
             var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
             return result;
@@ -51,6 +51,12 @@ namespace CricketScoreSheetPro.Droid
                 return true;
             });
             return result != null;
+        }
+
+        public string GetParentId(string id)
+        {
+            var document = Database.GetExistingDocument(id);
+            return document.UserProperties["parent_id"].ToString();
         }
 
         public virtual T GetItem(string id)

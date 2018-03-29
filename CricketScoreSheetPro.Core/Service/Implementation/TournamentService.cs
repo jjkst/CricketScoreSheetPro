@@ -89,5 +89,19 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             var tournamentdetail = _tournamentdetailRepository.GetItem(tournamentId);
             return tournamentdetail;
         }
+
+        public bool UpdateTournament(TournamentDetail tournamentdetail)
+        {
+            // update tournament
+            var currenttournament = _tournamentRepository.GetItem(_tournamentRepository.GetParentId(tournamentdetail.Id));
+            currenttournament.Name = tournamentdetail.Name;
+            currenttournament.Status = tournamentdetail.Status;
+            var tournamentupdated = _tournamentRepository.Update(tournamentdetail.Id, currenttournament);
+
+            //update tournamentdetail
+            var updatedtournamentdetail = _tournamentdetailRepository.Update(tournamentdetail.Id, tournamentdetail);
+            
+            return tournamentupdated && updatedtournamentdetail;
+        }
     }
 }
