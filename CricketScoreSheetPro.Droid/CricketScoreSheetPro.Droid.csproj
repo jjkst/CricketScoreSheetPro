@@ -129,12 +129,12 @@
     <Compile Include="Activity\BaseActivity.cs" />
     <Compile Include="Activity\TournamentDetailActivity.cs" />
     <Compile Include="Adapter\TournamentAdapter.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Fragment\BaseFragment.cs" />
     <Compile Include="Fragment\HomeFragment.cs" />
     <Compile Include="Fragment\TournamentFragment.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Repository.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton.cs" />
@@ -216,12 +216,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CricketScoreSheetPro.Core\CricketScoreSheetPro.Core.csproj">
-      <Project>{3d48ecf8-da1b-48b7-af45-bf999cbff01c}</Project>
-      <Name>CricketScoreSheetPro.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\list_even_row.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_vm_plus_dk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CricketScoreSheetPro.Core\CricketScoreSheetPro.Core.csproj">
+      <Project>{9cb6b988-71eb-4047-94a0-828fc3654258}</Project>
+      <Name>CricketScoreSheetPro.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />

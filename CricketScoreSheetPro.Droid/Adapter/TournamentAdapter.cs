@@ -12,9 +12,9 @@ namespace CricketScoreSheetPro.Droid.Adapter
     {
         public event EventHandler<string> ItemViewClick;
         public event EventHandler<string> ItemDeleteClick;
-        private List<Tournament> _tournaments;
+        private List<UserTournament> _tournaments;
 
-        public TournamentAdapter(List<Tournament> tournaments)
+        public TournamentAdapter(List<UserTournament> tournaments)
         {
             _tournaments = tournaments.OrderByDescending(d => d.AddDate).ToList();
         }
@@ -43,7 +43,7 @@ namespace CricketScoreSheetPro.Droid.Adapter
             return new TournamentViewHolder(itemView, OnViewClick, OnDeleteClick);
         }
 
-        public void RefreshTournaments(IEnumerable<Tournament> tournaments)
+        public void RefreshTournaments(IEnumerable<UserTournament> tournaments)
         {
             _tournaments = tournaments.ToList();
         }

@@ -1,4 +1,5 @@
 ﻿using CricketScoreSheetPro.Core.Model;
+using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -13,15 +14,16 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
         public TournamentPageTest()
         {
-            var tournamentService = new TournamentService(new Repository<Tournament>(),
-                new Repository<TournamentDetail>());
+            var testClient = new TestClient();
+            var tournamentService = new TournamentService(new Repository<UserTournament>(testClient),
+                new Repository<Tournament>(testClient));
             _listViewModel = new TournamentListViewModel(tournamentService);            
         }
 
         [TestCleanup]
         public void MethodCleanup()
         {
-            var database = new Repository<object>();
+            var database = new Repository<object>(new TestClient());
             database.DeleteDatabase();
         }
 
@@ -69,21 +71,15 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             aftercount.Should().Be(beforecount-1);
         }
 
-        public class FakeRepo : Repository<Tournament>
-        {
-            public override string GetUUID()
-            {
-                return "UUID2";
-            }
-        }
-
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public void ImportTournamentTest()
         {
             //Arrange
-            var tournamentService = new TournamentService(new FakeRepo(),
-                new Repository<TournamentDetail>());
+            var firstuser = new TestClient();
+            firstuser.SetUUID("UUIDFIRST");
+            var tournamentService = new TournamentService(new Repository<UserTournament>(firstuser),
+                new Repository<Tournament>(firstuser));
             var newtournament = tournamentService.AddTournament("ImportTournamentTest");
 
             //Act
@@ -93,7 +89,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             importtournament.Should().NotBeNull();
             importtournament.Name.Should().Be("ImportTournamentTest");
             importtournament.Status.Should().Be(newtournament.Status);
-            importtournament.Id.Should().Be(newtournament.Id);
+            importtournament.TournamentId.Should().Be(newtournament.Id);
         }
     }
 }

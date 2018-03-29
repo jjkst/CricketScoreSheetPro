@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CricketScoreSheetPro.Test</RootNamespace>
     <AssemblyName>CricketScoreSheetPro.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -19,6 +19,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,9 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseTest\TournamentDetailPageTest.cs" />
-    <Compile Include="Repository.cs" />
     <Compile Include="DatabaseTest\TournamentPageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -94,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CricketScoreSheetPro.Core\CricketScoreSheetPro.Core.csproj">
-      <Project>{3D48ECF8-DA1B-48B7-AF45-BF999CBFF01C}</Project>
+      <Project>{9cb6b988-71eb-4047-94a0-828fc3654258}</Project>
       <Name>CricketScoreSheetPro.Core</Name>
     </ProjectReference>
   </ItemGroup>

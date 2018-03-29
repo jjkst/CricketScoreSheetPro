@@ -11,17 +11,17 @@ namespace CricketScoreSheetPro.Core.ViewModel
         public TournamentViewModel(ITournamentService tournamentService, string tournamentId)
         {
             _tournamentService = tournamentService ?? throw new ArgumentNullException($"TournamentService is null, cannot get tournaments.");
-            Tournament = _tournamentService.GetTournamentDetail(tournamentId) ?? throw new ArgumentNullException($"Tournament Id is not exist");
+            Tournament = _tournamentService.GetTournament(tournamentId) ?? throw new ArgumentNullException($"Tournament Id is not exist");
         }
 
-        public TournamentDetail Tournament { get; private set; }
+        public Tournament Tournament { get; private set; }
 
         public string ProvideAccess(AccessType accessType)
         {
             return $"{Tournament.Id} {accessType}";
         }
 
-        public bool UpdateTournament(TournamentDetail tournament)
+        public bool UpdateTournament(Tournament tournament)
         {
             Tournament = tournament;
             var updated = _tournamentService.UpdateTournament(tournament);

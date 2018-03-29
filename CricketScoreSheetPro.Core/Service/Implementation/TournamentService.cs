@@ -1,4 +1,6 @@
-﻿using CricketScoreSheetPro.Core.Model;
+﻿using CricketScoreSheetPro.Core.Helper;
+using CricketScoreSheetPro.Core.Model;
+using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
@@ -8,100 +10,103 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 {
     public class TournamentService : ITournamentService
     {
+        private readonly IRepository<UserTournament> _usertournamentRepository;
         private readonly IRepository<Tournament> _tournamentRepository;
-        private readonly IRepository<TournamentDetail> _tournamentdetailRepository;
 
-        public TournamentService(IRepository<Tournament> tournamentRepository, IRepository<TournamentDetail> tournamentdetailRepository)
+        public TournamentService(IRepository<UserTournament> usertournamentRepository, IRepository<Tournament> tournamentRepository)
         {
-            _tournamentRepository = tournamentRepository ?? throw new ArgumentNullException($"TournamentRepository is null");
-            _tournamentdetailRepository = tournamentdetailRepository ?? throw new ArgumentNullException($"TournamentDetailRepository is null");
+            _usertournamentRepository = usertournamentRepository ?? throw new ArgumentNullException($"TournamentRepository is null");
+            _tournamentRepository = tournamentRepository ?? throw new ArgumentNullException($"TournamentDetailRepository is null");
         }
 
-        public TournamentDetail AddTournament(string tournamentName)
+        public UserTournament AddTournament(string tournamentName)
         {
-            var uuid = _tournamentRepository.GetUUID();
             var newtournamentproperties = new Dictionary<string, object>
             {
-                { "uuid", uuid},
                 { "type", nameof(Tournament)},
                 { "value", new Tournament
                             {
                                 Name = tournamentName,
                                 Status = "Open",
+                                StartDate = DateTime.Today
+                            }}
+            };
+            var tournamentdAdded = _tournamentRepository.Create(newtournamentproperties);
+
+            var newusertournamentproperties = new Dictionary<string, object>
+            {
+                { "type", nameof(UserTournament)},
+                { "value", new UserTournament
+                            {
+                                TournamentId = tournamentdAdded.Id,
+                                Name = tournamentdAdded.Name,
+                                Status = tournamentdAdded.Status,
                                 AccessType = AccessType.Moderator,
-                                Owner = uuid,
+                                Owner = true,
                                 AddDate = DateTime.Today
                             }}
             };            
-            var tournamentAdded = _tournamentRepository.Create(newtournamentproperties);
+            var usertournamentAdded = _usertournamentRepository.Create(newusertournamentproperties);
 
-            var newtournamentdetailproperties = new Dictionary<string, object>
-            {
-                { "parent_id", tournamentAdded.Id},
-                { "type", nameof(TournamentDetail)},
-                { "value", new TournamentDetail
-                            {
-                                Id = tournamentAdded.Id,
-                                Name = tournamentAdded.Name,
-                                Status = tournamentAdded.Status,
-                                StartDate = tournamentAdded.AddDate
-                            }}
-            };            
-            var tournamentdetailAdded = _tournamentdetailRepository.Create(newtournamentdetailproperties);
-            return tournamentdetailAdded;
+            return usertournamentAdded;
         }
 
-        public Tournament ImportTournament(string id, AccessType accessType)
+        public UserTournament ImportTournament(string tournamentid, AccessType accessType)
         {
-            var uuid = _tournamentRepository.GetUUID();
-            var existingtournament = _tournamentRepository.GetItem(id);
+            var existingtournament = _tournamentRepository.GetItem(tournamentid);
             var importtournamentproperties = new Dictionary<string, object>
             {
-                { "uuid", uuid},
-                { "type", nameof(Tournament)},
-                { "value", new Tournament
+                { "tournament", existingtournament.Id },
+                { "type", nameof(UserTournament)},
+                { "value", new UserTournament
                             {
-                                Id = existingtournament.Id,
+                                TournamentId = existingtournament.Id,
                                 Name = existingtournament.Name,
                                 Status = existingtournament.Status,
                                 AccessType = accessType,
-                                Owner = existingtournament.Owner,
-                                AddDate = existingtournament.AddDate
+                                AddDate = DateTime.Today
                             }}
             };
-            var importedtournament = _tournamentRepository.ImportCreate(importtournamentproperties);
+            var importedtournament = _usertournamentRepository.Create(importtournamentproperties);
             return importedtournament;
         }
 
-        public void DeleteTournament(string id)
+        public void DeleteTournament(string usertournamentid)
         {
-            _tournamentRepository.Delete(id);
+            var usertournament = _usertournamentRepository.GetItem(usertournamentid);
+            var tournamentId = Function.GetGenericObjectPropertyValue(usertournament, nameof(UserTournament.TournamentId));
+            _tournamentRepository.Delete(tournamentId);
+            _usertournamentRepository.Delete(usertournamentid);            
         }
 
-        public IList<Tournament> GetTournaments()
+        public IList<UserTournament> GetUserTournaments()
         {
-            var result = _tournamentRepository.GetList();
+            var result = _usertournamentRepository.GetList();
             return result;
         }
 
-        public TournamentDetail GetTournamentDetail(string tournamentId)
+        public Tournament GetTournament(string tournamentId)
         {
-            var tournamentdetail = _tournamentdetailRepository.GetItem(tournamentId);
-            return tournamentdetail;
+            var tournament = _tournamentRepository.GetItem(tournamentId);
+            return tournament;
         }
 
-        public bool UpdateTournament(TournamentDetail tournamentdetail)
+        public bool UpdateTournament(Tournament tournament)
         {
-            // update tournament
-            var currenttournament = _tournamentRepository.GetItem(_tournamentRepository.GetParentId(tournamentdetail.Id));
-            currenttournament.Name = tournamentdetail.Name;
-            currenttournament.Status = tournamentdetail.Status;
-            var tournamentupdated = _tournamentRepository.Update(tournamentdetail.Id, currenttournament);
+            //update tournament
+            var updatedtournament = _tournamentRepository.Update(tournament.Id, tournament);
 
-            //update tournamentdetail
-            var updatedtournamentdetail = _tournamentdetailRepository.Update(tournamentdetail.Id, tournamentdetail);
+            // update usertournament
+            var allaffectedusertournaments = _usertournamentRepository.GetListByProperty("tournament", tournament.Id);
+            bool updatedusertournament = true;
+            foreach (var ut in allaffectedusertournaments)
+            {
+                ut.Name = tournament.Name;
+                ut.Status = tournament.Status;
+                updatedusertournament = updatedusertournament && _usertournamentRepository.Update(ut.Id, ut);
+            }            
             
-            return tournamentupdated && updatedtournamentdetail;
+            return updatedtournament && updatedusertournament;
         }
     }
 }

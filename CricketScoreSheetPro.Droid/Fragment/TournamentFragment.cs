@@ -54,7 +54,7 @@ namespace CricketScoreSheetPro.Droid
 
         protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            IEnumerable<Tournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
+            IEnumerable<UserTournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
             TournamentsAdapter.RefreshTournaments(tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
@@ -106,64 +106,64 @@ namespace CricketScoreSheetPro.Droid
             inputDialog.Show();
         }
 
-        private List<Tournament> DummyList()
+        private List<UserTournament> DummyList()
         {
-            return new List<Tournament> {
-                    new Tournament {
+            return new List<UserTournament> {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "1",
                     Name = "Tournament Name one",
                     AddDate = DateTime.Today,
                     Status = "Open"
                     },
-                    new Tournament {
+                    new UserTournament {
                     Id =  "2",
                     Name = "Tournament Name two",
                     AddDate = DateTime.Today,

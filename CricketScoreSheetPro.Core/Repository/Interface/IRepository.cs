@@ -8,21 +8,15 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
 {
     public interface IRepository<T>
     {
-        string GetUUID();
-
         T Create(Dictionary<string, object> property);
-
-        T ImportCreate(Dictionary<string, object> property);
 
         bool Update(string id, T val);
 
         IList<T> GetList();
 
-        string GetParentId(string id);
+        IList<T> GetListByProperty(string propertyName, string propertyValue);
 
-        T GetItem(string uid);
-
-        T GetChildItem(string uid);
+        T GetItem(string id);
 
         void Delete(string id);
     }

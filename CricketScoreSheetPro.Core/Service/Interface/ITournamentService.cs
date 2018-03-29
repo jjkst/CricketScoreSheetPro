@@ -5,11 +5,11 @@ namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface ITournamentService
     {        
-        TournamentDetail AddTournament(string tournamentName);        
-        Tournament ImportTournament(string id, AccessType accessType);
+        UserTournament AddTournament(string tournamentName);        
+        UserTournament ImportTournament(string id, AccessType accessType);
         void DeleteTournament(string id);
-        IList<Tournament> GetTournaments();
-        TournamentDetail GetTournamentDetail(string tournamentId);
-        bool UpdateTournament(TournamentDetail tournamentdetail);
+        IList<UserTournament> GetUserTournaments();
+        Tournament GetTournament(string tournamentId);
+        bool UpdateTournament(Tournament tournamentdetail);
     }
 }

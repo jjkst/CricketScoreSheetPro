@@ -1,4 +1,5 @@
 using CricketScoreSheetPro.Core.Model;
+using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using System;
@@ -24,9 +25,10 @@ namespace CricketScoreSheetPro.Droid
         private TournamentService tournamentService;
         private TournamentService SetTournamentService()
         {
+            var client = new Client();
             if (tournamentService == null)
-                tournamentService = new TournamentService(new Repository<Tournament>(),
-                new Repository<TournamentDetail>());
+                tournamentService = new TournamentService(new Repository<UserTournament>(client),
+                new Repository<Tournament>(client));
             return tournamentService;
         }
 
