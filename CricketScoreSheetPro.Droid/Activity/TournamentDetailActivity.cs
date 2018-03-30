@@ -29,7 +29,7 @@ namespace CricketScoreSheetPro.Droid.Activity
         {
             base.OnCreate(savedInstanceState);
             var tournamentId = Intent.GetStringExtra("TournamentId");
-            //ViewModel = Singleton.Instance.TournamentDetailViewModel(tournamentId);
+            ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
             Name = (TextView)FindViewById(Resource.Id.NameValue);
             Sponsor = (TextView)FindViewById(Resource.Id.SponsorValue);
             Status = (TextView)FindViewById(Resource.Id.StatusValue);
@@ -40,11 +40,11 @@ namespace CricketScoreSheetPro.Droid.Activity
         protected override void OnResume()
         {
             base.OnResume();
-            //Name.Text = ViewModel.Tournament.Name;
-            //Sponsor.Text = ViewModel.Tournament.Sponsor;
-            //Status.Text = ViewModel.Tournament.Status;
-            //StartDate.Text = ViewModel.Tournament.StartDate.ToShortDateString();
-            //EntryFee.Text = ViewModel.Tournament.EntryFee.ToString();
+            Name.Text = ViewModel.Tournament.Name;
+            Sponsor.Text = ViewModel.Tournament.Sponsor;
+            Status.Text = ViewModel.Tournament.Status;
+            StartDate.Text = ViewModel.Tournament.StartDate.ToShortDateString();
+            EntryFee.Text = ViewModel.Tournament.EntryFee.ToString();
         }
 
     }

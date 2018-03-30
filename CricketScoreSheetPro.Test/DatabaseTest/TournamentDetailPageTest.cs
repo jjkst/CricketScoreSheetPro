@@ -11,6 +11,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TournamentDetailPageTest
     {
         private TournamentViewModel _viewModel;
+        private string UserTournamentId;
 
         public TournamentDetailPageTest()
         {
@@ -18,6 +19,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             var tournamentService = new TournamentService(new Repository<UserTournament>(testClient),
                 new Repository<Tournament>(testClient));
             var tournament = tournamentService.AddTournament("TournamentDetailPageTest");
+            UserTournamentId = tournament.Id;
             _viewModel = new TournamentViewModel(tournamentService, tournament.Id);
         }
 
@@ -55,9 +57,9 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Assert
             updated.Should().BeTrue();
             _viewModel.Tournament.Should().Be(tournamentdetail);
-            //var repo = new Repository<UserTournament>(new TestClient()).GetItem(tournamentdetail.Id);
-            //repo.Name.Should().Be(tournamentdetail.Name);
-            //repo.Status.Should().Be(tournamentdetail.Status);
+            var repo = new Repository<UserTournament>(new TestClient()).GetItem(UserTournamentId);
+            repo.Name.Should().Be(tournamentdetail.Name);
+            repo.Status.Should().Be(tournamentdetail.Status);
         }
     }
 }

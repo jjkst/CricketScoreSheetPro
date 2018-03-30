@@ -15,8 +15,8 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public TournamentService(IRepository<UserTournament> usertournamentRepository, IRepository<Tournament> tournamentRepository)
         {
-            _usertournamentRepository = usertournamentRepository ?? throw new ArgumentNullException($"TournamentRepository is null");
-            _tournamentRepository = tournamentRepository ?? throw new ArgumentNullException($"TournamentDetailRepository is null");
+            _usertournamentRepository = usertournamentRepository ?? throw new ArgumentNullException($"usertournamentRepository is null");
+            _tournamentRepository = tournamentRepository ?? throw new ArgumentNullException($"tournamentRepository is null");
         }
 
         public UserTournament AddTournament(string tournamentName)
@@ -35,6 +35,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
             var newusertournamentproperties = new Dictionary<string, object>
             {
+                { "tournament", tournamentdAdded.Id },
                 { "type", nameof(UserTournament)},
                 { "value", new UserTournament
                             {
@@ -74,8 +75,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
         public void DeleteTournament(string usertournamentid)
         {
             var usertournament = _usertournamentRepository.GetItem(usertournamentid);
-            var tournamentId = Function.GetGenericObjectPropertyValue(usertournament, nameof(UserTournament.TournamentId));
-            _tournamentRepository.Delete(tournamentId);
+            _tournamentRepository.Delete(usertournament.TournamentId);
             _usertournamentRepository.Delete(usertournamentid);            
         }
 
