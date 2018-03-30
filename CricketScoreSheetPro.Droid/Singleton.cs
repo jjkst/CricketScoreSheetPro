@@ -8,13 +8,17 @@ namespace CricketScoreSheetPro.Droid
 {
     public class Singleton
     {
+        public Client Client { get; set; }
         public string UniqueUserId { get; set; }
 
         #region Singleton
 
         private static readonly Singleton instance = new Singleton();
         
-        private Singleton() { }
+        private Singleton()
+        {
+            Client = new Client();
+        }
 
         public static Singleton Instance => instance;
 
@@ -25,10 +29,9 @@ namespace CricketScoreSheetPro.Droid
         private TournamentService tournamentService;
         private TournamentService SetTournamentService()
         {
-            var client = new Client();
             if (tournamentService == null)
-                tournamentService = new TournamentService(new Repository<UserTournament>(client),
-                new Repository<Tournament>(client));
+                tournamentService = new TournamentService(new Repository<UserTournament>(Client),
+                new Repository<Tournament>(Client));
             return tournamentService;
         }
 

@@ -7,28 +7,34 @@ namespace CricketScoreSheetPro.Droid
 {
     public class Client : IClient
     {
-        private Database Database;
-        private string UUID;
+        private Database _database;
+        private string _uuid;
 
         public Database GetDatabase()
         {
-            return Database;
+            if (_database == null)
+            {
+                var manager = new Manager(new DirectoryInfo(Helper.InternalPath), Manager.DefaultOptions);
+                _database = manager.GetDatabase("cricketscoresheetprodb");
+            }
+            return _database;
         }
 
         public string GetUUID()
         {
-            return UUID;
+            if (string.IsNullOrEmpty(_uuid)) _uuid = Singleton.Instance.UniqueUserId;
+            return _uuid;
         }
 
         public void SetDatabase(Database database)
         {
-            var manager = new Manager(new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Personal).ToLower()), Manager.DefaultOptions);
-            Database = manager.GetDatabase("cricketscoresheetprodb");
+            this._database = database;
         }
 
         public void SetUUID(string uuid)
         {
-            UUID = Singleton.Instance.UniqueUserId;
+            this._uuid = uuid;
         }
+        
     }
 }

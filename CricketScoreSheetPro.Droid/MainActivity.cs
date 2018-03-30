@@ -44,7 +44,7 @@ namespace CricketScoreSheetPro.Droid
             }
 
             //Create unique Id and store in database
-            var uiniqueUserIdfile = Path.Combine(Helper.DownloadPath, "UniqueUserId.txt");
+            var uiniqueUserIdfile = Path.Combine(Helper.InternalPath, "UniqueUserId.txt");
             if (File.Exists(uiniqueUserIdfile))
             {
                 var existingGuid = File.ReadAllText(uiniqueUserIdfile);
