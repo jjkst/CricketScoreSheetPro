@@ -53,6 +53,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             newtournament.Should().NotBeNull();
             newtournament.Name.Should().Be("AddTournamentTest");
             newtournament.Status.Should().Be("Open");
+            new Repository<Tournament>(new TestClient()).GetItem(newtournament.TournamentId).Name.Should().Be("AddTournamentTest");
         }
 
         [TestMethod]
@@ -61,14 +62,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         {
             //Arrange
             var newtournament = _listViewModel.AddTournament("DeleteTournamentTest");
-            var beforecount = _listViewModel.Tournaments.Count;
 
             //Act
             _listViewModel.DeleteTournament(newtournament.Id);
-            var aftercount = _listViewModel.Tournaments.Count;
 
             //Assert
-            aftercount.Should().Be(beforecount-1);
+            new Repository<Tournament>(new TestClient()).GetItem(newtournament.TournamentId).Should().BeNull();
         }
 
         [TestMethod]

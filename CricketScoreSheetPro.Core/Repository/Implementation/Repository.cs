@@ -15,14 +15,16 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
 
         public Repository(IClient client)
         {
-            Database = client.GetDatabase();
+            if (client == null) throw new ArgumentNullException("Database client is not set.");
+            Database = client.GetDatabase() ?? throw new ArgumentNullException("Database is not set.");
             UUID = client.GetUUID();
+            if(string.IsNullOrEmpty(UUID)) throw new ArgumentException("UUID is not set.");
             GenerateViews();
         }
 
         public virtual T Create(Dictionary<string, object> newproperty)
         {
-            if (newproperty == null) throw new ArgumentNullException($"Object to create is null");
+            if (newproperty == null) throw new ArgumentNullException("New property to be added is empty.");
             newproperty.Add("uuid", UUID);
             var document = Database.CreateDocument();
             Function.UpdateGenericObjectProperty(newproperty, document.Id);
@@ -46,6 +48,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         public virtual T GetItem(string id)
         {
             var document = Database.GetExistingDocument(id);
+            if (document == null) return null;
             var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
             return result;
         }
@@ -90,7 +93,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         }
 
         private void GenerateViews()
-        {
+        {            
             var userlist = Database.GetView(typeof(T).Name);
             userlist.SetMap((doc, emit) =>
             {
