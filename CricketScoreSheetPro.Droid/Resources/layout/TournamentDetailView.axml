@@ -7,84 +7,290 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="50dp"
-       android:orientation="horizontal"
-       android:weightSum="100">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="20"
+            android:text="@string/NameHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/NameValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:gravity="center"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:clickable="true"
+            android:background="#22F51F8B"/>
+    </LinearLayout>
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="20"
+            android:text="@string/SponsorHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/SponsorValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:gravity="center"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"             
+            android:clickable="true"
+            android:background="#22F51F8B"/>
+    </LinearLayout>
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="20"
+            android:text="@string/StatusHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/StatusValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:gravity="center"
+            android:textSize="@dimen/abc_action_bar_content_inset_material" 
+            android:clickable="true"
+            android:background="#22F51F8B"/>
+    </LinearLayout>
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="20"
+            android:text="@string/StartDateHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/StartDateValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:gravity="center"
+            android:textSize="@dimen/abc_action_bar_content_inset_material" 
+            android:clickable="true"
+            android:background="#22F51F8B"/>
+    </LinearLayout>
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="20"
+            android:text="@string/EntryFeeHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/EntryFeeValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:gravity="center"
+            android:textSize="@dimen/abc_action_bar_content_inset_material" 
+            android:clickable="true"
+            android:background="#22F51F8B"/>
+    </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="horizontal"
+    android:weightSum="100">
     <TextView
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:text="@string/NameHeader"
-        android:layout_weight="20"/>
-    <TextView
-        android:id="@+id/NameValue"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="80"/>
+        android:layout_weight="20"
+        android:text="@string/PrizesHeader"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:gravity="center_vertical" />
+    <LinearLayout
+      android:id="@+id/PrizeListValue"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="80"
+      android:orientation="vertical"
+      android:background="#22F51F8B">
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Winner : $100"
+        android:clickable="true"/>
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Runner : $50"
+        android:clickable="true"/>
+    </LinearLayout>
   </LinearLayout>
   <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="50dp"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="15dp"
+     android:layout_marginTop="5dp"
+     android:layout_marginRight="5dp"
      android:orientation="horizontal"
      android:weightSum="100">
     <TextView
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:text="@string/SponsorHeader"
-        android:layout_weight="20"/>
-    <TextView
-        android:id="@+id/SponsorValue"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="80"/>
+        android:layout_weight="20"
+        android:text="@string/FacilitiesHeader"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:gravity="center_vertical" />
+    <LinearLayout
+      android:id="@+id/FacilityListValue"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="80"
+      android:orientation="vertical"
+      android:background="#22F51F8B">
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Water"
+        android:clickable="true"/>
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Drinks"
+        android:clickable="true"/>
+    </LinearLayout>
   </LinearLayout>
   <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="50dp"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="15dp"
+     android:layout_marginTop="5dp"
+     android:layout_marginRight="5dp"
      android:orientation="horizontal"
      android:weightSum="100">
     <TextView
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:text="@string/StatusHeader"
-        android:layout_weight="20"/>
-    <TextView
-        android:id="@+id/StatusValue"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="80"/>
+        android:layout_weight="20"
+        android:text="@string/VenuesHeader"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:gravity="center_vertical" />
+    <LinearLayout
+      android:id="@+id/VenueListValue"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="80"
+      android:orientation="vertical"
+      android:background="#22F51F8B">
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Short Pump Middle school"
+        android:clickable="true"/>
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Richmond, VA"
+        android:clickable="true"/>
+    </LinearLayout>
   </LinearLayout>
   <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="50dp"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="15dp"
+     android:layout_marginTop="5dp"
+     android:layout_marginRight="5dp"
      android:orientation="horizontal"
      android:weightSum="100">
     <TextView
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:text="@string/StartDateHeader"
-        android:layout_weight="20"/>
-    <TextView
-        android:id="@+id/StartDateValue"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="80"/>
+        android:layout_weight="20"
+        android:text="@string/TeamsHeader"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:gravity="center_vertical" />
+    <LinearLayout
+      android:id="@+id/TeamListValue"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="80"
+      android:orientation="vertical"
+      android:background="#22F51F8B">
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Chennai Super Kings"
+        android:clickable="true"/>
+      <TextView
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/abc_action_bar_content_inset_material"
+        android:text="Royal Challengers"
+        android:clickable="true"/>
+    </LinearLayout>
   </LinearLayout>
-  <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="50dp"
-     android:orientation="horizontal"
-     android:weightSum="100">
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:text="@string/EntryFeeHeader"
-        android:layout_weight="20"/>
-    <TextView
-        android:id="@+id/EntryFeeValue"
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="80"/>
-  </LinearLayout>
-  
+
 </LinearLayout>

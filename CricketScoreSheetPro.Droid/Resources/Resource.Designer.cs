@@ -2367,11 +2367,17 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070034
 			public const int FUNCTION = 2131165236;
 			
+			// aapt resource value: 0x7f0700b9
+			public const int FacilityListValue = 2131165369;
+			
 			// aapt resource value: 0x7f070035
 			public const int META = 2131165237;
 			
 			// aapt resource value: 0x7f0700b3
 			public const int NameValue = 2131165363;
+			
+			// aapt resource value: 0x7f0700b8
+			public const int PrizeListValue = 2131165368;
 			
 			// aapt resource value: 0x7f070036
 			public const int SHIFT = 2131165238;
@@ -2387,6 +2393,12 @@ namespace CricketScoreSheetPro.Droid
 			
 			// aapt resource value: 0x7f0700b5
 			public const int StatusValue = 2131165365;
+			
+			// aapt resource value: 0x7f0700bb
+			public const int TeamListValue = 2131165371;
+			
+			// aapt resource value: 0x7f0700ba
+			public const int VenueListValue = 2131165370;
 			
 			// aapt resource value: 0x7f0700a2
 			public const int action0 = 2131165346;
@@ -2529,8 +2541,8 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070060
 			public const int default_activity_button = 2131165280;
 			
-			// aapt resource value: 0x7f0700ba
-			public const int deletetournament = 2131165370;
+			// aapt resource value: 0x7f0700be
+			public const int deletetournament = 2131165374;
 			
 			// aapt resource value: 0x7f070090
 			public const int design_bottom_sheet = 2131165328;
@@ -2589,8 +2601,8 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070054
 			public const int @fixed = 2131165268;
 			
-			// aapt resource value: 0x7f0700bd
-			public const int floating_action_button_fab_with_listview = 2131165373;
+			// aapt resource value: 0x7f0700c1
+			public const int floating_action_button_fab_with_listview = 2131165377;
 			
 			// aapt resource value: 0x7f070058
 			public const int forever = 2131165272;
@@ -2598,8 +2610,8 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f07000a
 			public const int ghost_view = 2131165194;
 			
-			// aapt resource value: 0x7f0700c1
-			public const int help = 2131165377;
+			// aapt resource value: 0x7f0700c5
+			public const int help = 2131165381;
 			
 			// aapt resource value: 0x7f070005
 			public const int home = 2131165189;
@@ -2649,8 +2661,8 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070061
 			public const int list_item = 2131165281;
 			
-			// aapt resource value: 0x7f0700bf
-			public const int masked = 2131165375;
+			// aapt resource value: 0x7f0700c3
+			public const int masked = 2131165379;
 			
 			// aapt resource value: 0x7f0700a5
 			public const int media_actions = 2131165349;
@@ -2667,29 +2679,29 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070028
 			public const int multiply = 2131165224;
 			
-			// aapt resource value: 0x7f0700c7
-			public const int nav_batsmanstatistics = 2131165383;
+			// aapt resource value: 0x7f0700cb
+			public const int nav_batsmanstatistics = 2131165387;
 			
-			// aapt resource value: 0x7f0700c8
-			public const int nav_bowlerstatistics = 2131165384;
+			// aapt resource value: 0x7f0700cc
+			public const int nav_bowlerstatistics = 2131165388;
 			
-			// aapt resource value: 0x7f0700c9
-			public const int nav_fielderstatistics = 2131165385;
-			
-			// aapt resource value: 0x7f0700c2
-			public const int nav_home = 2131165378;
-			
-			// aapt resource value: 0x7f0700c5
-			public const int nav_matches = 2131165381;
-			
-			// aapt resource value: 0x7f0700c4
-			public const int nav_teams = 2131165380;
+			// aapt resource value: 0x7f0700cd
+			public const int nav_fielderstatistics = 2131165389;
 			
 			// aapt resource value: 0x7f0700c6
-			public const int nav_teamstatistics = 2131165382;
+			public const int nav_home = 2131165382;
 			
-			// aapt resource value: 0x7f0700c3
-			public const int nav_tournaments = 2131165379;
+			// aapt resource value: 0x7f0700c9
+			public const int nav_matches = 2131165385;
+			
+			// aapt resource value: 0x7f0700c8
+			public const int nav_teams = 2131165384;
+			
+			// aapt resource value: 0x7f0700ca
+			public const int nav_teamstatistics = 2131165386;
+			
+			// aapt resource value: 0x7f0700c7
+			public const int nav_tournaments = 2131165383;
 			
 			// aapt resource value: 0x7f070093
 			public const int navigation_header_container = 2131165331;
@@ -2775,11 +2787,11 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070055
 			public const int scrollable = 2131165269;
 			
-			// aapt resource value: 0x7f0700c0
-			public const int searchText = 2131165376;
+			// aapt resource value: 0x7f0700c4
+			public const int searchText = 2131165380;
 			
-			// aapt resource value: 0x7f0700bb
-			public const int searchTournament = 2131165371;
+			// aapt resource value: 0x7f0700bf
+			public const int searchTournament = 2131165375;
 			
 			// aapt resource value: 0x7f070080
 			public const int search_badge = 2131165312;
@@ -2916,14 +2928,14 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f07008f
 			public const int touch_outside = 2131165327;
 			
-			// aapt resource value: 0x7f0700b8
-			public const int tournamentname = 2131165368;
-			
 			// aapt resource value: 0x7f0700bc
-			public const int tournamentsrecyclerview = 2131165372;
+			public const int tournamentname = 2131165372;
 			
-			// aapt resource value: 0x7f0700b9
-			public const int tournamentstatus = 2131165369;
+			// aapt resource value: 0x7f0700c0
+			public const int tournamentsrecyclerview = 2131165376;
+			
+			// aapt resource value: 0x7f0700bd
+			public const int tournamentstatus = 2131165373;
 			
 			// aapt resource value: 0x7f07000f
 			public const int transition_current_scene = 2131165199;
@@ -2952,8 +2964,8 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070016
 			public const int view_offset_helper = 2131165206;
 			
-			// aapt resource value: 0x7f0700be
-			public const int visible = 2131165374;
+			// aapt resource value: 0x7f0700c2
+			public const int visible = 2131165378;
 			
 			// aapt resource value: 0x7f07003c
 			public const int withText = 2131165244;
