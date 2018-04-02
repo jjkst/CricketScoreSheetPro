@@ -48,6 +48,18 @@ namespace CricketScoreSheetPro.Droid.Activity
             Prize = (TextView)FindViewById(Resource.Id.PrizeListValue);
             Prize.Click += IncludeExcludeList;
 
+            var facilitylayout  = (Button)FindViewById(Resource.Id.addfacilityitem);
+            facilitylayout.Click += AddItemInList;
+        }
+
+        private void AddItemInList(object sender, EventArgs e)
+        {
+            View view = LayoutInflater.From(this).Inflate(Resource.Layout.EditList, null);
+            TextView facility = (TextView)view.FindViewById(Resource.Id.facilitylistvalue);
+            Button deletefacility = (Button)view.FindViewById(Resource.Id.deletefacilityitem);
+
+            LinearLayout ll = (LinearLayout)FindViewById(Resource.Id.FacilityList);
+            ll.AddView(view);
         }
 
         private void IncludeExcludeList(object sender, EventArgs e)

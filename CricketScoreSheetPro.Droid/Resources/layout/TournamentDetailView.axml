@@ -191,31 +191,7 @@
         android:layout_height="30dp"
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:background="@drawable/buttonstyle" />
-      <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:weightSum="100"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:layout_margin="5dp">
-        <TextView
-          android:id="@+id/facilitylistvalue"
-          android:layout_height="match_parent"
-          android:layout_width="0dp"
-          android:layout_weight="90"
-          android:gravity="center"
-          android:textSize="@dimen/abc_action_bar_content_inset_material"
-          android:text="Water"/>
-        <Button
-            android:id="@+id/deletefacilityitem"
-            android:layout_height="24dp"
-            android:layout_width="24dp"
-            android:layout_weight="2"
-            android:scaleType="center"
-            android:layout_gravity="center|right"
-            android:background="@drawable/action_delete" />
-      </LinearLayout>
+        android:background="@drawable/buttonstyle"/>      
     </LinearLayout>
   </LinearLayout>
   <LinearLayout
