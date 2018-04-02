@@ -150,9 +150,14 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\NavigationMenu.axml" />
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
-    <AndroidResource Include="Resources\layout\TournamentDetailView.axml" />
+    <AndroidResource Include="Resources\layout\TournamentDetailView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\TournamentRow.axml" />
     <AndroidResource Include="Resources\layout\TournamentsView.axml" />
+    <AndroidResource Include="Resources\layout\EditList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -247,6 +252,9 @@
       <Project>{9cb6b988-71eb-4047-94a0-828fc3654258}</Project>
       <Name>CricketScoreSheetPro.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\action_add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />

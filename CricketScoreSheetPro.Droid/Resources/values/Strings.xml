@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ApplicationName">Cricket Score Sheet</string>
-	
+  <string name="ApplicationName">Cricket Score Sheet</string>
+
+  <string name="IncludeList">Include</string>
+  <string name="ExcludeList">Exclude</string>
+  
 	<string name="TournamentFragment">Tournaments</string>
 	<string name="TeamFragment">Teams</string>
 	<string name="MatchFragment">Matches</string>
@@ -19,7 +22,7 @@
 	<string name="PrizesHeader">Prize(s)</string>
 	<string name="FacilitiesHeader">Facilities</string>
 	<string name="VenuesHeader">Venues</string>
-	<string name="TeamsHeader">Teams</string>
+	<string name="TeamsHeader">Teams</string>  
 	
 	<string name="CompletedMatches">Completed Matches</string>
 	<string name="SavedMatches">Saved Matches</string>

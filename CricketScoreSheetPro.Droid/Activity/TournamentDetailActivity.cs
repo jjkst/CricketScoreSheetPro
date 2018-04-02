@@ -25,43 +25,102 @@ namespace CricketScoreSheetPro.Droid.Activity
         private TextView StartDate { get; set; }
         private TextView EntryFee { get; set; }
 
+        private TextView Prize { get; set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             var tournamentId = Intent.GetStringExtra("TournamentId");
             ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
 
-            Name = (TextView)FindViewById(Resource.Id.NameValue);
-            Name.Click += EditTournamentDetail;
+            Name = (TextView)FindViewById(Resource.Id.NameValue);            
             Sponsor = (TextView)FindViewById(Resource.Id.SponsorValue);
             Status = (TextView)FindViewById(Resource.Id.StatusValue);
             StartDate = (TextView)FindViewById(Resource.Id.StartDateValue);
             EntryFee = (TextView)FindViewById(Resource.Id.EntryFeeValue);
+
+            Name.Click += EditTournamentDetail;
+            Sponsor.Click += EditTournamentDetail;
+            Status.Click += EditTournamentDetail;
+            StartDate.Click += EditTournamentDetail;
+            EntryFee.Click += EditTournamentDetail;
+
+            Prize = (TextView)FindViewById(Resource.Id.PrizeListValue);
+            Prize.Click += IncludeExcludeList;
+
+        }
+
+        private void IncludeExcludeList(object sender, EventArgs e)
+        {
+            AlertDialog.Builder editListDialog = new AlertDialog.Builder(this);
+            editListDialog.SetView(Resource.Layout.EditList);
+
+            editListDialog.SetPositiveButton("Save", (senderAlert, args) => {
+                Toast.MakeText(this, "Saved.", ToastLength.Short).Show();
+            });
+
+            editListDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
+                Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
+            });
+
+            editListDialog.Show();
         }
 
         private void EditTournamentDetail(object sender, EventArgs e)
         {
-            //if(sender.GetType().GetProperty("Id").GetValue() == Resource.Id.NameValue)
-            //{
-            //
-            //}
             AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
-            inputDialog.SetTitle("Add Tournament");
 
-            EditText userInput = new EditText(this)
+            TextView editText = (TextView)sender;
+            string hint = null;
+            switch (editText.Id)
             {
-                Hint = "Enter Tournament Name",
-                Top = 5,
-                Focusable = true,
-                ShowSoftInputOnFocus = true
-            };
-            inputDialog.SetView(userInput);
+                case Resource.Id.NameValue:
+                    hint = "Edit name";
+                    break;
+                case Resource.Id.SponsorValue:
+                    hint = "Edit sponsor";
+                    break;
+                case Resource.Id.StatusValue:
+                    hint = "Edit status";
+                    break;
+                case Resource.Id.StartDateValue:
+                    hint = "Edit start date";
+                    break;
+                case Resource.Id.EntryFeeValue:
+                    hint = "Edit entry fee";
+                    break;
+            }
 
-            inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
-                var detailActivity = new Intent(this, typeof(TournamentDetailActivity));
-               // detailActivity.PutExtra("TournamentId", newtournament.Id);
-                StartActivity(detailActivity);
-            });
+            if (editText.Id == Resource.Id.StartDateValue)
+            {
+                DatePicker dp = new DatePicker(this)
+                {
+                    Top = 5,
+                    Focusable = true,   
+                    DateTime = DateTime.Today
+                };
+                inputDialog.SetView(dp);
+                inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
+                    editText.Text = dp.DateTime.ToShortDateString();
+                    Toast.MakeText(this, "Saved.", ToastLength.Short).Show();
+                });
+            }
+            else
+            { 
+                EditText userInput = new EditText(this)
+                {
+                    Hint = hint,
+                    Top = 10,
+                    Focusable = true,
+                    ShowSoftInputOnFocus = true
+                };
+                inputDialog.SetView(userInput);
+                inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
+                    editText.Text = userInput.Text;
+                    Toast.MakeText(this, "Saved.", ToastLength.Short).Show();
+                });
+            }
+
             inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
                 Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
             });
