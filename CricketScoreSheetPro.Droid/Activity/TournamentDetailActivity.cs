@@ -30,11 +30,42 @@ namespace CricketScoreSheetPro.Droid.Activity
             base.OnCreate(savedInstanceState);
             var tournamentId = Intent.GetStringExtra("TournamentId");
             ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
+
             Name = (TextView)FindViewById(Resource.Id.NameValue);
+            Name.Click += EditTournamentDetail;
             Sponsor = (TextView)FindViewById(Resource.Id.SponsorValue);
             Status = (TextView)FindViewById(Resource.Id.StatusValue);
             StartDate = (TextView)FindViewById(Resource.Id.StartDateValue);
             EntryFee = (TextView)FindViewById(Resource.Id.EntryFeeValue);
+        }
+
+        private void EditTournamentDetail(object sender, EventArgs e)
+        {
+            //if(sender.GetType().GetProperty("Id").GetValue() == Resource.Id.NameValue)
+            //{
+            //
+            //}
+            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
+            inputDialog.SetTitle("Add Tournament");
+
+            EditText userInput = new EditText(this)
+            {
+                Hint = "Enter Tournament Name",
+                Top = 5,
+                Focusable = true,
+                ShowSoftInputOnFocus = true
+            };
+            inputDialog.SetView(userInput);
+
+            inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
+                var detailActivity = new Intent(this, typeof(TournamentDetailActivity));
+               // detailActivity.PutExtra("TournamentId", newtournament.Id);
+                StartActivity(detailActivity);
+            });
+            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
+                Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
+            });
+            inputDialog.Show();
         }
 
         protected override void OnResume()
