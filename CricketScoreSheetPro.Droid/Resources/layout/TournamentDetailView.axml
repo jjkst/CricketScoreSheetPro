@@ -143,7 +143,6 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
     android:orientation="horizontal"
-    android:minHeight ="50dp"
     android:weightSum="100">
     <TextView
         android:layout_height="match_parent"
@@ -153,15 +152,22 @@
         android:textStyle="bold"
         android:textSize="@dimen/abc_action_bar_content_inset_material"
         android:gravity="center_vertical" />
-    <TextView
-        android:id="@+id/PrizeListValue"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="80"
-        android:gravity="center"
-        android:textSize="@dimen/abc_action_bar_content_inset_material" 
-        android:clickable="true"
-        android:background="#22F51F8B"/>
+    <LinearLayout
+      android:id="@+id/prizelist"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="80"
+      android:orientation="vertical"
+      android:background="#22F51F8B">
+      <Button
+        android:id="@+id/addprizeitem"
+        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:text="Add Prize"
+        android:textAlignment="center"
+        android:background="@drawable/buttonstyle"/>
+    </LinearLayout>
   </LinearLayout>
   <LinearLayout
      android:layout_width="match_parent"
@@ -180,7 +186,7 @@
         android:textSize="@dimen/abc_action_bar_content_inset_material"
         android:gravity="center_vertical" />
     <LinearLayout
-      android:id="@+id/FacilityList"
+      android:id="@+id/facilitylist"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="80"
@@ -188,9 +194,11 @@
       android:background="#22F51F8B">
       <Button
         android:id="@+id/addfacilityitem"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:layout_width="match_parent"
         android:layout_gravity="center"
+        android:text="Add Facility"
+        android:textAlignment="center"
         android:background="@drawable/buttonstyle"/>      
     </LinearLayout>
   </LinearLayout>
@@ -211,26 +219,20 @@
         android:textSize="@dimen/abc_action_bar_content_inset_material"
         android:gravity="center_vertical" />
     <LinearLayout
-      android:id="@+id/VenueListValue"
+      android:id="@+id/venuelist"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="80"
       android:orientation="vertical"
       android:background="#22F51F8B">
-      <TextView
-        android:layout_height="30dp"
+      <Button
+        android:id="@+id/addvenueitem"
+        android:layout_height="35dp"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:text="Short Pump Middle school"
-        android:clickable="true"/>
-      <TextView
-        android:layout_height="30dp"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:text="Richmond, VA"
-        android:clickable="true"/>
+        android:layout_gravity="center"
+        android:text="Add Venue"
+        android:textAlignment="center"
+        android:background="@drawable/buttonstyle"/>
     </LinearLayout>
   </LinearLayout>
   <LinearLayout
