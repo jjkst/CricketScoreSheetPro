@@ -4,8 +4,11 @@
           android:layout_height="50dp"
           android:weightSum="100"
           android:orientation="horizontal"
+          android:paddingTop="5dp"
           android:paddingLeft="5dp"
-          android:layout_margin="5dp">
+          android:paddingBottom="5p"
+          android:layout_margin="5dp"
+          android:background="#22F51F8B">
   <TextView
       android:id="@+id/itemvalue"
       android:layout_height="match_parent"

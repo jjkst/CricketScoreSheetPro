@@ -6,7 +6,14 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-  <LinearLayout
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">  
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -32,7 +39,7 @@
             android:clickable="true"
             android:background="#22F51F8B"/>
     </LinearLayout>
-  <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -58,7 +65,7 @@
             android:clickable="true"
             android:background="#22F51F8B"/>
     </LinearLayout>
-  <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -84,7 +91,7 @@
             android:clickable="true"
             android:background="#22F51F8B"/>
     </LinearLayout>
-  <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -110,7 +117,7 @@
             android:clickable="true"
             android:background="#22F51F8B"/>
     </LinearLayout>
-  <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
@@ -136,15 +143,15 @@
             android:clickable="true"
             android:background="#22F51F8B"/>
     </LinearLayout>
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="15dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="5dp"
-    android:orientation="horizontal"
-    android:weightSum="100">
-    <TextView
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+      <TextView
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="20"
@@ -152,127 +159,118 @@
         android:textStyle="bold"
         android:textSize="@dimen/abc_action_bar_content_inset_material"
         android:gravity="center_vertical" />
-    <LinearLayout
-      android:id="@+id/prizelist"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="80"
-      android:orientation="vertical"
-      android:background="#22F51F8B">
-      <Button
-        android:id="@+id/addprizeitem"
-        android:layout_height="35dp"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:text="Add Prize"
-        android:textAlignment="center"
-        android:background="@drawable/buttonstyle"/>
-    </LinearLayout>
-  </LinearLayout>
-  <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginLeft="15dp"
-     android:layout_marginTop="5dp"
-     android:layout_marginRight="5dp"
-     android:orientation="horizontal"
-     android:weightSum="100">
-    <TextView
-        android:layout_height="match_parent"
+      <LinearLayout
+        android:id="@+id/prizelist"
         android:layout_width="0dp"
-        android:layout_weight="20"
-        android:text="@string/FacilitiesHeader"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:gravity="center_vertical" />
-    <LinearLayout
-      android:id="@+id/facilitylist"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="80"
-      android:orientation="vertical"
-      android:background="#22F51F8B">
-      <Button
-        android:id="@+id/addfacilityitem"
-        android:layout_height="35dp"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:text="Add Facility"
-        android:textAlignment="center"
-        android:background="@drawable/buttonstyle"/>      
+        android:layout_height="wrap_content"
+        android:layout_weight="80"
+        android:orientation="vertical">
+        <Button
+          android:id="@+id/addprizeitem"
+          android:layout_height="40dp"
+          android:layout_width="match_parent"
+          android:layout_gravity="center"
+          android:text="Add Prize"
+          android:textAlignment="center"
+          android:background="@drawable/buttonstyle"/>
+      </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
-  <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginLeft="15dp"
-     android:layout_marginTop="5dp"
-     android:layout_marginRight="5dp"
-     android:orientation="horizontal"
-     android:weightSum="100">
-    <TextView
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="20"
-        android:text="@string/VenuesHeader"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:gravity="center_vertical" />
-    <LinearLayout
-      android:id="@+id/venuelist"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="80"
-      android:orientation="vertical"
-      android:background="#22F51F8B">
-      <Button
-        android:id="@+id/addvenueitem"
-        android:layout_height="35dp"
+      <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginLeft="15dp"
+       android:layout_marginTop="5dp"
+       android:layout_marginRight="5dp"
+       android:orientation="horizontal"
+       android:weightSum="100">
+       <TextView
+          android:layout_height="match_parent"
+          android:layout_width="0dp"
+          android:layout_weight="20"
+          android:text="@string/FacilitiesHeader"
+          android:textStyle="bold"
+          android:textSize="@dimen/abc_action_bar_content_inset_material"
+          android:gravity="center_vertical" />
+       <LinearLayout
+          android:id="@+id/facilitylist"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="80"
+          android:orientation="vertical">
+          <Button
+            android:id="@+id/addfacilityitem"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:text="Add Facility"
+            android:textAlignment="center"
+            android:background="@drawable/buttonstyle"/>      
+        </LinearLayout>
+      </LinearLayout>
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:text="Add Venue"
-        android:textAlignment="center"
-        android:background="@drawable/buttonstyle"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+          android:layout_height="match_parent"
+          android:layout_width="0dp"
+          android:layout_weight="20"
+          android:text="@string/VenuesHeader"
+          android:textStyle="bold"
+          android:textSize="@dimen/abc_action_bar_content_inset_material"
+          android:gravity="center_vertical" />
+        <LinearLayout
+          android:id="@+id/venuelist"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="80"
+          android:orientation="vertical">
+          <Button
+          android:id="@+id/addvenueitem"
+          android:layout_height="40dp"
+          android:layout_width="match_parent"
+          android:layout_gravity="center"
+          android:text="Add Venue"
+          android:textAlignment="center"
+          android:background="@drawable/buttonstyle"/>
+        </LinearLayout>
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+          android:layout_height="match_parent"
+          android:layout_width="0dp"
+          android:layout_weight="20"
+          android:text="@string/TeamsHeader"
+          android:textStyle="bold"
+          android:textSize="@dimen/abc_action_bar_content_inset_material"
+          android:gravity="center_vertical" />
+        <LinearLayout
+          android:id="@+id/teamlist"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="80"
+          android:orientation="vertical">
+          <Button
+            android:id="@+id/includeteam"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:text="Include Team"
+            android:textAlignment="center"
+            android:background="@drawable/buttonstyle"/>
+        </LinearLayout>
+      </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
-  <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginLeft="15dp"
-     android:layout_marginTop="5dp"
-     android:layout_marginRight="5dp"
-     android:orientation="horizontal"
-     android:weightSum="100">
-    <TextView
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="20"
-        android:text="@string/TeamsHeader"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:gravity="center_vertical" />
-    <LinearLayout
-      android:id="@+id/TeamListValue"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="80"
-      android:orientation="vertical"
-      android:background="#22F51F8B">
-      <TextView
-        android:layout_height="30dp"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:text="Chennai Super Kings"
-        android:clickable="true"/>
-      <TextView
-        android:layout_height="30dp"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:text="Royal Challengers"
-        android:clickable="true"/>
-    </LinearLayout>
-  </LinearLayout>
-
+  </ScrollView>
 </LinearLayout>

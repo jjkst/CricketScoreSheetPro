@@ -52,92 +52,8 @@ namespace CricketScoreSheetPro.Droid.Activity
             addFacility.Click += AddItemInList;
             var addVenue = (Button)FindViewById(Resource.Id.addvenueitem);
             addVenue.Click += AddItemInList;
-        }
-
-        private void AddItemInList(object sender, EventArgs e)
-        {
-            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
-            Button addItem = (Button)sender;
-            string hint = null;
-            switch (addItem.Id)
-            { 
-                case Resource.Id.addprizeitem:
-                    hint = "Enter prize";
-                    break;
-                case Resource.Id.addfacilityitem:
-                    hint = "Enter facility";
-                    break;
-                case Resource.Id.addvenueitem:
-                    hint = "Enter venue";
-                    break;
-            }
-            EditText userInput = new EditText(this)
-            {
-                Hint = hint,
-                Top = 10,
-                Focusable = true,
-                ShowSoftInputOnFocus = true
-            };
-            inputDialog.SetView(userInput);
-            inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
-                View view = LayoutInflater.From(this).Inflate(Resource.Layout.EditList, null);
-                TextView item = (TextView)view.FindViewById(Resource.Id.itemvalue);
-                Button deleteitem = (Button)view.FindViewById(Resource.Id.deleteitem);                
-                switch (addItem.Id)
-                {
-                    case Resource.Id.addprizeitem:                        
-                        LinearLayout prizelist = (LinearLayout)FindViewById(Resource.Id.prizelist);
-                        prizelist.AddView(view);
-                        item.Text = userInput.Text;
-                        deleteitem.Click += (b, r) => DeleteItem(b, r, "prize", userInput.Text);
-                        _tournament.Prizes.Add(userInput.Text);
-                        break;
-                    case Resource.Id.addfacilityitem:
-                        LinearLayout facilitylist = (LinearLayout)FindViewById(Resource.Id.facilitylist);
-                        facilitylist.AddView(view);
-                        item.Text = userInput.Text;
-                        deleteitem.Click += (b, r) => DeleteItem(b, r, "facility", userInput.Text); 
-                        _tournament.Facilities.Add(userInput.Text);
-                        break;
-                    case Resource.Id.addvenueitem:
-                        LinearLayout venuelist = (LinearLayout)FindViewById(Resource.Id.venuelist);
-                        venuelist.AddView(view);
-                        item.Text = userInput.Text;
-                        deleteitem.Click += (b, r) => DeleteItem(b, r, "venue", userInput.Text);
-                        _tournament.Venues.Add(userInput.Text);
-                        break;
-                }
-                Toast.MakeText(this, "Saved.", ToastLength.Short).Show();
-            });
-
-
-            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
-                Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
-            });
-            inputDialog.Show();
-        }
-
-        private void DeleteItem(object sender, EventArgs e, string list, string value)
-        {
-            LinearLayout listlayout = null;
-            switch (list)
-            {
-                case "prize":
-                    listlayout = (LinearLayout)FindViewById(Resource.Id.prizelist);
-                    _tournament.Prizes.Remove(value);
-                    break;
-                case "facility":
-                    listlayout = (LinearLayout)FindViewById(Resource.Id.facilitylist);
-                    _tournament.Facilities.Remove(value);
-                    break;
-                case "venue":
-                    listlayout = (LinearLayout)FindViewById(Resource.Id.venuelist);
-                    _tournament.Venues.Remove(value);
-                    break;
-            }
-            var v = listlayout;
-
-            //listlayout.RemoveView(view);
+            var includeteam = (Button)FindViewById(Resource.Id.includeteam);
+            includeteam.Click += InclueTeam;
         }
 
         private void EditTournamentDetail(object sender, EventArgs e)
@@ -150,7 +66,7 @@ namespace CricketScoreSheetPro.Droid.Activity
                 DatePicker dp = new DatePicker(this)
                 {
                     Top = 5,
-                    Focusable = true,   
+                    Focusable = true,
                     DateTime = DateTime.Today
                 };
                 inputDialog.SetView(dp);
@@ -211,6 +127,103 @@ namespace CricketScoreSheetPro.Droid.Activity
                 Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
             });
             inputDialog.Show();
+        }
+
+        private void AddItemInList(object sender, EventArgs e)
+        {
+            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
+            Button addItem = (Button)sender;
+            string hint = null;
+            switch (addItem.Id)
+            {
+                case Resource.Id.addprizeitem:
+                    hint = "Enter prize";
+                    break;
+                case Resource.Id.addfacilityitem:
+                    hint = "Enter facility";
+                    break;
+                case Resource.Id.addvenueitem:
+                    hint = "Enter venue";
+                    break;
+            }
+            EditText userInput = new EditText(this)
+            {
+                Hint = hint,
+                Top = 10,
+                Focusable = true,
+                ShowSoftInputOnFocus = true
+            };
+            inputDialog.SetView(userInput);
+            inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
+                View view = LayoutInflater.From(this).Inflate(Resource.Layout.EditList, null);
+                view.Tag = userInput.Text;
+                TextView item = (TextView)view.FindViewById(Resource.Id.itemvalue);
+                Button deleteitem = (Button)view.FindViewById(Resource.Id.deleteitem);
+                switch (addItem.Id)
+                {
+                    case Resource.Id.addprizeitem:
+                        _tournament.Prizes.Add(userInput.Text);
+                        item.Text = userInput.Text;
+                        deleteitem.Click += (b, r) => DeleteItem(b, r, "prize", userInput.Text);
+                        LinearLayout prizelist = (LinearLayout)FindViewById(Resource.Id.prizelist);
+                        prizelist.AddView(view);
+                        break;
+                    case Resource.Id.addfacilityitem:
+                        _tournament.Facilities.Add(userInput.Text);
+                        item.Text = userInput.Text;
+                        deleteitem.Click += (b, r) => DeleteItem(b, r, "facility", userInput.Text);
+                        LinearLayout facilitylist = (LinearLayout)FindViewById(Resource.Id.facilitylist);
+                        facilitylist.AddView(view);
+                        break;
+                    case Resource.Id.addvenueitem:
+                        _tournament.Venues.Add(userInput.Text);
+                        item.Text = userInput.Text;
+                        deleteitem.Click += (b, r) => DeleteItem(b, r, "venue", userInput.Text);
+                        LinearLayout venuelist = (LinearLayout)FindViewById(Resource.Id.venuelist);
+                        venuelist.AddView(view);
+                        break;
+                }
+                Toast.MakeText(this, "Saved.", ToastLength.Short).Show();
+            });
+
+
+            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
+                Toast.MakeText(this, "Canceled.", ToastLength.Short).Show();
+            });
+            inputDialog.Show();
+        }
+
+        private void DeleteItem(object sender, EventArgs e, string list, string value)
+        {
+            LinearLayout listlayout = null;
+            switch (list)
+            {
+                case "prize":
+                    listlayout = (LinearLayout)FindViewById(Resource.Id.prizelist);
+                    _tournament.Prizes.Remove(value);
+                    listlayout.RemoveView(listlayout.FindViewWithTag(value));
+                    break;
+                case "facility":
+                    listlayout = (LinearLayout)FindViewById(Resource.Id.facilitylist);
+                    _tournament.Facilities.Remove(value);
+                    listlayout.RemoveView(listlayout.FindViewWithTag(value));
+                    break;
+                case "venue":
+                    listlayout = (LinearLayout)FindViewById(Resource.Id.venuelist);
+                    _tournament.Venues.Remove(value);
+                    listlayout.RemoveView(listlayout.FindViewWithTag(value));
+                    break;
+            }
+        }
+
+        private void InclueTeam(object sender, EventArgs e)
+        {
+            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
+            Spinner existingtea = new Spinner(this)
+            {
+                Top = 10,
+                Focusable = true,
+            };
         }
 
         protected override void OnResume()
