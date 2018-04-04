@@ -22,7 +22,6 @@ namespace CricketScoreSheetPro.Droid.Activity
     {
         protected override int GetLayoutResourceId => Resource.Layout.TournamentDetailView;
 
-        private Tournament _tournament;
         private TournamentViewModel ViewModel;
 
         private TextView Name;
@@ -78,14 +77,12 @@ namespace CricketScoreSheetPro.Droid.Activity
             FacilityRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
             //Set Venue
             VenueRecyclerView = FindViewById<RecyclerView>(Resource.Id.venuerecyclerview);
-            VenueRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
-
+            VenueRecyclerView.SetLayoutManager(new LinearLayoutManager(this));            
         }
 
         protected override void OnResume()
         {
             base.OnResume();
-            _tournament = new Tournament();
             Name.Text = ViewModel.Tournament.Name;
             Sponsor.Text = ViewModel.Tournament.Sponsor;
             Status.Text = ViewModel.Tournament.Status;
@@ -107,22 +104,22 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private void DeletePrize(object sender, string value)
         {
-            _tournament.Prizes.Remove(value);
-            PrizeAdapter.Refresh(_tournament.Prizes);
+            ViewModel.Tournament.Prizes.Remove(value);
+            PrizeAdapter.Refresh(ViewModel.Tournament.Prizes);
             PrizeRecyclerView.SetAdapter(PrizeAdapter);
         }
 
         private void DeleteFacility(object sender, string value)
         {
-            _tournament.Facilities.Remove(value);
-            FacilityAdapter.Refresh(_tournament.Facilities);
-            PrizeRecyclerView.SetAdapter(FacilityAdapter);
+            ViewModel.Tournament.Facilities.Remove(value);
+            FacilityAdapter.Refresh(ViewModel.Tournament.Facilities);
+            FacilityRecyclerView.SetAdapter(FacilityAdapter);
         }
 
         private void DeleteVenue(object sender, string value)
         {
-            _tournament.Prizes.Remove(value);
-            VenueAdapter.Refresh(_tournament.Venues);
+            ViewModel.Tournament.Venues.Remove(value);
+            VenueAdapter.Refresh(ViewModel.Tournament.Venues);
             VenueRecyclerView.SetAdapter(VenueAdapter);
         }
 
@@ -134,7 +131,7 @@ namespace CricketScoreSheetPro.Droid.Activity
             SelectedTextView = (TextView)sender;
             if (SelectedTextView.Id == Resource.Id.StartDateValue)
             {
-                DatePickerDialogFragment startdate = DatePickerDialogFragment.NewInstance(null);
+                DatePickerDialogFragment startdate = new DatePickerDialogFragment(this);
                 startdate.Show(ft, "EditTournamentDetail");
             }
             else
@@ -143,16 +140,16 @@ namespace CricketScoreSheetPro.Droid.Activity
                 switch (SelectedTextView.Id)
                 {
                     case Resource.Id.NameValue:
-                        tournamentDetailEdit = EditTextDialogFragment.NewInstance(null, title, "Edit name");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit name");
                         break;
                     case Resource.Id.SponsorValue:
-                        tournamentDetailEdit = EditTextDialogFragment.NewInstance(null, title, "Edit sponsor");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit sponsor");
                         break;
                     case Resource.Id.StatusValue:
-                        tournamentDetailEdit = EditTextDialogFragment.NewInstance(null, title, "Edit status");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit status");
                         break;
                     case Resource.Id.EntryFeeValue:
-                        tournamentDetailEdit = EditTextDialogFragment.NewInstance(null, title, "Edit entry fee");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit entry fee");
                         break;
                 }
                 tournamentDetailEdit.Show(ft, "EditTournamentDetail");
@@ -169,13 +166,13 @@ namespace CricketScoreSheetPro.Droid.Activity
             switch (AddItemButton.Id)
             {
                 case Resource.Id.addprizeitem:
-                    tournamentDetailEdit_list = EditTextDialogFragment.NewInstance(null, title, "Enter prize");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter prize");
                     break;
                 case Resource.Id.addfacilityitem:
-                    tournamentDetailEdit_list = EditTextDialogFragment.NewInstance(null, title, "Enter facility");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter facility");
                     break;
                 case Resource.Id.addvenueitem:
-                    tournamentDetailEdit_list = EditTextDialogFragment.NewInstance(null, title, "Enter venue");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter venue");
                     break;
             }
             tournamentDetailEdit_list.Show(ft, "EditTournamentDetail");
@@ -184,7 +181,7 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private void EditTournamentDetail_InclueTeam(object sender, EventArgs e)
         {
-            SpinnerDialogFragment includeTeamFragment = SpinnerDialogFragment.NewInstance(null, new List<string>() { { "JK" } });
+            SpinnerDialogFragment includeTeamFragment = new SpinnerDialogFragment(this, new List<string>() { { "JK" } });
             includeTeamFragment.Show(ClearPreviousFragments("InclueTeam"), "InclueTeam");
         }
 
@@ -203,7 +200,7 @@ namespace CricketScoreSheetPro.Droid.Activity
         public void OnSelectedDate(DateTime selectedDate)
         {
             SelectedTextView.Text = selectedDate.ToShortDateString();
-            _tournament.StartDate = selectedDate;
+            ViewModel.Tournament.StartDate = selectedDate;
         }
 
         public void OnEnteredText(string inputText)
@@ -213,18 +210,18 @@ namespace CricketScoreSheetPro.Droid.Activity
                 switch (AddItemButton.Id)
                 {
                     case Resource.Id.addprizeitem:
-                        _tournament.Prizes.Add(inputText);
-                        PrizeAdapter.Refresh(_tournament.Prizes);
+                        ViewModel.Tournament.Prizes.Add(inputText);
+                        PrizeAdapter.Refresh(ViewModel.Tournament.Prizes);
                         PrizeRecyclerView.SetAdapter(PrizeAdapter);
                         break;
                     case Resource.Id.addfacilityitem:
-                        _tournament.Facilities.Add(inputText);
-                        FacilityAdapter.Refresh(_tournament.Facilities);
+                        ViewModel.Tournament.Facilities.Add(inputText);
+                        FacilityAdapter.Refresh(ViewModel.Tournament.Facilities);
                         FacilityRecyclerView.SetAdapter(FacilityAdapter);
                         break;
                     case Resource.Id.addvenueitem:
-                        _tournament.Venues.Add(inputText);
-                        VenueAdapter.Refresh(_tournament.Venues);
+                        ViewModel.Tournament.Venues.Add(inputText);
+                        VenueAdapter.Refresh(ViewModel.Tournament.Venues);
                         VenueRecyclerView.SetAdapter(VenueAdapter);
                         break;
                 }
@@ -235,16 +232,16 @@ namespace CricketScoreSheetPro.Droid.Activity
                 switch (SelectedTextView.Id)
                 {
                     case Resource.Id.NameValue:
-                        _tournament.Name = inputText;
+                        ViewModel.Tournament.Name = inputText;
                         break;
                     case Resource.Id.SponsorValue:
-                        _tournament.Sponsor = inputText;
+                        ViewModel.Tournament.Sponsor = inputText;
                         break;
                     case Resource.Id.StatusValue:
-                        _tournament.Status = inputText;
+                        ViewModel.Tournament.Status = inputText;
                         break;
                     case Resource.Id.EntryFeeValue:
-                        _tournament.EntryFee = Convert.ToDecimal(inputText);
+                        ViewModel.Tournament.EntryFee = Convert.ToDecimal(inputText);
                         break;
                 }
             }
@@ -258,6 +255,19 @@ namespace CricketScoreSheetPro.Droid.Activity
                 ft.Remove(prev);
             ft.AddToBackStack(null);
             return ft;
-        } 
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {            
+            if (item.ItemId == Android.Resource.Id.Home)
+                OnBackPressed();
+            return base.OnOptionsItemSelected(item);            
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.UpdateTournament();
+            base.OnBackPressed();
+        }
     }
 }

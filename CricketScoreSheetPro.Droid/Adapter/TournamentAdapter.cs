@@ -50,7 +50,7 @@ namespace CricketScoreSheetPro.Droid.Adapter
 
         private void OnViewClick(int position)
         {
-            ItemViewClick?.Invoke(this, _tournaments[position].Id);
+            ItemViewClick?.Invoke(this, _tournaments[position].TournamentId);
         }
 
         private void OnDeleteClick(int position)

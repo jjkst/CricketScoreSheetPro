@@ -1,34 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
+using System;
 
 namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
 {
+    public interface ISelectedDateListener
+    {
+        void OnSelectedDate(DateTime selectedDate);
+    }
+
     public class DatePickerDialogFragment : DialogFragment
     {
-        private ISelectedDateListener callback;
+        private ISelectedDateListener _callback;
 
-        public interface ISelectedDateListener
+        public DatePickerDialogFragment (ISelectedDateListener callback)
         {
-            void OnSelectedDate(DateTime selectedDate);
-        }
-
-        public static DatePickerDialogFragment NewInstance(Bundle bundle)
-        {
-            DatePickerDialogFragment fragment = new DatePickerDialogFragment
-            {
-                Arguments = bundle
-            };
-            return fragment;
+            _callback = callback;
         }
 
         public override Dialog OnCreateDialog(Bundle savedInstanceState)
@@ -43,7 +31,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
             AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
             inputDialog.SetView(datepicker);
             inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
-                callback.OnSelectedDate(datepicker.DateTime);
+                _callback.OnSelectedDate(datepicker.DateTime);
                 Toast.MakeText(this.Activity, "Saved.", ToastLength.Short).Show();
             });
             inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {

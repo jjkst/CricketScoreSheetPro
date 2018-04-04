@@ -4,7 +4,6 @@ using CricketScoreSheetPro.Core.Repository.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CricketScoreSheetPro.Core.Repository.Implementation
 {
@@ -29,7 +28,8 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             var document = Database.CreateDocument();
             Function.UpdateGenericObjectProperty(newproperty, document.Id);
             document.PutProperties(newproperty);
-            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            var rawvalue = document.GetProperty("value");
+            var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
             return result;
         }
 
@@ -49,7 +49,8 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         {
             var document = Database.GetExistingDocument(id);
             if (document == null) return null;
-            var result = JsonConvert.DeserializeObject<T>(document.GetProperty("value").ToString());
+            var rawvalue = document.GetProperty("value");
+            var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
             return result;
         }
 
@@ -61,7 +62,11 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             var result = new List<T>();
             var rows = query.Run();
             foreach (var row in rows)
-                result.Add(JsonConvert.DeserializeObject<T>(row.Value.ToString()));
+            {
+                var rawvalue = row.Value;
+                result.Add(JsonConvert.DeserializeObject<T>(rawvalue.ToString()));
+            }
+                
             return result;
         }
 
@@ -70,11 +75,15 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             GenerateViewByProperty(propertyName, propertyValue);
             var query = Database.GetView("listbyproperty").CreateQuery();
             query.Descending = true;
+            var v = Database.CreateAllDocumentsQuery().Run();
 
             var result = new List<T>();
             var rows = query.Run();
             foreach (var row in rows)
-                result.Add(JsonConvert.DeserializeObject<T>(row.Value.ToString()));
+            {
+                var rawvalue = row.Value;
+                result.Add(JsonConvert.DeserializeObject<T>(rawvalue.ToString()));
+            }
             return result;
         }
 

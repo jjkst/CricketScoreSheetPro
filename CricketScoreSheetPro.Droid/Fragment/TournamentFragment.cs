@@ -33,10 +33,7 @@ namespace CricketScoreSheetPro.Droid
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = base.OnCreateView(inflater, container, savedInstanceState);
-            TournamentsAdapter = new TournamentAdapter(ViewModel.Tournaments);
-            TournamentsAdapter.ItemViewClick += OnItemViewClick;
-            TournamentsAdapter.ItemDeleteClick += OnItemDeleteClick;
-
+           
             FloatingActionButton addTournament = view.FindViewById<FloatingActionButton>(Resource.Id.floating_action_button_fab_with_listview);
             addTournament.Click += ShowAddTournamentDialog;
 
@@ -48,8 +45,16 @@ namespace CricketScoreSheetPro.Droid
             };
             TournamentsRecyclerView.AddOnScrollListener(onScrollListener);
             TournamentsRecyclerView.SetLayoutManager(layoutManager);           
-            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
             return view;
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+            TournamentsAdapter = new TournamentAdapter(ViewModel.Tournaments);
+            TournamentsAdapter.ItemViewClick += OnItemViewClick;
+            TournamentsAdapter.ItemDeleteClick += OnItemDeleteClick;
+            TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
 
         protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
@@ -73,9 +78,9 @@ namespace CricketScoreSheetPro.Droid
             StartActivity(detailActivity);
         }
 
-        private void OnItemDeleteClick(object sender, string tournamentId)
+        private void OnItemDeleteClick(object sender, string usertournamentId)
         {
-            ViewModel.DeleteTournament(tournamentId);
+            ViewModel.DeleteTournament(usertournamentId);
             TournamentsAdapter.RefreshTournaments(ViewModel.Tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
@@ -97,7 +102,7 @@ namespace CricketScoreSheetPro.Droid
             inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
                 var newtournament = ViewModel.AddTournament(userInput.Text);
                 var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
-                detailActivity.PutExtra("TournamentId", newtournament.Id);
+                detailActivity.PutExtra("TournamentId", newtournament.TournamentId);
                 StartActivity(detailActivity);
             });
             inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {

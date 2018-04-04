@@ -21,10 +21,9 @@ namespace CricketScoreSheetPro.Core.ViewModel
             return $"{Tournament.Id} {accessType}";
         }
 
-        public bool UpdateTournament(Tournament tournament)
+        public bool UpdateTournament()
         {
-            Tournament = tournament;
-            var updated = _tournamentService.UpdateTournament(tournament);
+            var updated = _tournamentService.UpdateTournament(Tournament);
             return updated;
         }
     }

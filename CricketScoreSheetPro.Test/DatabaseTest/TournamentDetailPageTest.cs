@@ -47,19 +47,17 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void UpdateTournament()
         {
             //Arrange
-            var tournamentdetail = _viewModel.Tournament;
-            tournamentdetail.Name = "UpdateTournamentName";
-            tournamentdetail.Status = "InProgress";
+            _viewModel.Tournament.Name = "UpdateTournamentName";
+            _viewModel.Tournament.Status = "InProgress";
 
             //Act
-            var updated = _viewModel.UpdateTournament(tournamentdetail);
+            var updated = _viewModel.UpdateTournament();
 
             //Assert
             updated.Should().BeTrue();
-            _viewModel.Tournament.Should().Be(tournamentdetail);
             var repo = new Repository<UserTournament>(new TestClient()).GetItem(UserTournamentId);
-            repo.Name.Should().Be(tournamentdetail.Name);
-            repo.Status.Should().Be(tournamentdetail.Status);
+            repo.Name.Should().Be("UpdateTournamentName");
+            repo.Status.Should().Be("InProgress");
         }
     }
 }

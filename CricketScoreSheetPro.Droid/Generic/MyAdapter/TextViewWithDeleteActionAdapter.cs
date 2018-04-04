@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
+﻿using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
 {
@@ -34,7 +28,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).
-                        Inflate(Resource.Layout.TournamentRow, parent, false);
+                        Inflate(Resource.Layout.TextViewWithDeleteActionRow, parent, false);
             return new TextViewWithDeleteActionViewHolder(itemView, OnDeleteClick);
         }
 
