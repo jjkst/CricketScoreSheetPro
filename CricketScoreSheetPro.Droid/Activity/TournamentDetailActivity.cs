@@ -11,11 +11,13 @@ using Android.Views;
 using Android.Widget;
 using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
+using static CricketScoreSheetPro.Droid.Generic.MyDialogFragment.SpinnerDialogFragment;
 
 namespace CricketScoreSheetPro.Droid.Activity
 {
     [Activity(Label = "Tournament Detail", Theme = "@style/MyTheme")]
-    public class TournamentDetailActivity : BaseActivity
+    public class TournamentDetailActivity : BaseActivity , ISelectedSpinnerItemListener
     {
         protected override int GetLayoutResourceId => Resource.Layout.TournamentDetailView;
 
@@ -218,12 +220,15 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private void InclueTeam(object sender, EventArgs e)
         {
-            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
-            Spinner existingtea = new Spinner(this)
-            {
-                Top = 10,
-                Focusable = true,
-            };
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag("dialog");
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+
+            // Create and show the dialog.
+            SpinnerDialogFragment includeTeamFragment = SpinnerDialogFragment.NewInstance(null, new List<string>() { { "JK" } });
+            includeTeamFragment.Show(ft, "dialog");
         }
 
         protected override void OnResume()
@@ -237,5 +242,17 @@ namespace CricketScoreSheetPro.Droid.Activity
             EntryFee.Text = "$" + ViewModel.Tournament.EntryFee;
         }
 
+        public void OnSelectSpinnerItem(string inputText)
+        {
+            View view = LayoutInflater.From(this).Inflate(Resource.Layout.EditList, null);
+            view.Tag = inputText;
+            TextView item = (TextView)view.FindViewById(Resource.Id.itemvalue);
+            item.Text = inputText;
+
+            Button deleteitem = (Button)view.FindViewById(Resource.Id.deleteitem);            
+            deleteitem.Click += (b, r) => DeleteItem(b, r, "prize", inputText);
+            LinearLayout teamlist = (LinearLayout)FindViewById(Resource.Id.teamlist);
+            teamlist.AddView(view);
+        }
     }
 }

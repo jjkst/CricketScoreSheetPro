@@ -133,6 +133,8 @@
     <Compile Include="Fragment\BaseFragment.cs" />
     <Compile Include="Fragment\HomeFragment.cs" />
     <Compile Include="Fragment\TournamentFragment.cs" />
+    <Compile Include="Generic\MyAdapter\SpinnerAdapter.cs" />
+    <Compile Include="Generic\MyDialogFragment\SpinnerDialogFragment.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -156,6 +158,12 @@
     <AndroidResource Include="Resources\layout\TournamentRow.axml" />
     <AndroidResource Include="Resources\layout\TournamentsView.axml" />
     <AndroidResource Include="Resources\layout\EditList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SpinnerDialogFragmentLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SpinnerTextViewRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -255,6 +263,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\action_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\titleBarStyle.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\spinnerStyle.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\action_share.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
