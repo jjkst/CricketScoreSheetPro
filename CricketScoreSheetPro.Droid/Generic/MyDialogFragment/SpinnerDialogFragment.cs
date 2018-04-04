@@ -1,33 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CricketScoreSheetPro.Droid.Generic.MyAdapter;
+using System;
+using System.Collections.Generic;
 
 namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
 {
     public class SpinnerDialogFragment : DialogFragment
     {
+        private ISelectedSpinnerItemListener callback;
+
         public interface ISelectedSpinnerItemListener
         {
             void OnSelectSpinnerItem(String inputText);
         }
 
-        static string[] _itemlist;
-
+        private static string[] _arrarylist;
         private Spinner spinner;
 
         public static SpinnerDialogFragment NewInstance(Bundle bundle, List<string> list)
         {
-            _itemlist = list.ToArray();
+            _arrarylist = list.ToArray();
             SpinnerDialogFragment fragment = new SpinnerDialogFragment
             {
                 Arguments = bundle
@@ -38,16 +33,14 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = inflater.Inflate(Resource.Layout.SpinnerDialogFragmentLayout, container, false);
-            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, _itemlist);
 
-            //Set list
+            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, _arrarylist);
             spinner = view.FindViewById<Spinner>(Resource.Id.spinnerlist);
             spinner.Adapter = adapter;
 
             Button save = view.FindViewById<Button>(Resource.Id.save);
             save.Click += delegate {
-                ISelectedSpinnerItemListener parent = (ISelectedSpinnerItemListener)this.Activity;
-                parent.OnSelectSpinnerItem(spinner.SelectedItem.ToString());
+                callback.OnSelectSpinnerItem(spinner.SelectedItem.ToString());
                 Dismiss();
                 Toast.MakeText(Activity, "Saved", ToastLength.Short).Show();
             };

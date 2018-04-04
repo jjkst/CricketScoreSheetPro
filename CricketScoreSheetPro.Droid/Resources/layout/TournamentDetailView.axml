@@ -173,6 +173,12 @@
           android:text="Add Prize"
           android:textAlignment="center"
           android:background="@drawable/buttonstyle"/>
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/prizerecyclerview"
+          android:scrollbars="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp" />
       </LinearLayout>
     </LinearLayout>
       <LinearLayout
@@ -204,7 +210,13 @@
             android:layout_gravity="center"
             android:text="Add Facility"
             android:textAlignment="center"
-            android:background="@drawable/buttonstyle"/>      
+            android:background="@drawable/buttonstyle"/>
+         <android.support.v7.widget.RecyclerView
+            android:id="@+id/facilityrecyclerview"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
         </LinearLayout>
       </LinearLayout>
       <LinearLayout
@@ -237,6 +249,12 @@
           android:text="Add Venue"
           android:textAlignment="center"
           android:background="@drawable/buttonstyle"/>
+          <android.support.v7.widget.RecyclerView
+            android:id="@+id/venuerecyclerview"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
         </LinearLayout>
       </LinearLayout>
       <LinearLayout
