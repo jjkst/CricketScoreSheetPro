@@ -1,298 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <include
+    android:id="@+id/toolbar"
+    layout="@layout/toolbar" />
     <ScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">  
-      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
+        android:layout_height="wrap_content"
+        android:orientation="vertical">  
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="20"
+            android:layout_weight="30"
+            android:gravity="center_vertical"             
             android:text="@string/NameHeader"
             android:textStyle="bold"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:gravity="center_vertical" />
-        <TextView
+            android:textSize="@dimen/abc_action_bar_content_inset_material"/>
+          <TextView
             android:id="@+id/NameValue"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="80"
-            android:gravity="center"
+            android:layout_weight="70"
+            android:gravity="center_vertical"
             android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:clickable="true"
-            android:background="#22F51F8B"/>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
+            android:textColor="@color/EditText"
+            android:clickable="true"/>
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_marginLeft="15dp"
+         android:layout_marginTop="5dp"
+         android:layout_marginRight="5dp"
+         android:orientation="horizontal"
+         android:weightSum="100">
+          <TextView
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="20"
-            android:text="@string/SponsorHeader"
-            android:textStyle="bold"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/SponsorValue"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="80"
-            android:gravity="center"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"             
-            android:clickable="true"
-            android:background="#22F51F8B"/>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="20"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
             android:text="@string/StatusHeader"
             android:textStyle="bold"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:gravity="center_vertical" />
-        <TextView
+            android:textSize="@dimen/abc_action_bar_content_inset_material"/>
+          <TextView
             android:id="@+id/StatusValue"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="80"
-            android:gravity="center"
-            android:textSize="@dimen/abc_action_bar_content_inset_material" 
-            android:clickable="true"
-            android:background="#22F51F8B"/>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textColor="@color/EditText"
+            android:clickable="true"/>
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="20"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
+            android:text="@string/SponsorHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"/>
+          <TextView
+            android:id="@+id/SponsorValue"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textColor="@color/EditText"
+            android:clickable="true"/>
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_marginLeft="15dp"
+         android:layout_marginTop="5dp"
+         android:layout_marginRight="5dp"
+         android:orientation="horizontal"
+         android:weightSum="100">
+          <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
             android:text="@string/StartDateHeader"
             android:textStyle="bold"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:gravity="center_vertical" />
-        <TextView
+            android:textSize="@dimen/abc_action_bar_content_inset_material"/>
+          <TextView
             android:id="@+id/StartDateValue"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="80"
-            android:gravity="center"
-            android:textSize="@dimen/abc_action_bar_content_inset_material" 
-            android:clickable="true"
-            android:background="#22F51F8B"/>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textColor="@color/EditText"
+            android:clickable="true"/>
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_marginLeft="15dp"
+         android:layout_marginTop="5dp"
+         android:layout_marginRight="5dp"
+         android:orientation="horizontal"
+         android:weightSum="100">
+          <TextView
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="20"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
             android:text="@string/EntryFeeHeader"
             android:textStyle="bold"
-            android:textSize="@dimen/abc_action_bar_content_inset_material"
-            android:gravity="center_vertical" />
-        <TextView
+            android:textSize="@dimen/abc_action_bar_content_inset_material"/>
+          <TextView
             android:id="@+id/EntryFeeValue"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="80"
-            android:gravity="center"
-            android:textSize="@dimen/abc_action_bar_content_inset_material" 
-            android:clickable="true"
-            android:background="#22F51F8B"/>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-      <TextView
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="20"
-        android:text="@string/PrizesHeader"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_action_bar_content_inset_material"
-        android:gravity="center_vertical" />
-      <LinearLayout
-        android:id="@+id/prizelist"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="80"
-        android:orientation="vertical">
-        <Button
-          android:id="@+id/addprizeitem"
-          android:layout_height="40dp"
-          android:layout_width="match_parent"
-          android:layout_gravity="center"
-          android:text="Add Prize"
-          android:textAlignment="center"
-          android:background="@drawable/buttonstyle"/>
-        <android.support.v7.widget.RecyclerView
-          android:id="@+id/prizerecyclerview"
-          android:scrollbars="vertical"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp" />
-      </LinearLayout>
-    </LinearLayout>
-      <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginLeft="15dp"
-       android:layout_marginTop="5dp"
-       android:layout_marginRight="5dp"
-       android:orientation="horizontal"
-       android:weightSum="100">
-       <TextView
-          android:layout_height="match_parent"
-          android:layout_width="0dp"
-          android:layout_weight="20"
-          android:text="@string/FacilitiesHeader"
-          android:textStyle="bold"
-          android:textSize="@dimen/abc_action_bar_content_inset_material"
-          android:gravity="center_vertical" />
-       <LinearLayout
-          android:id="@+id/facilitylist"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="80"
-          android:orientation="vertical">
-          <Button
-            android:id="@+id/addfacilityitem"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:text="Add Facility"
-            android:textAlignment="center"
-            android:background="@drawable/buttonstyle"/>
-         <android.support.v7.widget.RecyclerView
-            android:id="@+id/facilityrecyclerview"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:textColor="@color/EditText"
+            android:clickable="true"/>
         </LinearLayout>
-      </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
-          android:layout_height="match_parent"
-          android:layout_width="0dp"
-          android:layout_weight="20"
-          android:text="@string/VenuesHeader"
-          android:textStyle="bold"
-          android:textSize="@dimen/abc_action_bar_content_inset_material"
-          android:gravity="center_vertical" />
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
         <LinearLayout
-          android:id="@+id/venuelist"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="80"
-          android:orientation="vertical">
-          <Button
-          android:id="@+id/addvenueitem"
-          android:layout_height="40dp"
           android:layout_width="match_parent"
-          android:layout_gravity="center"
-          android:text="Add Venue"
-          android:textAlignment="center"
-          android:background="@drawable/buttonstyle"/>
-          <android.support.v7.widget.RecyclerView
-            android:id="@+id/venuerecyclerview"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp" />
-        </LinearLayout>
-      </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <TextView
-          android:layout_height="match_parent"
-          android:layout_width="0dp"
-          android:layout_weight="20"
-          android:text="@string/TeamsHeader"
-          android:textStyle="bold"
-          android:textSize="@dimen/abc_action_bar_content_inset_material"
-          android:gravity="center_vertical" />
-        <LinearLayout
-          android:id="@+id/teamlist"
-          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="80"
-          android:orientation="vertical">
-          <Button
-            android:id="@+id/includeteam"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:text="Include Team"
-            android:textAlignment="center"
-            android:background="@drawable/buttonstyle"/>
-          <android.support.v7.widget.RecyclerView
-            android:id="@+id/teamrecyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:text="@string/PrizesHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+          <LinearLayout
+            android:id="@+id/prizelist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:orientation="vertical">
+            <Button
+              android:id="@+id/addprizeitem"
+              android:layout_height="40dp"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:text="Add Prize"
+              android:textAlignment="center"
+              android:background="@drawable/buttonstyle"/>
+            <android.support.v7.widget.RecyclerView
+              android:id="@+id/prizerecyclerview"
+              android:scrollbars="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp" />
+          </LinearLayout>
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:text="@string/FacilitiesHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+          <LinearLayout
+            android:id="@+id/facilitylist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:orientation="vertical">
+            <Button
+              android:id="@+id/addfacilityitem"
+              android:layout_height="40dp"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:text="Add Facility"
+              android:textAlignment="center"
+              android:background="@drawable/buttonstyle"/>
+            <android.support.v7.widget.RecyclerView
+              android:id="@+id/facilityrecyclerview"
+              android:scrollbars="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp" />
+          </LinearLayout>
+      </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:text="@string/VenuesHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+          <LinearLayout
+            android:id="@+id/venuelist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:orientation="vertical">
+            <Button
+              android:id="@+id/addvenueitem"
+              android:layout_height="40dp"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:text="Add Venue"
+              android:textAlignment="center"
+              android:background="@drawable/buttonstyle"/>
+            <android.support.v7.widget.RecyclerView
+              android:id="@+id/venuerecyclerview"
+              android:scrollbars="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp" />
+          </LinearLayout>
+      </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@color/DividerLine" />
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          android:weightSum="100">
+          <TextView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:text="@string/TeamsHeader"
+            android:textStyle="bold"
+            android:textSize="@dimen/abc_action_bar_content_inset_material"
+            android:gravity="center_vertical" />
+          <LinearLayout
+            android:id="@+id/teamlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:orientation="vertical">
+            <Button
+              android:id="@+id/includeteam"
+              android:layout_height="40dp"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:text="Include Team"
+              android:textAlignment="center"
+              android:background="@drawable/buttonstyle"/>
+            <android.support.v7.widget.RecyclerView
+              android:id="@+id/teamrecyclerview"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+          </LinearLayout>
         </LinearLayout>
       </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 </LinearLayout>

@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Droid.Adapter;
 using CricketScoreSheetPro.Droid.Generic.MyAdapter;
@@ -26,11 +27,6 @@ namespace CricketScoreSheetPro.Droid.Activity
         private TextView Status;
         private TextView StartDate;
         private TextView EntryFee;
-
-        private TextView SelectedTextView;
-        private Button AddItemButton;
-        private bool AddAction;
-
         private RecyclerView PrizeRecyclerView;
         private TextViewWithDeleteActionAdapter PrizeAdapter;
         private RecyclerView FacilityRecyclerView;
@@ -40,9 +36,14 @@ namespace CricketScoreSheetPro.Droid.Activity
         private RecyclerView TeamRecyclerView;
         private TeamAdapter TeamAdapter;
 
+        private TextView SelectedTextView;
+        private Button AddItemButton;
+        private bool AddAction;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            SetTitle(Resource.String.TournamentDetailActivity);
             var tournamentId = Intent.GetStringExtra("TournamentId");            
             ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
 
@@ -186,9 +187,17 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private void EditTournamentDetail_IncludeTeam(object sender, EventArgs e)
         {
-            SpinnerDialogFragment includeTeamFragment = new SpinnerDialogFragment(this, 
-                new Dictionary<string, string>() { { "1", "JK" } });
-            includeTeamFragment.Show(ClearPreviousFragments("InclueTeam"), "InclueTeam");
+            var teams = new List<UserTeam>
+            {
+                new UserTeam { Id = "1", Name = "JK" },
+                new UserTeam { Id = "2", Name = "RK" }
+            }; // Should be from TeamViewModel
+
+            var teamnames = new List<string>();
+            foreach(var team in teams)
+                teamnames.Add(team.Name);
+            SpinnerDialogFragment includeTeamFragment = new SpinnerDialogFragment(this, "Include Team", teamnames);
+            includeTeamFragment.Show(ClearPreviousFragments("IncludeTeam"), "IncludeTeam");
         }
 
         private void OnItemDeleteClick(object sender, string userteamId)
@@ -200,14 +209,16 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         public void OnSelectSpinnerItem(string inputText)
         {
-            View view = LayoutInflater.From(this).Inflate(Resource.Layout.TextViewWithDeleteActionRow, null);
-            view.Tag = inputText;
-            TextView item = (TextView)view.FindViewById(Resource.Id.itemvalue);
-            item.Text = inputText;
+            var teams = new List<UserTeam>
+            {
+                new UserTeam { Id = "1", Name = "JK" },
+                new UserTeam { Id = "2", Name = "RK" }
+            }; // Should be from TeamViewModel
 
-            Button deleteitem = (Button)view.FindViewById(Resource.Id.deleteitem);            
-            LinearLayout teamlist = (LinearLayout)FindViewById(Resource.Id.teamlist);
-            teamlist.AddView(view);
+            var team = teams.FirstOrDefault(t => t.Name == inputText);
+            ViewModel.Tournament.Teams.Add(team);
+            TeamAdapter.Refresh(ViewModel.Tournament.Teams);
+            TeamRecyclerView.SetAdapter(TeamAdapter);
         }
 
         public void OnSelectedDate(DateTime selectedDate)

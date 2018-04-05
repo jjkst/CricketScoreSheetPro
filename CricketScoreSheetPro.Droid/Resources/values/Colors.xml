@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <item name="EditText" type="color">#0086ff</item>
+  <item name="DividerLine" type="color">#d3d3d3</item>
+  <item name="Icon" type="color">#0086ff</item>
+</resources>

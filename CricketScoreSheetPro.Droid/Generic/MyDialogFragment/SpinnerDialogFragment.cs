@@ -18,42 +18,44 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
     {
         private ISelectedSpinnerItemListener _callback;
 
-        private Dictionary<string, string> _dictionary;
-        private Spinner spinner;
+        private string _title;
+        private List<string> _items;
 
-        public SpinnerDialogFragment(ISelectedSpinnerItemListener callback, Dictionary<string, string> dictionary)
+        public SpinnerDialogFragment(ISelectedSpinnerItemListener callback, string title, List<string> list)
         {
-            _dictionary = dictionary;
+            _title = title;
+            _items = list;
             _callback = callback;
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override Dialog OnCreateDialog(Bundle savedInstanceState)
         {
-            View view = inflater.Inflate(Resource.Layout.SpinnerDialogFragmentLayout, container, false);
+            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, _items.ToArray());
 
-            List<string> teamnames = new List<string>();
-            for(int i=0; i < _dictionary.Count; i++)
-                teamnames.Add(_dictionary.Values.ElementAt(i));
-
-            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, teamnames.ToArray());
-            spinner = view.FindViewById<Spinner>(Resource.Id.spinnerlist);
-            spinner.Adapter = adapter;
-
-            Button save = view.FindViewById<Button>(Resource.Id.save);
-            save.Click += delegate {
-                _callback.OnSelectSpinnerItem(spinner.SelectedItem.ToString());
-                Dismiss();
-                Toast.MakeText(Activity, "Saved", ToastLength.Short).Show();
+            LinearLayout container = new LinearLayout(this.Activity);
+            LinearLayout.LayoutParams layoutparameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
+            layoutparameters.SetMargins(15, 20, 15, 5);
+            Spinner userInput = new Spinner(this.Activity, SpinnerMode.Dialog)
+            {                
+                Focusable = true,
+                LayoutParameters = layoutparameters,
+                Adapter = adapter
             };
+            container.AddView(userInput);
 
-            Button cancel = view.FindViewById<Button>(Resource.Id.cancel);
-            cancel.Click += delegate {
+            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
+            inputDialog.SetTitle(_title);
+            inputDialog.SetView(container);
+            inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
+                _callback.OnSelectSpinnerItem(userInput.SelectedItem.ToString());
                 Dismiss();
-                Toast.MakeText(Activity, "Canceled", ToastLength.Short).Show();
-            };
-
-            return view;
+                Toast.MakeText(this.Activity, "Saved.", ToastLength.Short).Show();
+            });
+            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
+                Dismiss();
+                Toast.MakeText(this.Activity, "Canceled.", ToastLength.Short).Show();
+            });
+            return inputDialog.Show();
         }
-
     }
 }

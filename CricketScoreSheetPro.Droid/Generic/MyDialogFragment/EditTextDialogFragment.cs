@@ -25,18 +25,22 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
         }
 
         public override Dialog OnCreateDialog(Bundle savedInstanceState)
-        { 
+        {
+            LinearLayout container = new LinearLayout(this.Activity);
+            LinearLayout.LayoutParams layoutparameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
+            layoutparameters.SetMargins(15, 20, 15, 5);
             EditText userInput = new EditText(this.Activity)
             {
                 Hint = _hint,
-                Top = 10,
                 Focusable = true,
+                LayoutParameters = layoutparameters,
                 ShowSoftInputOnFocus = true
             };
+            container.AddView(userInput);
 
             AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
             inputDialog.SetTitle(_title);
-            inputDialog.SetView(userInput);
+            inputDialog.SetView(container);
             inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
                 _callback.OnEnteredText(userInput.Text);
                 Toast.MakeText(this.Activity, "Saved.", ToastLength.Short).Show();
