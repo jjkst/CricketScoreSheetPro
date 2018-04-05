@@ -4,16 +4,13 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
+using CricketScoreSheetPro.Droid.Adapter;
 using CricketScoreSheetPro.Droid.Generic.MyAdapter;
 using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static CricketScoreSheetPro.Droid.Generic.MyDialogFragment.DatePickerDialogFragment;
-using static CricketScoreSheetPro.Droid.Generic.MyDialogFragment.EditTextDialogFragment;
-using static CricketScoreSheetPro.Droid.Generic.MyDialogFragment.SpinnerDialogFragment;
 
 namespace CricketScoreSheetPro.Droid.Activity
 {
@@ -41,6 +38,7 @@ namespace CricketScoreSheetPro.Droid.Activity
         private RecyclerView VenueRecyclerView;
         private TextViewWithDeleteActionAdapter VenueAdapter;
         private RecyclerView TeamRecyclerView;
+        private TeamAdapter TeamAdapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -67,7 +65,7 @@ namespace CricketScoreSheetPro.Droid.Activity
             var addVenue = (Button)FindViewById(Resource.Id.addvenueitem);
             addVenue.Click += EditTournamentDetail_AddItem;
             var includeteam = (Button)FindViewById(Resource.Id.includeteam);
-            includeteam.Click += EditTournamentDetail_InclueTeam;
+            includeteam.Click += EditTournamentDetail_IncludeTeam;
 
             //Set Prize
             PrizeRecyclerView = FindViewById<RecyclerView>(Resource.Id.prizerecyclerview);
@@ -77,7 +75,10 @@ namespace CricketScoreSheetPro.Droid.Activity
             FacilityRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
             //Set Venue
             VenueRecyclerView = FindViewById<RecyclerView>(Resource.Id.venuerecyclerview);
-            VenueRecyclerView.SetLayoutManager(new LinearLayoutManager(this));            
+            VenueRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
+            //Team 
+            TeamRecyclerView = FindViewById<RecyclerView>(Resource.Id.teamrecyclerview);
+            TeamRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
         }
 
         protected override void OnResume()
@@ -100,6 +101,10 @@ namespace CricketScoreSheetPro.Droid.Activity
             VenueAdapter = new TextViewWithDeleteActionAdapter(ViewModel.Tournament.Venues.ToList());
             VenueAdapter.ItemDeleteClick += DeleteVenue;
             VenueRecyclerView.SetAdapter(VenueAdapter);
+
+            TeamAdapter = new TeamAdapter(ViewModel.Tournament.Teams.ToList());
+            TeamAdapter.ItemDeleteClick += OnItemDeleteClick;
+            TeamRecyclerView.SetAdapter(TeamAdapter);
         }
 
         private void DeletePrize(object sender, string value)
@@ -179,10 +184,18 @@ namespace CricketScoreSheetPro.Droid.Activity
             AddAction = true;
         }
 
-        private void EditTournamentDetail_InclueTeam(object sender, EventArgs e)
+        private void EditTournamentDetail_IncludeTeam(object sender, EventArgs e)
         {
-            SpinnerDialogFragment includeTeamFragment = new SpinnerDialogFragment(this, new List<string>() { { "JK" } });
+            SpinnerDialogFragment includeTeamFragment = new SpinnerDialogFragment(this, 
+                new Dictionary<string, string>() { { "1", "JK" } });
             includeTeamFragment.Show(ClearPreviousFragments("InclueTeam"), "InclueTeam");
+        }
+
+        private void OnItemDeleteClick(object sender, string userteamId)
+        {
+            ViewModel.Tournament.Teams.Remove(ViewModel.Tournament.Teams.FirstOrDefault(ut=>ut.Id == userteamId));
+            TeamAdapter.Refresh(ViewModel.Tournament.Teams);
+            TeamRecyclerView.SetAdapter(TeamAdapter);
         }
 
         public void OnSelectSpinnerItem(string inputText)

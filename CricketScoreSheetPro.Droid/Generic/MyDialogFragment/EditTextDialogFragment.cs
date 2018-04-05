@@ -10,6 +10,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
     {
         void OnEnteredText(String inputText);
     }
+
     public class EditTextDialogFragment : DialogFragment
     {
         private IEditedTextListener _callback;

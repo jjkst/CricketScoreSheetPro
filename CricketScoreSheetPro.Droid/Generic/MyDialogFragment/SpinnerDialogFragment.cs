@@ -5,6 +5,7 @@ using Android.Widget;
 using CricketScoreSheetPro.Droid.Generic.MyAdapter;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
 {
@@ -17,12 +18,12 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
     {
         private ISelectedSpinnerItemListener _callback;
 
-        private string[] _arrarylist;
+        private Dictionary<string, string> _dictionary;
         private Spinner spinner;
 
-        public SpinnerDialogFragment(ISelectedSpinnerItemListener callback, List<string> list)
+        public SpinnerDialogFragment(ISelectedSpinnerItemListener callback, Dictionary<string, string> dictionary)
         {
-            _arrarylist = list.ToArray();
+            _dictionary = dictionary;
             _callback = callback;
         }
 
@@ -30,7 +31,11 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
         {
             View view = inflater.Inflate(Resource.Layout.SpinnerDialogFragmentLayout, container, false);
 
-            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, _arrarylist);
+            List<string> teamnames = new List<string>();
+            for(int i=0; i < _dictionary.Count; i++)
+                teamnames.Add(_dictionary.Values.ElementAt(i));
+
+            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, teamnames.ToArray());
             spinner = view.FindViewById<Spinner>(Resource.Id.spinnerlist);
             spinner.Adapter = adapter;
 

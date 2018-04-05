@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Activity\BaseActivity.cs" />
     <Compile Include="Activity\TournamentDetailActivity.cs" />
+    <Compile Include="Adapter\TeamAdapter.cs" />
     <Compile Include="Adapter\TournamentAdapter.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Fragment\BaseFragment.cs" />
