@@ -5,6 +5,7 @@ using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Core.Service.Implementation
 {
@@ -98,6 +99,10 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
             // update usertournament
             var allaffectedusertournaments = _usertournamentRepository.GetListByProperty("tournament", tournament.Id);
+            if (allaffectedusertournaments.Any() && (allaffectedusertournaments[0].Name == tournament.Name ||
+                allaffectedusertournaments[0].Status == tournament.Status))
+                return updatedtournament;
+
             bool updatedusertournament = true;
             foreach (var ut in allaffectedusertournaments)
             {

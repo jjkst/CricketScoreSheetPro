@@ -127,12 +127,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\BaseActivity.cs" />
+    <Compile Include="Activity\TeamDetailActivity.cs" />
     <Compile Include="Activity\TournamentDetailActivity.cs" />
+    <Compile Include="Adapter\PlayerAdapter.cs" />
     <Compile Include="Adapter\TeamAdapter.cs" />
     <Compile Include="Adapter\TournamentAdapter.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Fragment\BaseFragment.cs" />
     <Compile Include="Fragment\HomeFragment.cs" />
+    <Compile Include="Fragment\TeamFragment.cs" />
     <Compile Include="Fragment\TournamentFragment.cs" />
     <Compile Include="Generic\MyAdapter\SpinnerAdapter.cs" />
     <Compile Include="Generic\MyAdapter\TextViewWithDeleteActionAdapter.cs" />
@@ -162,11 +165,19 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\TournamentRow.axml" />
-    <AndroidResource Include="Resources\layout\TournamentsView.axml" />
+    <AndroidResource Include="Resources\layout\TournamentView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\TextViewWithDeleteActionRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SpinnerTextViewRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TeamView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TeamDetailView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -221,7 +232,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\menu.xml" />
+    <AndroidResource Include="Resources\menu\menu.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\menu_navigation.xml" />

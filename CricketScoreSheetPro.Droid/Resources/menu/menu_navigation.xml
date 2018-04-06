@@ -3,7 +3,7 @@
   <group android:checkableBehavior="single">
     <item
       android:id="@+id/nav_home"
-      android:icon="@drawable/home_tinted"
+      android:icon="@drawable/home"
       android:title="Home"/>
     <item
       android:id="@+id/nav_tournaments"
@@ -12,10 +12,10 @@
     <item
       android:id="@+id/nav_teams"
       android:icon="@drawable/teamicon"
-      android:title="@string/TeamFragment_tinted"/>
+      android:title="@string/TeamFragment"/>
     <item
       android:id="@+id/nav_matches"
-      android:icon="@drawable/matchresults_tinted"
+      android:icon="@drawable/matchresults"
       android:title="@string/MatchFragment"/>
   </group>
   <item android:title="Statistics">

@@ -53,5 +53,35 @@ namespace CricketScoreSheetPro.Droid
         }
 
         #endregion Tournament
+
+        #region Team
+
+        private TeamService teamService;
+        private TeamService SetTeamService()
+        {
+            if (teamService == null)
+                teamService = new TeamService(new Repository<UserTeam>(Client),
+                new Repository<Team>(Client));
+            return teamService;
+        }
+
+        private TeamListViewModel teamtListViewModel;
+        public TeamListViewModel TeamListViewModel()
+        {
+            teamService = teamService ?? SetTeamService();
+            teamtListViewModel = teamtListViewModel ?? new TeamListViewModel(teamService);
+            return teamtListViewModel;
+        }
+
+        private TeamViewModel teamViewModel;
+        public TeamViewModel TeamViewModel(string teamId)
+        {
+            teamService = teamService ?? SetTeamService();
+            if (teamViewModel == null || teamViewModel.Team.Id != teamId)
+                teamViewModel = new TeamViewModel(teamService, teamId);
+            return teamViewModel;
+        }
+
+        #endregion Team
     }
 }

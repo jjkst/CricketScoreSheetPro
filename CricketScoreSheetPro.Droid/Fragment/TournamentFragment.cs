@@ -18,7 +18,7 @@ namespace CricketScoreSheetPro.Droid
 {
     public class TournamentFragment : BaseFragment
     {
-        protected override int GetLayoutResourceId => Resource.Layout.TournamentsView;
+        protected override int GetLayoutResourceId => Resource.Layout.TournamentView;
 
         private TournamentListViewModel ViewModel { get; set; }
         private TournamentAdapter TournamentsAdapter { get; set; }
@@ -28,13 +28,16 @@ namespace CricketScoreSheetPro.Droid
         {
             base.OnCreate(savedInstanceState);
             ViewModel = Singleton.Instance.TournamentListViewModel();
+            this.Activity.InvalidateOptionsMenu();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = base.OnCreateView(inflater, container, savedInstanceState);
-           
-            FloatingActionButton addTournament = view.FindViewById<FloatingActionButton>(Resource.Id.floating_action_button_fab_with_listview);
+            SearchEditText = view.FindViewById<EditText>(Resource.Id.searchTournament);
+            SearchEditText.TextChanged += SearchText_TextChanged;
+
+            FloatingActionButton addTournament = view.FindViewById<FloatingActionButton>(Resource.Id.addtournament);
             addTournament.Click += ShowAddTournamentDialog;
 
             TournamentsRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.tournamentsrecyclerview);
@@ -111,70 +114,16 @@ namespace CricketScoreSheetPro.Droid
             inputDialog.Show();
         }
 
-        private List<UserTournament> DummyList()
+        public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            return new List<UserTournament> {
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "1",
-                    Name = "Tournament Name one",
-                    AddDate = DateTime.Today,
-                    Status = "Open"
-                    },
-                    new UserTournament {
-                    Id =  "2",
-                    Name = "Tournament Name two",
-                    AddDate = DateTime.Today,
-                    Status = "Open",
-                    }
-            };
-        }        
+            if (item.ItemId == Resource.Id.searchText)
+            {
+                if (SearchEditText.Visibility == ViewStates.Gone)
+                    SearchEditText.Visibility = ViewStates.Visible;
+                else SearchEditText.Visibility = ViewStates.Gone;
+                return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
     }
 }

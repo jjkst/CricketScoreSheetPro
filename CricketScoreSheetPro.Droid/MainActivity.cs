@@ -74,7 +74,7 @@ namespace CricketScoreSheetPro.Droid
                     break;
 				case (Resource.Id.nav_teams):                    
                     ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
-                    ft.Replace(Resource.Id.content_frame, new TournamentFragment(), nameof(TournamentFragment));
+                    ft.Replace(Resource.Id.content_frame, new TeamFragment(), nameof(TeamFragment));
                     break;
                 case (Resource.Id.nav_matches):                    
                     ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
@@ -110,6 +110,10 @@ namespace CricketScoreSheetPro.Droid
             {
                 case nameof(TournamentFragment):
                     SupportActionBar.SetTitle(Resource.String.TournamentFragment);
+                    menu.FindItem(Resource.Id.searchText).SetVisible(true);
+                    break;
+                case nameof(TeamFragment):
+                    SupportActionBar.SetTitle(Resource.String.TeamFragment);
                     menu.FindItem(Resource.Id.searchText).SetVisible(true);
                     break;
             }

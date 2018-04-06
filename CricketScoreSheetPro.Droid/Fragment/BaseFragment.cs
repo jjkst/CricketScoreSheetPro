@@ -1,4 +1,3 @@
-
 using Android.App;
 using Android.OS;
 using Android.Text;
@@ -15,28 +14,17 @@ namespace CricketScoreSheetPro.Droid
 
         public override void OnCreate(Bundle savedInstanceState)
         {
-            SetHasOptionsMenu(true);
             base.OnCreate(savedInstanceState);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = inflater.Inflate(GetLayoutResourceId, container, false);
-            SearchEditText = view.FindViewById<EditText>(Resource.Id.searchTournament);
-            SearchEditText.TextChanged += SearchText_TextChanged;
-
             return view;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Resource.Id.searchText)
-            {
-                if (SearchEditText.Visibility == ViewStates.Gone)
-                    SearchEditText.Visibility = ViewStates.Visible;
-                else SearchEditText.Visibility = ViewStates.Gone;
-                return true;
-            }
             return base.OnOptionsItemSelected(item);
         }
         

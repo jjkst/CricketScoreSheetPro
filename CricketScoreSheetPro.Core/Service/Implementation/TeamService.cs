@@ -3,6 +3,7 @@ using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CricketScoreSheetPro.Core.Service.Implementation
@@ -38,6 +39,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
                             {
                                 TeamId = teamAdded.Id,
                                 Name = teamAdded.Name,
+                                AccessType = AccessType.Moderator,
                                 Owner = true,
                                 AddDate = DateTime.Today                                
                             }}
@@ -71,9 +73,10 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             //update team
             var updatedteam = _teamRepository.Update(team.Id, team);
 
-            //Only if name change
             // update usertournament
             var userteams = _userteamRepository.GetListByProperty("team", team.Id);
+            if (userteams.Any() && userteams[0].Name == team.Name) return updatedteam; //No need if no name change
+
             bool updateduserteam = true;
             foreach (var ut in userteams)
             {

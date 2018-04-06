@@ -22,8 +22,12 @@
 	<string name="PrizesHeader">Prize(s)</string>
 	<string name="FacilitiesHeader">Facilities</string>
 	<string name="VenuesHeader">Venues</string>
-	<string name="TeamsHeader">Teams</string>  
-	
+	<string name="TeamsHeader">Teams</string>
+
+  <string name="TeamDetailActivity">Team Detail</string>
+  <string name="NameHeader">Name</string>
+  <string name="PlayersHeader">Players</string>
+  
 	<string name="CompletedMatches">Completed Matches</string>
 	<string name="SavedMatches">Saved Matches</string>
 	<string name="BatsmanStats">Batsman Statistics</string>

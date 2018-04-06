@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CricketScoreSheetPro.Core.Model
 {
@@ -10,6 +11,8 @@ namespace CricketScoreSheetPro.Core.Model
         public string Name { get; set; }
 
         public IList<string> Roles { get; set; }
+
+        public DateTime AddDate { get; set; }
     }
 
 }
