@@ -29,6 +29,7 @@ namespace CricketScoreSheetPro.Droid
             base.OnCreate(savedInstanceState);
             ViewModel = Singleton.Instance.TournamentListViewModel();
             this.Activity.InvalidateOptionsMenu();
+            SetHasOptionsMenu(true);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

@@ -38,12 +38,11 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private TextView SelectedTextView;
         private Button AddItemButton;
-        private bool AddAction;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetTitle(Resource.String.TournamentDetailActivity);
+            SupportActionBar.SetTitle(Resource.String.TournamentDetailActivity);
             var tournamentId = Intent.GetStringExtra("TournamentId");            
             ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
 
@@ -132,7 +131,6 @@ namespace CricketScoreSheetPro.Droid.Activity
         private void EditTournamentDetail(object sender, EventArgs e)
         {
             var ft = ClearPreviousFragments("EditTournamentDetail");
-            string title = "Edit Tournament Detail";
 
             SelectedTextView = (TextView)sender;
             if (SelectedTextView.Id == Resource.Id.StartDateValue)
@@ -146,16 +144,16 @@ namespace CricketScoreSheetPro.Droid.Activity
                 switch (SelectedTextView.Id)
                 {
                     case Resource.Id.NameValue:
-                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit name");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, "Edit Name", "Enter name");
                         break;
                     case Resource.Id.SponsorValue:
-                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit sponsor");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, "Edit Sponsor", "Enter sponsor");
                         break;
                     case Resource.Id.StatusValue:
-                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit status");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, "Edit Status", "Enter status");
                         break;
                     case Resource.Id.EntryFeeValue:
-                        tournamentDetailEdit = new EditTextDialogFragment(this, title, "Edit entry fee");
+                        tournamentDetailEdit = new EditTextDialogFragment(this, "Edit Entry Fee", "Enter entry fee");
                         break;
                 }
                 tournamentDetailEdit.Show(ft, "EditTournamentDetail");
@@ -165,24 +163,22 @@ namespace CricketScoreSheetPro.Droid.Activity
         private void EditTournamentDetail_AddItem(object sender, EventArgs e)
         {            
             var ft = ClearPreviousFragments("EditTournamentDetail");
-            string title = "Edit Tournament Detail";
             
             AddItemButton = (Button)sender;
             EditTextDialogFragment tournamentDetailEdit_list = null;
             switch (AddItemButton.Id)
             {
                 case Resource.Id.addprizeitem:
-                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter prize");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, "Add Prize", "Enter prize");
                     break;
                 case Resource.Id.addfacilityitem:
-                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter facility");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, "Add Facility", "Enter facility");
                     break;
                 case Resource.Id.addvenueitem:
-                    tournamentDetailEdit_list = new EditTextDialogFragment(this, title, "Enter venue");
+                    tournamentDetailEdit_list = new EditTextDialogFragment(this, "Add Venue", "Enter venue");
                     break;
             }
             tournamentDetailEdit_list.Show(ft, "EditTournamentDetail");
-            AddAction = true;
         }
 
         private void EditTournamentDetail_IncludeTeam(object sender, EventArgs e)
@@ -227,47 +223,41 @@ namespace CricketScoreSheetPro.Droid.Activity
             ViewModel.Tournament.StartDate = selectedDate;
         }
 
-        public void OnEnteredText(string inputText)
+        public void OnEnteredText(string title, string inputText)
         {
-            if (AddAction)
+            switch (title)
             {
-                switch (AddItemButton.Id)
-                {
-                    case Resource.Id.addprizeitem:
-                        ViewModel.Tournament.Prizes.Add(inputText);
-                        PrizeAdapter.Refresh(ViewModel.Tournament.Prizes);
-                        PrizeRecyclerView.SetAdapter(PrizeAdapter);
-                        break;
-                    case Resource.Id.addfacilityitem:
-                        ViewModel.Tournament.Facilities.Add(inputText);
-                        FacilityAdapter.Refresh(ViewModel.Tournament.Facilities);
-                        FacilityRecyclerView.SetAdapter(FacilityAdapter);
-                        break;
-                    case Resource.Id.addvenueitem:
-                        ViewModel.Tournament.Venues.Add(inputText);
-                        VenueAdapter.Refresh(ViewModel.Tournament.Venues);
-                        VenueRecyclerView.SetAdapter(VenueAdapter);
-                        break;
-                }
-            }
-            else
-            {          
-                SelectedTextView.Text = inputText;
-                switch (SelectedTextView.Id)
-                {
-                    case Resource.Id.NameValue:
-                        ViewModel.Tournament.Name = inputText;
-                        break;
-                    case Resource.Id.SponsorValue:
-                        ViewModel.Tournament.Sponsor = inputText;
-                        break;
-                    case Resource.Id.StatusValue:
-                        ViewModel.Tournament.Status = inputText;
-                        break;
-                    case Resource.Id.EntryFeeValue:
-                        ViewModel.Tournament.EntryFee = Convert.ToDecimal(inputText);
-                        break;
-                }
+                case "Add Prize":
+                    ViewModel.Tournament.Prizes.Add(inputText);
+                    PrizeAdapter.Refresh(ViewModel.Tournament.Prizes);
+                    PrizeRecyclerView.SetAdapter(PrizeAdapter);
+                    break;
+                case "Add Facility":
+                    ViewModel.Tournament.Facilities.Add(inputText);
+                    FacilityAdapter.Refresh(ViewModel.Tournament.Facilities);
+                    FacilityRecyclerView.SetAdapter(FacilityAdapter);
+                    break;
+                case "Add Venue":
+                    ViewModel.Tournament.Venues.Add(inputText);
+                    VenueAdapter.Refresh(ViewModel.Tournament.Venues);
+                    VenueRecyclerView.SetAdapter(VenueAdapter);
+                    break;
+                case "Edit Name":
+                    ViewModel.Tournament.Name = inputText;
+                    SelectedTextView.Text = inputText;
+                    break;
+                case "Edit Sponsor":
+                    ViewModel.Tournament.Sponsor = inputText;
+                    SelectedTextView.Text = inputText;
+                    break;
+                case "Edit Status":
+                    ViewModel.Tournament.Status = inputText;
+                    SelectedTextView.Text = inputText;
+                    break;
+                case "Edit Entry Fee":
+                    ViewModel.Tournament.EntryFee = Convert.ToDecimal(inputText);
+                    SelectedTextView.Text = inputText;
+                    break;
             }
         }
 

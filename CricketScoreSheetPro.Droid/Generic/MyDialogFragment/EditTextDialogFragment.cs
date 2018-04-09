@@ -8,7 +8,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
 {
     public interface IEditedTextListener
     {
-        void OnEnteredText(String inputText);
+        void OnEnteredText(string title, string inputText);
     }
 
     public class EditTextDialogFragment : DialogFragment
@@ -42,7 +42,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
             inputDialog.SetTitle(_title);
             inputDialog.SetView(container);
             inputDialog.SetPositiveButton("Save", (senderAlert, args) => {
-                _callback.OnEnteredText(userInput.Text);
+                _callback.OnEnteredText(_title, userInput.Text);
                 Toast.MakeText(this.Activity, "Saved.", ToastLength.Short).Show();
             });
             inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {

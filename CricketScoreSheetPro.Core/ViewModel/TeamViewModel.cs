@@ -18,16 +18,15 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public Team Team { get; private set; }
 
-        public bool UpdateTeam(Team team)
+        public bool UpdateTeam()
         {
-            Team = team;
-            var updated = _teamService.UpdateTeam(team);
+            var updated = _teamService.UpdateTeam(Team);
             return updated;
         }
 
         public void AddPlayers(string playername)
         {
-            Team.Players.Add(new Player { Name = playername });
+            Team.Players.Add(playername);
         }
     }
 }

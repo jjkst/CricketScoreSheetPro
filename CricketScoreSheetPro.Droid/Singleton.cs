@@ -13,14 +13,22 @@ namespace CricketScoreSheetPro.Droid
 
         #region Singleton
 
-        private static readonly Singleton instance = new Singleton();
+        private static Singleton instance;
         
         private Singleton()
         {
             Client = new Client();
         }
 
-        public static Singleton Instance => instance;
+        public static Singleton Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Singleton();
+                return instance;
+            }
+        }
 
         #endregion Singleton                
 

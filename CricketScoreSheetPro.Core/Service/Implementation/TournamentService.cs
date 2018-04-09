@@ -1,11 +1,8 @@
-﻿using CricketScoreSheetPro.Core.Helper;
-using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
+﻿using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Repository.Interface;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CricketScoreSheetPro.Core.Service.Implementation
 {
@@ -22,6 +19,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public UserTournament AddTournament(string tournamentName)
         {
+            if (string.IsNullOrEmpty(tournamentName)) throw new ArgumentException($"Tournament name is empty");
             var newtournamentproperties = new Dictionary<string, object>
             {
                 { "type", nameof(Tournament)},
@@ -33,7 +31,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
                             }}
             };
             var tournamentdAdded = _tournamentRepository.Create(newtournamentproperties);
-
+            if(tournamentdAdded == null) throw new ArgumentException($"Tournament add is not successful.");
             var newusertournamentproperties = new Dictionary<string, object>
             {
                 { "tournament", tournamentdAdded.Id },
@@ -55,7 +53,9 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public UserTournament ImportTournament(string tournamentid, AccessType accessType)
         {
+            if (string.IsNullOrEmpty(tournamentid)) throw new ArgumentException($"Tournament ID is null");
             var existingtournament = _tournamentRepository.GetItem(tournamentid);
+            if (existingtournament == null) throw new ArgumentException($"Not able to find tournamant.");
             var importtournamentproperties = new Dictionary<string, object>
             {
                 { "tournament", existingtournament.Id },
@@ -75,7 +75,9 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public void DeleteTournament(string usertournamentid)
         {
+            if (string.IsNullOrEmpty(usertournamentid)) throw new ArgumentException($"UserTournament ID is null");
             var usertournament = _usertournamentRepository.GetItem(usertournamentid);
+            if (usertournament == null) throw new ArgumentException($"Not able to find user tournamant.");
             _tournamentRepository.Delete(usertournament.TournamentId);
             _usertournamentRepository.Delete(usertournamentid);            
         }
@@ -88,19 +90,24 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public Tournament GetTournament(string tournamentId)
         {
+            if (string.IsNullOrEmpty(tournamentId)) throw new ArgumentException($"Tournament ID is null");
             var tournament = _tournamentRepository.GetItem(tournamentId);
             return tournament;
         }
 
         public bool UpdateTournament(Tournament tournament)
         {
+            if (tournament == null) throw new ArgumentException($"Tournament is null");
+
             //update tournament
             var updatedtournament = _tournamentRepository.Update(tournament.Id, tournament);
+            if (!updatedtournament) return false;
 
             // update usertournament
             var allaffectedusertournaments = _usertournamentRepository.GetListByProperty("tournament", tournament.Id);
-            if (allaffectedusertournaments.Any() && (allaffectedusertournaments[0].Name == tournament.Name ||
-                allaffectedusertournaments[0].Status == tournament.Status))
+            if(allaffectedusertournaments == null) throw new ArgumentException($"Not able to find tournament id in users list");
+            if (allaffectedusertournaments[0].Name == tournament.Name ||
+                allaffectedusertournaments[0].Status == tournament.Status)
                 return updatedtournament;
 
             bool updatedusertournament = true;

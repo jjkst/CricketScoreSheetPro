@@ -47,17 +47,15 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void UpdateTeam()
         {
             //Arrange
-            var teamdetail = _viewModel.Team;
-            teamdetail.Name = "UpdateTeamName";
+            _viewModel.Team.Name = "UpdateTeamName";
 
             //Act
-            var updated = _viewModel.UpdateTeam(teamdetail);
+            var updated = _viewModel.UpdateTeam();
 
             //Assert
             updated.Should().BeTrue();
-            _viewModel.Team.Should().BeEquivalentTo(teamdetail);
-            var repo = new Repository<UserTournament>(new TestClient()).GetItem(UserTeamId);
-            repo.Name.Should().Be(teamdetail.Name);
+            var repo = new Repository<UserTeam>(new TestClient()).GetItem(UserTeamId);
+            repo.Name.Should().Be("UpdateTeamName");
         }
 
         [TestMethod]
@@ -65,16 +63,14 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void AddPlayerSaved()
         {
             //Arrange
-            var teamdetail = _viewModel.Team;
+            _viewModel.AddPlayers("AddPlayer");
 
             //Act
-            _viewModel.AddPlayers("AddPlayer");
-            _viewModel.UpdateTeam(_viewModel.Team);
+            _viewModel.UpdateTeam();
 
             //Assert
-            _viewModel.Team.Should().Be(teamdetail);
-            var repo = new Repository<Team>(new TestClient()).GetItem(teamdetail.Id);
-            repo.Should().BeEquivalentTo(teamdetail);
+            var repo = new Repository<Team>(new TestClient()).GetItem(_viewModel.Team.Id);
+            repo.Players.Should().Contain("AddPlayer");
         }
     }
 }

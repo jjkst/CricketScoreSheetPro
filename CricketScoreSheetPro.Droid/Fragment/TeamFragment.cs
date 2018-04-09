@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Text;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Droid.Activity;
 using CricketScoreSheetPro.Droid.Adapter;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Droid
 {
@@ -33,6 +29,7 @@ namespace CricketScoreSheetPro.Droid
             base.OnCreate(savedInstanceState);
             ViewModel = Singleton.Instance.TeamListViewModel();
             this.Activity.InvalidateOptionsMenu();
+            SetHasOptionsMenu(true);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -45,6 +42,7 @@ namespace CricketScoreSheetPro.Droid
             addTeam.Click += ShowAddTeamDialog;
 
             TeamsRecyclerView = view.FindViewById<RecyclerView>(Resource.Id.teamsrecyclerview);
+
             var layoutManager = new LinearLayoutManager(this.Activity);
             var onScrollListener = new XamarinRecyclerViewOnScrollListener(layoutManager)
             {

@@ -21,6 +21,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public UserTeam AddTeam(string teamName)
         {
+            if (string.IsNullOrEmpty(teamName)) throw new ArgumentException($"Team name is empty");
             var newteamproperties = new Dictionary<string, object>
             {
                 { "type", nameof(Team)},
@@ -30,7 +31,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
                             }}
             };
             var teamAdded = _teamRepository.Create(newteamproperties);
-
+            if (teamAdded == null) throw new ArgumentException($"Team add is not successful.");
             var newuserteamproperties = new Dictionary<string, object>
             {
                 { "team", teamAdded.Id },
@@ -51,13 +52,16 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public void DeleteTeam(string userteamid)
         {
+            if (string.IsNullOrEmpty(userteamid)) throw new ArgumentException($"UserTeam ID is null");
             var userteam = _userteamRepository.GetItem(userteamid);
+            if (userteam == null) throw new ArgumentException($"Not able to find user team.");
             _teamRepository.Delete(userteam.TeamId);
             _userteamRepository.Delete(userteam.Id);
         }
 
         public Team GetTeam(string teamId)
         {
+            if (string.IsNullOrEmpty(teamId)) throw new ArgumentException($"Team ID is null");
             var team = _teamRepository.GetItem(teamId);
             return team;
         }
@@ -70,12 +74,15 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public bool UpdateTeam(Team team)
         {
+            if (team == null) throw new ArgumentException($"Team is null");
+
             //update team
             var updatedteam = _teamRepository.Update(team.Id, team);
 
             // update usertournament
             var userteams = _userteamRepository.GetListByProperty("team", team.Id);
-            if (userteams.Any() && userteams[0].Name == team.Name) return updatedteam; //No need if no name change
+            if (userteams == null) throw new ArgumentException($"Not able to find team id in users list");
+            if (userteams[0].Name == team.Name) return updatedteam; //No need if no name change
 
             bool updateduserteam = true;
             foreach (var ut in userteams)

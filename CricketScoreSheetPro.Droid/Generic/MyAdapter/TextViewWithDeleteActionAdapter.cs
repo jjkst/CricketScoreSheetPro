@@ -9,6 +9,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
 {
     public class TextViewWithDeleteActionAdapter : RecyclerView.Adapter
     {
+        public event EventHandler<string> ItemViewClick;
         public event EventHandler<string> ItemDeleteClick;
         private List<string> _items;
 
@@ -22,19 +23,24 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             TextViewWithDeleteActionViewHolder vh = holder as TextViewWithDeleteActionViewHolder;
-            vh.Item.Text = _items[position];
+            vh.Name.Text = _items[position];
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).
                         Inflate(Resource.Layout.TextViewWithDeleteActionRow, parent, false);
-            return new TextViewWithDeleteActionViewHolder(itemView, OnDeleteClick);
+            return new TextViewWithDeleteActionViewHolder(itemView, OnViewClick, OnDeleteClick);
         }
 
         public void Refresh(IEnumerable<string> items)
         {
             _items = items.ToList();
+        }
+
+        private void OnViewClick(int position)
+        {
+            ItemViewClick?.Invoke(this, _items[position]);
         }
 
         private void OnDeleteClick(int position)
@@ -45,13 +51,14 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
 
     public class TextViewWithDeleteActionViewHolder : RecyclerView.ViewHolder
     {
-        public TextView Item { get; private set; }
+        public TextView Name { get; private set; }
         public Button Delete { get; private set; }
 
-        public TextViewWithDeleteActionViewHolder(View itemView, Action<int> deletelistener)
+        public TextViewWithDeleteActionViewHolder(View itemView, Action<int> viewlistener, Action<int> deletelistener)
             : base(itemView)
         {
-            Item = itemView.FindViewById<TextView>(Resource.Id.itemvalue);
+            Name = itemView.FindViewById<TextView>(Resource.Id.itemvalue);
+            Name.Click += (sender, e) => viewlistener(AdapterPosition);
             Delete = itemView.FindViewById<Button>(Resource.Id.deleteitem);
             Delete.Click += (sender, e) => deletelistener(AdapterPosition);
         }

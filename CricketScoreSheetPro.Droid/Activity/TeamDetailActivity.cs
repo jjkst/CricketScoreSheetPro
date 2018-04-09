@@ -1,39 +1,43 @@
 ﻿
-using System;
-using System.Linq;
 using Android.App;
 using Android.OS;
 using Android.Support.V7.Widget;
+using Android.Views;
 using Android.Widget;
 using CricketScoreSheetPro.Core.ViewModel;
-using CricketScoreSheetPro.Droid.Adapter;
+using CricketScoreSheetPro.Droid.Generic.MyAdapter;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
+using System;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Droid.Activity
 {
     [Activity(Label = "Team Detail", Theme = "@style/MyTheme")]
-    public class TeamDetailActivity : BaseActivity
+    public class TeamDetailActivity : BaseActivity, IEditedTextListener
     {
         protected override int GetLayoutResourceId => Resource.Layout.TeamDetailView;
 
         private TeamViewModel ViewModel;
-        private RecyclerView PlayerRecyclerView;
-        private PlayerAdapter PlayerAdapter;
-
         private TextView Name;
+        private RecyclerView PlayerRecyclerView;
+        private TextViewWithDeleteActionAdapter PlayerAdapter;
+
+        private int SelectedPlayerNameIndex;
+        private TextView SelectedTextView;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetTitle(Resource.String.TeamDetailActivity);
+            SupportActionBar.SetTitle(Resource.String.TeamDetailActivity);
             var teamId = Intent.GetStringExtra("TeamId");
             ViewModel = Singleton.Instance.TeamViewModel(teamId);
 
             Name = (TextView)FindViewById(Resource.Id.NameValue);
-            Name.Click += EditTeamDetail;
+            Name.Click += EditTeamName;
             var addplayer = (Button)FindViewById(Resource.Id.addplayer);
-            addplayer.Click += EditTeamDetail_AddPlayer;
+            addplayer.Click += AddPlayer;
 
-            //Team 
+            //Players 
             PlayerRecyclerView = FindViewById<RecyclerView>(Resource.Id.playerrecyclerview);
             PlayerRecyclerView.SetLayoutManager(new LinearLayoutManager(this));
         }
@@ -43,32 +47,84 @@ namespace CricketScoreSheetPro.Droid.Activity
             base.OnResume();
             Name.Text = ViewModel.Team.Name;
 
-            PlayerAdapter = new PlayerAdapter(ViewModel.Team.Players.ToList());
+            PlayerAdapter = new TextViewWithDeleteActionAdapter(ViewModel.Team.Players.ToList());
             PlayerAdapter.ItemViewClick += OnItemViewClick;
             PlayerAdapter.ItemDeleteClick += OnItemDeleteClick;
             PlayerRecyclerView.SetAdapter(PlayerAdapter);
         }
 
-        private void OnItemViewClick(object sender, string e)
+        private void OnItemViewClick(object sender, string playername)
         {
-            throw new NotImplementedException();
+            var ft = ClearPreviousFragments("EditPlayerName");
+            SelectedPlayerNameIndex = ViewModel.Team.Players.IndexOf(playername); 
+            var editPlayerName = new EditTextDialogFragment(this, "Edit Player Name", playername);
+            editPlayerName.Show(ft, "EditPlayerName");
         }
 
-        private void OnItemDeleteClick(object sender, string userteamId)
+        private void OnItemDeleteClick(object sender, string playername)
         {
-            ViewModel.Team.Players.Remove(ViewModel.Team.Players.FirstOrDefault(ut => ut.Id == userteamId));
+            ViewModel.Team.Players.Remove(ViewModel.Team.Players.FirstOrDefault(ut => ut == playername));
             PlayerAdapter.Refresh(ViewModel.Team.Players);
             PlayerRecyclerView.SetAdapter(PlayerAdapter);
         }
 
-        private void EditTeamDetail_AddPlayer(object sender, EventArgs e)
+        private FragmentTransaction ClearPreviousFragments(string tag)
         {
-            throw new NotImplementedException();
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag(tag);
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+            return ft;
         }
 
-        private void EditTeamDetail(object sender, EventArgs e)
+        private void AddPlayer(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var ft = ClearPreviousFragments("AddPlayer");
+            var editPlayerName = new EditTextDialogFragment(this, "Add Player", "Enter player name");
+            editPlayerName.Show(ft, "AddPlayer");
+        }
+
+        private void EditTeamName(object sender, EventArgs e)
+        {
+            var ft = ClearPreviousFragments("EditTeamName");
+            SelectedTextView = (TextView)sender;
+            var editTeamName = new EditTextDialogFragment(this, "Edit Team Name", "Enter team name");
+            editTeamName.Show(ft, "EditTeamName");
+        }
+
+        public void OnEnteredText(string title, string inputText)
+        {
+            switch (title)
+            {
+                case "Add Player":
+                    ViewModel.Team.Players.Add(inputText);
+                    PlayerAdapter.Refresh(ViewModel.Team.Players);
+                    PlayerRecyclerView.SetAdapter(PlayerAdapter);
+                    break;
+                case "Edit Team Name":
+                    ViewModel.Team.Name = inputText;
+                    SelectedTextView.Text = inputText;
+                    break;
+                case "Edit Player Name": 
+                    ViewModel.Team.Players[SelectedPlayerNameIndex] = inputText;
+                    PlayerAdapter.Refresh(ViewModel.Team.Players);
+                    PlayerRecyclerView.SetAdapter(PlayerAdapter);
+                    break;
+            }            
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Android.Resource.Id.Home)
+                OnBackPressed();
+            return base.OnOptionsItemSelected(item);
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.UpdateTeam();
+            base.OnBackPressed();
         }
     }
 }
