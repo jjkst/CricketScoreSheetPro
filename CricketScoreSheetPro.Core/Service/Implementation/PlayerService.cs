@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CricketScoreSheetPro.Core.Service.Implementation
 {
-    class PlayerService
+    public class PlayerService
     {
     }
 }

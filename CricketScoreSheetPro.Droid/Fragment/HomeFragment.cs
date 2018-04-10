@@ -30,13 +30,13 @@ namespace CricketScoreSheetPro.Droid
             mNewGameButton = view.FindViewById<Button>(Resource.Id.newgameButton);
             mSavedGameButton = view.FindViewById<Button>(Resource.Id.savedgamesButton);
 
-            //mNewGameButton.Click += (object sender, EventArgs args) =>
-            //{
-            //    FragmentTransaction transaction = FragmentManager.BeginTransaction();
-            //    NewGameDialogFragment newGameDialog = new NewGameDialogFragment();
-            //    newGameDialog.SetStyle(DialogFragmentStyle.NoTitle, 0);
-            //    newGameDialog.Show(transaction, "newgame dialog");
-            //};
+            mNewGameButton.Click += (object sender, EventArgs args) =>
+            {
+                FragmentTransaction transaction = FragmentManager.BeginTransaction();
+                NewGameDialogFragment newGameDialog = new NewGameDialogFragment();
+                newGameDialog.SetStyle(DialogFragmentStyle.NoTitle, 0);
+                newGameDialog.Show(transaction, "newgame dialog");
+            };
 
             //mSavedGameButton.Click += (object sender, EventArgs args) =>
             //{

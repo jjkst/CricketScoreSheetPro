@@ -139,6 +139,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Fragment\BaseFragment.cs" />
     <Compile Include="Fragment\HomeFragment.cs" />
+    <Compile Include="Fragment\NewGameDialogFragment.cs" />
     <Compile Include="Fragment\TeamFragment.cs" />
     <Compile Include="Fragment\TournamentFragment.cs" />
     <Compile Include="Generic\MyAdapter\SpinnerAdapter.cs" />
@@ -190,6 +191,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MatchRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\NewGameView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
