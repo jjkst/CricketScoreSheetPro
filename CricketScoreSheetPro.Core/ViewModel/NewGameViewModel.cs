@@ -38,5 +38,10 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public Umpire SelectedSecondaryUmpire { get; set; }
 
+        public Match AddMatch()
+        {
+            return new Match();
+        }
+
     }
 }

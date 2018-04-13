@@ -49,5 +49,15 @@ namespace CricketScoreSheetPro.Droid.Activity
             else
                 base.OnBackPressed();
         }
+
+        protected FragmentTransaction ClearPreviousFragments(string tag)
+        {
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag(tag);
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+            return ft;
+        }
     }
 }

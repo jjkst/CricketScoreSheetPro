@@ -10,13 +10,14 @@ using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Droid.Activity;
 using CricketScoreSheetPro.Droid.Adapter;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CricketScoreSheetPro.Droid
 {
-    public class TournamentFragment : BaseFragment
+    public class TournamentFragment : BaseFragment, IEditedTextListener
     {
         protected override int GetLayoutResourceId => Resource.Layout.TournamentView;
 
@@ -27,7 +28,7 @@ namespace CricketScoreSheetPro.Droid
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ViewModel = Singleton.Instance.TournamentListViewModel();
+            ViewModel = new Driver().TournamentListViewModel();
             this.Activity.InvalidateOptionsMenu();
             SetHasOptionsMenu(true);
         }
@@ -70,7 +71,7 @@ namespace CricketScoreSheetPro.Droid
 
         private void ImportTournament()
         {
-            var importtournament = ViewModel.ImportTournament("", Singleton.Instance.UniqueUserId);
+            var importtournament = ViewModel.ImportTournament("", Driver.UniqueUserId);
             TournamentsAdapter.RefreshTournaments(ViewModel.Tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
@@ -91,28 +92,9 @@ namespace CricketScoreSheetPro.Droid
 
         private void ShowAddTournamentDialog(object sender, EventArgs e)
         {
-            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
-            inputDialog.SetTitle("Add Tournament");
-
-            EditText userInput = new EditText(Activity)
-            {
-                Hint = "Enter Tournament Name",
-                Top = 5,
-                Focusable = true,
-                ShowSoftInputOnFocus = true
-            };
-            inputDialog.SetView(userInput);
-
-            inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
-                var newtournament = ViewModel.AddTournament(userInput.Text);
-                var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
-                detailActivity.PutExtra("TournamentId", newtournament.TournamentId);
-                StartActivity(detailActivity);
-            });
-            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
-                Toast.MakeText(this.Activity, "Canceled.", ToastLength.Short).Show();
-            });
-            inputDialog.Show();
+            var ft = ClearPreviousFragments("AddTournament");
+            var addTournament = new EditTextDialogFragment(this, "Add Tournament", "Enter Tournament name");
+            addTournament.Show(ft, "AddTournament");
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -125,6 +107,14 @@ namespace CricketScoreSheetPro.Droid
                 return true;
             }
             return base.OnOptionsItemSelected(item);
+        }
+
+        public void OnEnteredText(string title, string inputText)
+        {
+            var newtournament = ViewModel.AddTournament(inputText);
+            var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
+            detailActivity.PutExtra("TournamentId", newtournament.TournamentId);
+            StartActivity(detailActivity);
         }
     }
 }

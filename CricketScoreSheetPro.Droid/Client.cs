@@ -22,7 +22,7 @@ namespace CricketScoreSheetPro.Droid
 
         public string GetUUID()
         {
-            if (string.IsNullOrEmpty(_uuid)) _uuid = Singleton.Instance.UniqueUserId;
+            if (string.IsNullOrEmpty(_uuid)) _uuid = Driver.UniqueUserId;
             return _uuid;
         }
 

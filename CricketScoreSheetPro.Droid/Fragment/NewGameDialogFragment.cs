@@ -1,18 +1,22 @@
 ﻿
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using CricketScoreSheetPro.Core.ViewModel;
+using CricketScoreSheetPro.Droid.Activity;
 using CricketScoreSheetPro.Droid.Generic.MyAdapter;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CricketScoreSheetPro.Droid
 {
-    public class NewGameDialogFragment : DialogFragment
+    public class NewGameDialogFragment : DialogFragment, IEditedTextListener
     {
+        private Driver driver;
         private NewGameViewModel ViewModel;
 
         private Spinner mHomeTeamName;
@@ -23,10 +27,21 @@ namespace CricketScoreSheetPro.Droid
         private Spinner mOvers;
         private Button mCreateMatchBtn;
 
+        private List<string> Teams;
+        private List<string> Locations;
+        private List<string> Umpires;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ViewModel = Singleton.Instance.NewGameViewModel();
+            driver = new Driver();
+            ViewModel = driver.NewGameViewModel();
+            Teams = new List<string> { "Select Team", "Add New Team" };
+            Teams.AddRange(ViewModel.Teams.Select(n => n.Name));
+            Locations = new List<string> { "Select Ground/Location", "Add Ground/Location" };
+            Locations.AddRange(ViewModel.Locations.Select(n => n.Name));
+            Umpires = new List<string> { "Select Umpire", "Add Umpire" };
+            Umpires.AddRange(ViewModel.Umpires.Select(n => n.Name));
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -41,6 +56,22 @@ namespace CricketScoreSheetPro.Droid
             mUmpireOne = view.FindViewById<Spinner>(Resource.Id.umpire1);           
             mUmpireTwo = view.FindViewById<Spinner>(Resource.Id.umpire2);
 
+            mCreateMatchBtn = view.FindViewById<Button>(Resource.Id.createMatchButton);
+            mCreateMatchBtn.Enabled = false;
+            mCreateMatchBtn.Click += (object sender, EventArgs e) =>
+            {
+                var match = ViewModel.AddMatch();
+                var currentMatchActivity = new Intent(this.Activity, typeof(MatchActivity));
+                currentMatchActivity.PutExtra("MatchId", match.Id);
+                StartActivity(currentMatchActivity);
+                Fragment prev = (DialogFragment)FragmentManager.FindFragmentByTag("newgame dialog");
+                if (prev != null)
+                {
+                    DialogFragment df = (DialogFragment)prev;
+                    df.Dismiss();
+                }
+            };
+
             return view;
         }
 
@@ -48,53 +79,83 @@ namespace CricketScoreSheetPro.Droid
         {
             base.OnResume();
 
-            //Set teams
-            var teams = new List<string> { "Select Team", "Add New Team" };
-            teams.AddRange(ViewModel.Teams.Select(n => n.Name));
-            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, teams.ToArray());            
+            //Set teams            
+            var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());            
             mHomeTeamName.Adapter = adapter;
-            mHomeTeamName.ItemSelected += setTeam;
+            mHomeTeamName.ItemSelected += SetTeam;
             mAwayTeamName.Adapter = adapter;
-            mAwayTeamName.ItemSelected += setTeam;
+            mAwayTeamName.ItemSelected += SetTeam;
 
             // Set Overs            
             var overs = new string[] { "Ten10", "Twenty20", "ThirtyFive35", "Forty40", "Fifty50", "Custom" };
             mOvers.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, overs);
-            mOvers.ItemSelected += setOvers;
+            mOvers.ItemSelected += SetOvers;
 
             // Set Location  
-            var locations = new List<string> { "Select Ground/Location", "Add Ground/Location" };
-            locations.AddRange(ViewModel.Locations.Select(n => n.Name));
             mLocation.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, 
-               locations.ToArray());
-            mLocation.ItemSelected += setLocation;
+               Locations.ToArray());
+            mLocation.ItemSelected += SetLocation;
 
             // Set Umpire      
-            var umpires = new List<string> { "Select Umpire", "Add Umpire" };
-            umpires.AddRange(ViewModel.Umpires.Select(n => n.Name));
             mUmpireOne.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow,
-                umpires.ToArray());
-            mUmpireOne.ItemSelected += setUmpires;
+                Umpires.ToArray());
+            mUmpireOne.ItemSelected += SetUmpires;
         
             mUmpireTwo.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow,
-                umpires.ToArray());
-            mUmpireTwo.ItemSelected += setUmpires;
+                Umpires.ToArray());
+            mUmpireTwo.ItemSelected += SetUmpires;
         }
 
-        private void setUmpires(object sender, AdapterView.ItemSelectedEventArgs e)
+        private void SetUmpires(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+           
+        }
+
+        private void SetLocation(object sender, AdapterView.ItemSelectedEventArgs e)
         {
         }
 
-        private void setLocation(object sender, AdapterView.ItemSelectedEventArgs e)
+        private void SetOvers(object sender, AdapterView.ItemSelectedEventArgs e)
         {
         }
 
-        private void setOvers(object sender, AdapterView.ItemSelectedEventArgs e)
+        private void SetTeam(object sender, AdapterView.ItemSelectedEventArgs e)
         {
+            if (e.Position != 1) return;
+            var ft = ClearPreviousFragments("AddTeam");
+
+            var title = "Add HomeTeam";
+            if (Resource.Id.awayTeam == e.Parent.Id)
+                title = "Add AwayTeam";
+            var addTeam = new EditTextDialogFragment(this, title, "Enter Team name");
+            addTeam.Show(ft, "AddTeam");
         }
 
-        private void setTeam(object sender, AdapterView.ItemSelectedEventArgs e)
+        public void OnEnteredText(string title, string inputText)
         {
+            var team = driver.TeamListViewModel().AddTeam(inputText);
+            Teams.Add(inputText);
+            switch(title)
+            {
+                case "Add HomeTeam":
+                    mHomeTeamName.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());
+                    mHomeTeamName.SetSelection(Umpires.Count - 1);
+                    break;
+                case "Add AwayTeam":
+                    mAwayTeamName.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());
+                    mAwayTeamName.SetSelection(Umpires.Count - 1);
+                    break;
+            }
+        }
+
+        protected FragmentTransaction ClearPreviousFragments(string tag)
+        {
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag(tag);
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+            return ft;
         }
     }
 }

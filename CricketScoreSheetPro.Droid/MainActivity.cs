@@ -48,12 +48,12 @@ namespace CricketScoreSheetPro.Droid
             if (File.Exists(uiniqueUserIdfile))
             {
                 var existingGuid = File.ReadAllText(uiniqueUserIdfile);
-                Singleton.Instance.UniqueUserId = existingGuid;
+                Driver.UniqueUserId = existingGuid;
             }
             else
             {
                 var newGuid = Guid.NewGuid().ToString();
-                Singleton.Instance.UniqueUserId = newGuid;
+                Driver.UniqueUserId = newGuid;
                 File.WriteAllText(uiniqueUserIdfile, newGuid);
             }            
         }

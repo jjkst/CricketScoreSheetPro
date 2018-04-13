@@ -44,7 +44,7 @@ namespace CricketScoreSheetPro.Droid.Activity
             base.OnCreate(savedInstanceState);
             SupportActionBar.SetTitle(Resource.String.TournamentDetailActivity);
             var tournamentId = Intent.GetStringExtra("TournamentId");            
-            ViewModel = Singleton.Instance.TournamentViewModel(tournamentId);
+            ViewModel = new Driver().TournamentViewModel(tournamentId);
 
             Name = (TextView)FindViewById(Resource.Id.NameValue);            
             Sponsor = (TextView)FindViewById(Resource.Id.SponsorValue);
@@ -259,16 +259,6 @@ namespace CricketScoreSheetPro.Droid.Activity
                     SelectedTextView.Text = inputText;
                     break;
             }
-        }
-
-        private FragmentTransaction ClearPreviousFragments(string tag)
-        {
-            FragmentTransaction ft = FragmentManager.BeginTransaction();
-            Fragment prev = FragmentManager.FindFragmentByTag(tag);
-            if (prev != null)
-                ft.Remove(prev);
-            ft.AddToBackStack(null);
-            return ft;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

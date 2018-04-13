@@ -27,7 +27,15 @@ namespace CricketScoreSheetPro.Droid
         {
             return base.OnOptionsItemSelected(item);
         }
-        
 
+        protected FragmentTransaction ClearPreviousFragments(string tag)
+        {
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag(tag);
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+            return ft;
+        }
     }
 }

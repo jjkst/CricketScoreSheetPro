@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\BaseActivity.cs" />
+    <Compile Include="Activity\MatchActivity.cs" />
     <Compile Include="Activity\MatchListActivity.cs" />
     <Compile Include="Activity\TeamDetailActivity.cs" />
     <Compile Include="Activity\TournamentDetailActivity.cs" />
@@ -151,7 +152,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Singleton.cs" />
+    <Compile Include="Driver.cs" />
     <Compile Include="XamarinRecyclerViewOnScrollListener.cs" />
   </ItemGroup>
   <ItemGroup>

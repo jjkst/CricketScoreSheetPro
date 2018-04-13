@@ -30,7 +30,7 @@ namespace CricketScoreSheetPro.Droid.Activity
             base.OnCreate(savedInstanceState);
             SupportActionBar.SetTitle(Resource.String.TeamDetailActivity);
             var teamId = Intent.GetStringExtra("TeamId");
-            ViewModel = Singleton.Instance.TeamViewModel(teamId);
+            ViewModel = new Driver().TeamViewModel(teamId);
 
             Name = (TextView)FindViewById(Resource.Id.NameValue);
             Name.Click += EditTeamName;
@@ -66,16 +66,6 @@ namespace CricketScoreSheetPro.Droid.Activity
             ViewModel.Team.Players.Remove(ViewModel.Team.Players.FirstOrDefault(ut => ut == playername));
             PlayerAdapter.Refresh(ViewModel.Team.Players);
             PlayerRecyclerView.SetAdapter(PlayerAdapter);
-        }
-
-        private FragmentTransaction ClearPreviousFragments(string tag)
-        {
-            FragmentTransaction ft = FragmentManager.BeginTransaction();
-            Fragment prev = FragmentManager.FindFragmentByTag(tag);
-            if (prev != null)
-                ft.Remove(prev);
-            ft.AddToBackStack(null);
-            return ft;
         }
 
         private void AddPlayer(object sender, EventArgs e)

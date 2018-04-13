@@ -10,13 +10,14 @@ using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Droid.Activity;
 using CricketScoreSheetPro.Droid.Adapter;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CricketScoreSheetPro.Droid
 {
-    public class TeamFragment : BaseFragment
+    public class TeamFragment : BaseFragment, IEditedTextListener
     {
         protected override int GetLayoutResourceId => Resource.Layout.TeamView;
 
@@ -27,7 +28,7 @@ namespace CricketScoreSheetPro.Droid
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            ViewModel = Singleton.Instance.TeamListViewModel();
+            ViewModel = new Driver().TeamListViewModel();
             this.Activity.InvalidateOptionsMenu();
             SetHasOptionsMenu(true);
         }
@@ -85,28 +86,9 @@ namespace CricketScoreSheetPro.Droid
 
         private void ShowAddTeamDialog(object sender, EventArgs e)
         {
-            AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
-            inputDialog.SetTitle("Add Team");
-
-            EditText userInput = new EditText(Activity)
-            {
-                Hint = "Enter Team Name",
-                Top = 5,
-                Focusable = true,
-                ShowSoftInputOnFocus = true
-            };
-            inputDialog.SetView(userInput);
-
-            inputDialog.SetPositiveButton("Add", (senderAlert, args) => {
-                var newteam = ViewModel.AddTeam(userInput.Text);
-                var detailActivity = new Intent(this.Activity, typeof(TeamDetailActivity));
-                detailActivity.PutExtra("TeamId", newteam.TeamId);
-                StartActivity(detailActivity);
-            });
-            inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
-                Toast.MakeText(this.Activity, "Canceled.", ToastLength.Short).Show();
-            });
-            inputDialog.Show();
+            var ft = ClearPreviousFragments("AddTeam");
+            var addTournament = new EditTextDialogFragment(this, "Add Team", "Enter Tournament name");
+            addTournament.Show(ft, "AddTeam");
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -119,6 +101,14 @@ namespace CricketScoreSheetPro.Droid
                 return true;
             }
             return base.OnOptionsItemSelected(item);
+        }
+
+        public void OnEnteredText(string title, string inputText)
+        {
+            var newteam = ViewModel.AddTeam(inputText);
+            var detailActivity = new Intent(this.Activity, typeof(TeamDetailActivity));
+            detailActivity.PutExtra("TeamId", newteam.TeamId);
+            StartActivity(detailActivity);
         }
     }
 }

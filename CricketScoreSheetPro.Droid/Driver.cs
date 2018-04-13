@@ -6,31 +6,10 @@ using System;
 
 namespace CricketScoreSheetPro.Droid
 {
-    public class Singleton
+    public class Driver
     {
-        public Client Client { get; set; }
-        public string UniqueUserId { get; set; }
-
-        #region Singleton
-
-        private static Singleton instance;
-        
-        private Singleton()
-        {
-            Client = new Client();
-        }
-
-        public static Singleton Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new Singleton();
-                return instance;
-            }
-        }
-
-        #endregion Singleton                
+        public Client Client { get; set; } = new Client();
+        public static string UniqueUserId { get; set; }           
 
         #region Tournament
 
