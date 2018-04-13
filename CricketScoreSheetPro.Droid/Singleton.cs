@@ -91,5 +91,36 @@ namespace CricketScoreSheetPro.Droid
         }
 
         #endregion Team
+
+        #region New Game
+
+        private UmpireService umpireService;
+        private UmpireService UmpireService()
+        {
+            if (umpireService == null)
+                umpireService = new UmpireService(new Repository<Umpire>(Client));
+            return umpireService;
+        }
+
+        private LocationService locationService;
+        private LocationService LocationService()
+        {
+            if (locationService == null)
+                locationService = new LocationService(new Repository<Location>(Client));
+            return locationService;
+        }
+
+        private NewGameViewModel newgameViewModel;
+        public NewGameViewModel NewGameViewModel()
+        {
+            teamService = teamService ?? SetTeamService();
+            locationService = locationService ?? LocationService();
+            umpireService = umpireService ?? UmpireService();
+            if (newgameViewModel == null)
+                newgameViewModel = new NewGameViewModel(teamService, locationService, umpireService);
+            return newgameViewModel;
+        }
+
+        #endregion New Game
     }
 }

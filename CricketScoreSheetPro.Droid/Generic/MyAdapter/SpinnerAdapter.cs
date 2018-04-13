@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Content;
 using Android.Views;
 using Android.Widget;
 
@@ -14,11 +6,13 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
 {
     public class SpinnerAdapter : ArrayAdapter<string>
     {
+        int resourcelayout;
         string[] objects;
 
         public SpinnerAdapter(Context context, int textViewResourceId, string[] objects) :
             base(context, textViewResourceId, objects)
         {
+            this.resourcelayout = textViewResourceId;
             this.objects = objects;
         }
 
@@ -34,7 +28,7 @@ namespace CricketScoreSheetPro.Droid.Generic.MyAdapter
 
         public View GetCustomView(int position, View convertView, ViewGroup parent)
         {
-            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.SpinnerTextViewRow, parent, false);
+            View itemView = LayoutInflater.From(parent.Context).Inflate(resourcelayout, parent, false);
             TextView label = (TextView)itemView.FindViewById(Resource.Id.label);
             label.Text = objects[position];
             label.SetTypeface(null, Android.Graphics.TypefaceStyle.BoldItalic);

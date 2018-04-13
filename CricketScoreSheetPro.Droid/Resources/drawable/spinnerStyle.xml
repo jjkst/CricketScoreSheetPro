@@ -13,7 +13,7 @@
       </item>
       <item >
         <bitmap android:gravity="center|right" android:src="@android:drawable/arrow_down_float" />
-        <padding android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp" />
+        <margin android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp" />
       </item>
     </layer-list>
   </item>
