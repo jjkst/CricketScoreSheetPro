@@ -11,20 +11,30 @@ namespace CricketScoreSheetPro.Core.ViewModel
     {
         public bool IsTournament { get; set; }
 
-        public List<UserTeam> Teams { get; set; }
+        private readonly ITeamService _teamService;
 
-        public List<Location> Locations { get; set; }
+        private readonly ILocationService _locationService;
 
-        public List<Umpire> Umpires { get; set; }
+        private readonly IUmpireService _umpireService;
+
+        public List<UserTeam> Teams => _teamService.GetUserTeams().ToList();
+
+        public List<Location> Locations => _locationService.GetLocations().ToList();
+
+        public List<Umpire> Umpires => _umpireService.GetUmpires().ToList();
 
         public NewGameViewModel(ITeamService teamService, ILocationService locationService, IUmpireService umpireService)
         {
-            Teams = teamService.GetUserTeams().ToList();
-            Locations = locationService.GetLocations().ToList();
-            Umpires = umpireService.GetUmpires().ToList();
+            this._teamService = teamService;
+            this._locationService = locationService;
+            this._umpireService = umpireService;
         }
 
-        public TeamInning SelectedHomeTeam { get; set; }
+        public TeamInning SelectedHomeTeam(UserTeam userTeam)
+        {
+            var team = _teamService.GetTeam(userTeam.TeamId);
+            return new TeamInning();
+        }
 
         public TeamInning SelectedAwayTeam { get; set; }        
 
@@ -37,6 +47,21 @@ namespace CricketScoreSheetPro.Core.ViewModel
         public Umpire SelectedPrimaryUmpire { get; set; }
 
         public Umpire SelectedSecondaryUmpire { get; set; }
+
+        public Umpire AddUmpire(string umpirename)
+        {
+            return _umpireService.AddUmpire(umpirename);
+        }
+
+        public Location AddLocation(string locationname)
+        {
+            return _locationService.AddLocation(locationname);
+        }
+
+        public UserTeam AddTeam(string teamname)
+        {
+            return _teamService.AddTeam(teamname);
+        }
 
         public Match AddMatch()
         {

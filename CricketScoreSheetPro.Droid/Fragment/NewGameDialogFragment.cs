@@ -28,6 +28,7 @@ namespace CricketScoreSheetPro.Droid
         private Button mCreateMatchBtn;
 
         private List<string> Teams;
+        private List<string> Overs;
         private List<string> Locations;
         private List<string> Umpires;
 
@@ -106,19 +107,6 @@ namespace CricketScoreSheetPro.Droid
             mUmpireTwo.ItemSelected += SetUmpires;
         }
 
-        private void SetUmpires(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-           
-        }
-
-        private void SetLocation(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-        }
-
-        private void SetOvers(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-        }
-
         private void SetTeam(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             if (e.Position != 1) return;
@@ -127,23 +115,81 @@ namespace CricketScoreSheetPro.Droid
             var title = "Add HomeTeam";
             if (Resource.Id.awayTeam == e.Parent.Id)
                 title = "Add AwayTeam";
-            var addTeam = new EditTextDialogFragment(this, title, "Enter Team name");
+            var addTeam = new EditTextDialogFragment(this, title, "Enter team name");
             addTeam.Show(ft, "AddTeam");
+        }
+
+        private void SetOvers(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            if (e.Position != 5) return;
+            var ft = ClearPreviousFragments("customovers");
+            var title = "Custom Over";
+            var customOvers = new EditTextDialogFragment(this, title, "Enter number of over(s)");
+            customOvers.Show(ft, "customovers");
+        }
+
+        private void SetLocation(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            if (e.Position != 1) return;
+            var ft = ClearPreviousFragments("AddLocation");
+
+            var title = "Add Location";
+            var addLocation = new EditTextDialogFragment(this, title, "Enter location");
+            addLocation.Show(ft, "AddLocation");
+        }
+
+        private void SetUmpires(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            if (e.Position != 1) return;
+            var ft = ClearPreviousFragments("AddUmpire");
+
+            var title = "Add PrimaryUmpire";
+            if (Resource.Id.umpire2 == e.Parent.Id)
+                title = "Add SecondaryUmpire";
+            var addTeam = new EditTextDialogFragment(this, title, "Enter umpire name");
+            addTeam.Show(ft, "AddUmpire");
         }
 
         public void OnEnteredText(string title, string inputText)
         {
-            var team = driver.TeamListViewModel().AddTeam(inputText);
-            Teams.Add(inputText);
             switch(title)
             {
                 case "Add HomeTeam":
+                    var hometeam = driver.TeamListViewModel().AddTeam(inputText);
+                    Teams.Add(inputText);
                     mHomeTeamName.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());
-                    mHomeTeamName.SetSelection(Umpires.Count - 1);
+                    mHomeTeamName.SetSelection(Teams.Count - 1);
+                    ViewModel.SelectedHomeTeam(ViewModel.Teams.FirstOrDefault(t => t.Name == inputText));
                     break;
                 case "Add AwayTeam":
+                    var awayteam = driver.TeamListViewModel().AddTeam(inputText);
+                    Teams.Add(inputText);
                     mAwayTeamName.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());
-                    mAwayTeamName.SetSelection(Umpires.Count - 1);
+                    mAwayTeamName.SetSelection(Teams.Count - 1);
+                    break;
+                case "Custom Over":
+                    Overs.Add(inputText);
+                    var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Overs.ToArray());
+                    mOvers.Adapter = adapter;
+                    mOvers.SetSelection(Overs.Count - 1);
+                    break;
+                case "Add Location":
+                    var addLocation = driver.NewGameViewModel().AddLocation(inputText);
+                    Locations.Add(inputText);
+                    mLocation.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Locations.ToArray());                    
+                    mLocation.SetSelection(Locations.Count - 1);
+                    break;
+                case "Add PrimaryUmpire":
+                    var primaryumpire = driver.NewGameViewModel().AddUmpire(inputText);
+                    Umpires.Add(inputText);
+                    mUmpireOne.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Umpires.ToArray());
+                    mUmpireOne.SetSelection(Umpires.Count - 1);
+                    break;
+                case "Add SecondaryUmpire":
+                    var secondaryumpire = driver.NewGameViewModel().AddUmpire(inputText);
+                    Umpires.Add(inputText);
+                    mUmpireTwo.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Umpires.ToArray());
+                    mUmpireTwo.SetSelection(Umpires.Count - 1);
                     break;
             }
         }
