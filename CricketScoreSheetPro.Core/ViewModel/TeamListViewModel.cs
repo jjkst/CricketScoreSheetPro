@@ -15,9 +15,9 @@ namespace CricketScoreSheetPro.Core.ViewModel
             _teamService = teamService ?? throw new ArgumentNullException($"TeamService is null, cannot get teams.");
         }
 
-        public List<UserTeam> Teams => _teamService.GetUserTeams().ToList();
+        public List<Team> Teams => _teamService.GetTeams().ToList();
 
-        public UserTeam AddTeam(string teamName)
+        public Team AddTeam(string teamName)
         {
             var newteam = _teamService.AddTeam(teamName);
             return newteam;

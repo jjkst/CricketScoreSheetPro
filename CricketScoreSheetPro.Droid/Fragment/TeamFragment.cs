@@ -65,7 +65,7 @@ namespace CricketScoreSheetPro.Droid
 
         protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            IEnumerable<UserTeam> teams = ViewModel.Teams.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
+            IEnumerable<Team> teams = ViewModel.Teams.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
             TeamAdapter.Refresh(teams);
             TeamsRecyclerView.SetAdapter(TeamAdapter);
         }
@@ -107,7 +107,7 @@ namespace CricketScoreSheetPro.Droid
         {
             var newteam = ViewModel.AddTeam(inputText);
             var detailActivity = new Intent(this.Activity, typeof(TeamDetailActivity));
-            detailActivity.PutExtra("TeamId", newteam.TeamId);
+            detailActivity.PutExtra("TeamId", newteam.Id);
             StartActivity(detailActivity);
         }
     }

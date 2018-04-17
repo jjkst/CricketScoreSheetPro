@@ -17,8 +17,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TeamPageTest()
         {
             var testClient = new TestClient();
-            var teamService = new TeamService(new Repository<UserTeam>(testClient),
-                new Repository<Team>(testClient));
+            var teamService = new TeamService(new Repository<Team>(testClient));
             _listViewModel = new TeamListViewModel(teamService);
         }
 
@@ -54,7 +53,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Assert
             newteam.Should().NotBeNull();
             newteam.Name.Should().Be("AddTeamTest");
-            new Repository<Team>(new TestClient()).GetItem(newteam.TeamId).Name.Should().Be("AddTeamTest");
+            new Repository<Team>(new TestClient()).GetItem(newteam.Id).Name.Should().Be("AddTeamTest");
         }
 
         [TestMethod]
@@ -68,7 +67,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             _listViewModel.DeleteTeam(newteam.Id);
 
             //Assert
-            new Repository<Team>(new TestClient()).GetItem(newteam.TeamId).Should().BeNull();
+            new Repository<Team>(new TestClient()).GetItem(newteam.Id).Should().BeNull();
         }
 
     }

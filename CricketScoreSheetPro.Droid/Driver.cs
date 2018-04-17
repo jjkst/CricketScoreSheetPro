@@ -47,8 +47,7 @@ namespace CricketScoreSheetPro.Droid
         private TeamService SetTeamService()
         {
             if (teamService == null)
-                teamService = new TeamService(new Repository<UserTeam>(Client),
-                new Repository<Team>(Client));
+                teamService = new TeamService(new Repository<Team>(Client));
             return teamService;
         }
 

@@ -17,7 +17,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         private readonly IUmpireService _umpireService;
 
-        public List<UserTeam> Teams => _teamService.GetUserTeams().ToList();
+        public List<Team> Teams => _teamService.GetTeams().ToList();
 
         public List<Location> Locations => _locationService.GetLocations().ToList();
 
@@ -30,13 +30,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             this._umpireService = umpireService;
         }
 
-        public TeamInning SelectedHomeTeam(UserTeam userTeam)
-        {
-            var team = _teamService.GetTeam(userTeam.TeamId);
-            return new TeamInning();
-        }
-
-        public TeamInning SelectedAwayTeam { get; set; }        
+        public Team SelectedAwayTeam { get; set; }        
 
         public string SelectedTournamentId { get; set; }
 
@@ -58,15 +52,14 @@ namespace CricketScoreSheetPro.Core.ViewModel
             return _locationService.AddLocation(locationname);
         }
 
-        public UserTeam AddTeam(string teamname)
+        public Team AddTeam(string teamname)
         {
             return _teamService.AddTeam(teamname);
         }
 
-        public Match AddMatch()
+        public Match AddMatch(string hometeamname, string awayteamname, string overs, string location, string primaryumpire, string secondaryumpire)
         {
             return new Match();
         }
-
     }
 }

@@ -10,16 +10,14 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 {
     public class TeamService : ITeamService
     {
-        private readonly IRepository<UserTeam> _userteamRepository;
         private readonly IRepository<Team> _teamRepository;
 
-        public TeamService(IRepository<UserTeam> userteamRepository, IRepository<Team> teamRepository)
+        public TeamService(IRepository<Team> teamRepository)
         {
-            _userteamRepository = userteamRepository ?? throw new ArgumentNullException($"userteamRepository is null");
             _teamRepository = teamRepository ?? throw new ArgumentNullException($"teamRepository is null");
         }
 
-        public UserTeam AddTeam(string teamName)
+        public Team AddTeam(string teamName)
         {
             if (string.IsNullOrEmpty(teamName)) throw new ArgumentException($"Team name is empty");
             var newteamproperties = new Dictionary<string, object>
@@ -27,36 +25,20 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
                 { "type", nameof(Team)},
                 { "value", new Team
                             {
-                                Name = teamName
+                                Name = teamName,
+                                AccessType = AccessType.Moderator,
+                                Owner = true,
+                                AddDate = DateTime.Today
                             }}
             };
             var teamAdded = _teamRepository.Create(newteamproperties);
-            if (teamAdded == null) throw new ArgumentException($"Team add is not successful.");
-            var newuserteamproperties = new Dictionary<string, object>
-            {
-                { "team", teamAdded.Id },
-                { "type", nameof(UserTeam)},
-                { "value", new UserTeam
-                            {
-                                TeamId = teamAdded.Id,
-                                Name = teamAdded.Name,
-                                AccessType = AccessType.Moderator,
-                                Owner = true,
-                                AddDate = DateTime.Today                                
-                            }}
-            };
-            var userteamAdded = _userteamRepository.Create(newuserteamproperties);
-
-            return userteamAdded;
+            return teamAdded;
         }
 
-        public void DeleteTeam(string userteamid)
+        public void DeleteTeam(string teamid)
         {
-            if (string.IsNullOrEmpty(userteamid)) throw new ArgumentException($"UserTeam ID is null");
-            var userteam = _userteamRepository.GetItem(userteamid);
-            if (userteam == null) throw new ArgumentException($"Not able to find user team.");
-            _teamRepository.Delete(userteam.TeamId);
-            _userteamRepository.Delete(userteam.Id);
+            if (string.IsNullOrEmpty(teamid)) throw new ArgumentException($"Team ID is null");
+            _teamRepository.Delete(teamid);
         }
 
         public Team GetTeam(string teamId)
@@ -66,9 +48,9 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             return team;
         }
 
-        public IList<UserTeam> GetUserTeams()
+        public IList<Team> GetTeams()
         {
-            var result = _userteamRepository.GetList();
+            var result = _teamRepository.GetList();
             return result;
         }
 
@@ -79,19 +61,7 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             //update team
             var updatedteam = _teamRepository.Update(team.Id, team);
 
-            // update usertournament
-            var userteams = _userteamRepository.GetListByProperty("team", team.Id);
-            if (userteams == null) throw new ArgumentException($"Not able to find team id in users list");
-            if (userteams[0].Name == team.Name) return updatedteam; //No need if no name change
-
-            bool updateduserteam = true;
-            foreach (var ut in userteams)
-            {
-                ut.Name = team.Name;
-                updateduserteam = updateduserteam && _userteamRepository.Update(ut.Id, ut);
-            }
-
-            return updateduserteam && updateduserteam;
+            return updatedteam;
         }
     }
 }

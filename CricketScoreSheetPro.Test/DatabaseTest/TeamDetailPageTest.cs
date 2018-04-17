@@ -17,8 +17,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TeamDetailPageTest()
         {
             var testClient = new TestClient();
-            var teamService = new TeamService(new Repository<UserTeam>(testClient),
-                new Repository<Team>(testClient));
+            var teamService = new TeamService(new Repository<Team>(testClient));
             var team = teamService.AddTeam("TeamDetailPageTest");
             UserTeamId = team.Id;
             _viewModel = new TeamViewModel(teamService, team.Id);
@@ -54,7 +53,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             updated.Should().BeTrue();
-            var repo = new Repository<UserTeam>(new TestClient()).GetItem(UserTeamId);
+            var repo = new Repository<Team>(new TestClient()).GetItem(UserTeamId);
             repo.Name.Should().Be("UpdateTeamName");
         }
 

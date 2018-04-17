@@ -61,7 +61,14 @@ namespace CricketScoreSheetPro.Droid
             mCreateMatchBtn.Enabled = false;
             mCreateMatchBtn.Click += (object sender, EventArgs e) =>
             {
-                var match = ViewModel.AddMatch();
+                var hometeamname = mHomeTeamName.SelectedItem.ToString();
+                var awayteamname = mAwayTeamName.SelectedItem.ToString();
+                var overs = mOvers.SelectedItem.ToString();
+                var location = mLocation.SelectedItem.ToString();
+                var primaryumpire = mUmpireOne.SelectedItem.ToString();
+                var secondaryumpire = mUmpireTwo.SelectedItem.ToString();
+
+                var match = ViewModel.AddMatch(hometeamname, awayteamname, overs, location, primaryumpire, secondaryumpire);
                 var currentMatchActivity = new Intent(this.Activity, typeof(MatchActivity));
                 currentMatchActivity.PutExtra("MatchId", match.Id);
                 StartActivity(currentMatchActivity);
@@ -159,7 +166,6 @@ namespace CricketScoreSheetPro.Droid
                     Teams.Add(inputText);
                     mHomeTeamName.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.SpinnerTextViewRow, Teams.ToArray());
                     mHomeTeamName.SetSelection(Teams.Count - 1);
-                    ViewModel.SelectedHomeTeam(ViewModel.Teams.FirstOrDefault(t => t.Name == inputText));
                     break;
                 case "Add AwayTeam":
                     var awayteam = driver.TeamListViewModel().AddTeam(inputText);

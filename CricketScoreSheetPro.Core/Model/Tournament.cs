@@ -23,7 +23,7 @@ namespace CricketScoreSheetPro.Core.Model
 
         public IList<string> Venues { get; set; }    
         
-        public IList<UserTeam> Teams { get; set; }
+        public IList<Team> Teams { get; set; }
 
         public int TotalOvers { get; set; }
 
@@ -32,7 +32,7 @@ namespace CricketScoreSheetPro.Core.Model
             Prizes = new List<string>();
             Facilities = new List<string>();
             Venues = new List<string>();
-            Teams = new List<UserTeam>();
+            Teams = new List<Team>();
         }
     }
 }

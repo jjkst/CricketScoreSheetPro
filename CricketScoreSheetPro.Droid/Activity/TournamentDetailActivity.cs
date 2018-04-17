@@ -183,10 +183,10 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         private void EditTournamentDetail_IncludeTeam(object sender, EventArgs e)
         {
-            var teams = new List<UserTeam>
+            var teams = new List<Team>
             {
-                new UserTeam { Id = "1", Name = "JK" },
-                new UserTeam { Id = "2", Name = "RK" }
+                new Team { Id = "1", Name = "JK" },
+                new Team { Id = "2", Name = "RK" }
             }; // Should be from TeamViewModel
 
             var teamnames = new List<string>();
@@ -205,10 +205,10 @@ namespace CricketScoreSheetPro.Droid.Activity
 
         public void OnSelectSpinnerItem(string inputText)
         {
-            var teams = new List<UserTeam>
+            var teams = new List<Team>
             {
-                new UserTeam { Id = "1", Name = "JK" },
-                new UserTeam { Id = "2", Name = "RK" }
+                new Team { Id = "1", Name = "JK" },
+                new Team { Id = "2", Name = "RK" }
             }; // Should be from TeamViewModel
 
             var team = teams.FirstOrDefault(t => t.Name == inputText);
