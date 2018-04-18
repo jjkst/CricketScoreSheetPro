@@ -147,6 +147,7 @@
     <Compile Include="Generic\MyAdapter\TextViewWithDeleteActionAdapter.cs" />
     <Compile Include="Generic\MyDialogFragment\DatePickerDialogFragment.cs" />
     <Compile Include="Generic\MyDialogFragment\EditTextDialogFragment.cs" />
+    <Compile Include="Generic\MyDialogFragment\RadioButtonDialogFragment.cs" />
     <Compile Include="Generic\MyDialogFragment\SpinnerDialogFragment.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MainActivity.cs" />

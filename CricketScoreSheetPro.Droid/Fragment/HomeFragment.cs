@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
+using CricketScoreSheetPro.Droid.Generic.MyDialogFragment;
+using System;
 
 namespace CricketScoreSheetPro.Droid
 {
-    public class HomeFragment : Fragment
+    public class HomeFragment : Fragment, ISelectedRadioButtonListener
     {
         private Button mNewGameButton;
         private Button mSavedGameButton;
@@ -32,10 +26,9 @@ namespace CricketScoreSheetPro.Droid
 
             mNewGameButton.Click += (object sender, EventArgs args) =>
             {
-                FragmentTransaction transaction = FragmentManager.BeginTransaction();
-                NewGameDialogFragment newGameDialog = new NewGameDialogFragment();
-                newGameDialog.SetStyle(DialogFragmentStyle.NoTitle, 0);
-                newGameDialog.Show(transaction, "newgame dialog");
+                var ft = ClearPreviousFragments("GameType");
+                var gametype = new RadioButtonDialogFragment(this, "Select game type");
+                gametype.Show(ft, "GameType");
             };
 
             //mSavedGameButton.Click += (object sender, EventArgs args) =>
@@ -45,6 +38,24 @@ namespace CricketScoreSheetPro.Droid
             //};
 
             return view;
+        }
+
+        public void OnSelectedRadioButton(string title, string inputText)
+        {
+            FragmentTransaction transaction = FragmentManager.BeginTransaction();
+            NewGameDialogFragment newGameDialog = new NewGameDialogFragment();
+            newGameDialog.SetStyle(DialogFragmentStyle.NoTitle, 0);
+            newGameDialog.Show(transaction, "newgame dialog");
+        }
+
+        protected FragmentTransaction ClearPreviousFragments(string tag)
+        {
+            FragmentTransaction ft = FragmentManager.BeginTransaction();
+            Fragment prev = FragmentManager.FindFragmentByTag(tag);
+            if (prev != null)
+                ft.Remove(prev);
+            ft.AddToBackStack(null);
+            return ft;
         }
     }
 }

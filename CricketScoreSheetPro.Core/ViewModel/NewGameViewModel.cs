@@ -28,19 +28,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             this._teamService = teamService;
             this._locationService = locationService;
             this._umpireService = umpireService;
-        }
-
-        public Team SelectedAwayTeam { get; set; }        
-
-        public string SelectedTournamentId { get; set; }
-
-        public int TotalOvers { get; set; }
-
-        public Location SelectedLocation { get; set; }
-
-        public Umpire SelectedPrimaryUmpire { get; set; }
-
-        public Umpire SelectedSecondaryUmpire { get; set; }
+        }  
 
         public Umpire AddUmpire(string umpirename)
         {
@@ -59,7 +47,43 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public Match AddMatch(string hometeamname, string awayteamname, string overs, string location, string primaryumpire, string secondaryumpire)
         {
-            return new Match();
+            var hometeam = Teams.FirstOrDefault(n => n.Name == hometeamname);
+            if (hometeam == null) throw new NullReferenceException("Home team name is not added");
+            var awayteam = Teams.FirstOrDefault(n => n.Name == awayteamname);
+            if (awayteam == null) throw new NullReferenceException("Away team name is not added");
+
+            var hometeaminning = new TeamInning
+            {
+                TeamId = hometeam.Id,
+                TeamName = hometeam.Name,
+                Team_TournamentId = "",
+                TournamentId = "",
+                MatchId = "",
+            };
+            var awayteaminning = new TeamInning
+            {
+                TeamId = awayteam.Id,
+                TeamName = awayteam.Name,
+                Team_TournamentId = "",
+                TournamentId = "",
+                MatchId = "",
+            };
+
+            var tournamentId = "";
+
+            var match = new Match
+            {
+                HomeTeam = hometeaminning,
+                AddDate = DateTime.Now,
+                AwayTeam = awayteaminning,
+                Location = location,
+                PrimaryUmpire = primaryumpire,
+                SecondaryUmpire = secondaryumpire,
+                TotalOvers = int.Parse(overs)
+            };
+            
+
+            return match;
         }
     }
 }
