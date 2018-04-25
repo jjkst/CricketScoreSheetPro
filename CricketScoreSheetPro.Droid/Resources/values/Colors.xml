@@ -3,4 +3,5 @@
   <item name="EditText" type="color">#0086ff</item>
   <item name="DividerLine" type="color">#d3d3d3</item>
   <item name="Icon" type="color">#0086ff</item>
+  <item name="Title" type="color">#2196F3</item>
 </resources>
