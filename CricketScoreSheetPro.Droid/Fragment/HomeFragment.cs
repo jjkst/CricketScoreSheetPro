@@ -27,7 +27,7 @@ namespace CricketScoreSheetPro.Droid
             mNewGameButton.Click += (object sender, EventArgs args) =>
             {
                 var ft = ClearPreviousFragments("GameType");
-                var gametype = new RadioButtonDialogFragment(this, "Select game type");
+                var gametype = new RadioButtonDialogFragment(this, "Select Game Type");
                 gametype.Show(ft, "GameType");
             };
 

@@ -39,25 +39,17 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
             LinearLayout.LayoutParams layoutparameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
             layoutparameters.SetMargins(15, 20, 15, 5);
 
-            TextView title = new TextView(this.Activity);
-            title.SetText(_title, TextView.BufferType.Normal);
-            title.SetBackgroundColor(new Color(ContextCompat.GetColor(this.Activity, Resource.Color.Title)));
-            title.SetPadding(10, 10, 10, 10);
-            title.Gravity = GravityFlags.CenterHorizontal;
-            title.SetTextColor(Color.Black);
-            title.SetTextSize(ComplexUnitType.Px, 50);
-
-            Individual = new RadioButton(this.Activity) { Text = "Individual Game" };
-            Tournament = new RadioButton(this.Activity) { Text = "Tournament" };
-
-            RadioGroup rg = new RadioGroup(this.Activity);
+            Individual = new RadioButton(this.Activity) { Text = "Individual Game", LayoutParameters = layoutparameters };
+            Tournament = new RadioButton(this.Activity) { Text = "Tournament", LayoutParameters = layoutparameters };
+            RadioGroup rg = new RadioGroup(this.Activity) { LayoutParameters = layoutparameters };
             rg.AddView(Individual);
             rg.AddView(Tournament);
-            rg.CheckedChange += Rg_CheckedChange; 
+            rg.CheckedChange += Rg_CheckedChange;
+
             container.AddView(rg);
 
             AlertDialog.Builder inputDialog = new AlertDialog.Builder(this.Activity);
-            inputDialog.SetCustomTitle(title);
+            inputDialog.SetTitle(_title);
             inputDialog.SetView(container);
             inputDialog.SetNegativeButton("Cancel", (senderAlert, args) => {
                 Toast.MakeText(this.Activity, "Canceled.", ToastLength.Short).Show();
@@ -69,6 +61,5 @@ namespace CricketScoreSheetPro.Droid.Generic.MyDialogFragment
         {
             _callback.OnSelectedRadioButton(_title, Individual.Id == e.CheckedId ? "Individual Game" : "Tournament");
         }
-
     }
 }

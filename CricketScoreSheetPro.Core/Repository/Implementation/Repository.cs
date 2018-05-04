@@ -56,7 +56,8 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
 
         public virtual IList<T> GetList()
         {
-            var query = Database.GetView(typeof(T).Name).CreateQuery();
+            //var query = Database.GetView(typeof(T).Name).CreateQuery();
+            var query = Database.CreateAllDocumentsQuery();
             query.Descending = true;
 
             var result = new List<T>();
