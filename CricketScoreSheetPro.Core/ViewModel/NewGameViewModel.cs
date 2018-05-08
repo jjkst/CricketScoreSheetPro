@@ -45,7 +45,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             return _teamService.AddTeam(teamname);
         }
 
-        public Match AddMatch(string hometeamname, string awayteamname, string overs, string location, string primaryumpire, string secondaryumpire)
+        public Match AddMatch(string hometeamname, string awayteamname, string overs_tournaments, string location, string primaryumpire, string secondaryumpire)
         {
             var hometeam = Teams.FirstOrDefault(n => n.Name == hometeamname);
             if (hometeam == null) throw new NullReferenceException("Home team name is not added");
@@ -79,7 +79,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
                 Location = location,
                 PrimaryUmpire = primaryumpire,
                 SecondaryUmpire = secondaryumpire,
-                TotalOvers = int.Parse(overs)
+                TotalOvers = int.Parse(overs_tournaments)
             };
             
 

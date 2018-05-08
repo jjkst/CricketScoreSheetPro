@@ -42,10 +42,11 @@ namespace CricketScoreSheetPro.Droid
 
         public void OnSelectedRadioButton(string title, string inputText)
         {
+            ClearPreviousFragments("GameType");
             FragmentTransaction transaction = FragmentManager.BeginTransaction();
-            NewGameDialogFragment newGameDialog = new NewGameDialogFragment();
+            NewGameDialogFragment newGameDialog = new NewGameDialogFragment(inputText);
             newGameDialog.SetStyle(DialogFragmentStyle.NoTitle, 0);
-            newGameDialog.Show(transaction, "newgame dialog");
+            newGameDialog.Show(transaction, "newgame dialog");            
         }
 
         protected FragmentTransaction ClearPreviousFragments(string tag)

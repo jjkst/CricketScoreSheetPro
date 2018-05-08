@@ -25,8 +25,17 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         {
             if (newproperty == null) throw new ArgumentNullException("New property to be added is empty.");
             newproperty.Add("uuid", UUID);
-            var document = Database.CreateDocument();
-            Function.UpdateGenericObjectProperty(newproperty, document.Id);
+            string id = null;
+            using (var mutableDoc = new MutableDocument())
+            {
+                mutableDoc.SetFloat("version", 2.0f)
+                    .SetString("type", "SDK");
+
+                // Save it to the database
+                Database.Save(mutableDoc);
+                id = mutableDoc.Id;
+            }
+            Function.UpdateGenericObjectProperty(newproperty, id);
             document.PutProperties(newproperty);
             var rawvalue = document.GetProperty("value");
             var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
