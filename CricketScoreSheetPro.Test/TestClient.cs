@@ -1,4 +1,5 @@
 ﻿using Couchbase.Lite;
+using Couchbase.Lite.DI;
 using CricketScoreSheetPro.Core;
 using System;
 using System.IO;
@@ -14,8 +15,10 @@ namespace CricketScoreSheetPro.Test
         {
             if(_database == null)
             {
-                var manager = new Manager(new DirectoryInfo(Environment.CurrentDirectory.ToLower()), Manager.DefaultOptions);
-                _database = manager.GetDatabase("testdb");
+                Couchbase.Lite.Support.NetDesktop.Activate();
+                //var defaultDirectory = Service.GetService<IDefaultDirectoryResolver>().DefaultDirectory();
+                var config = new DatabaseConfiguration();
+                _database = new Database("testdb", config);
             }
             return _database;
         }

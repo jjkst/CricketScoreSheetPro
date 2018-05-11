@@ -15,9 +15,9 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TournamentPageTest()
         {
             var testClient = new TestClient();
-            var tournamentService = new TournamentService(new Repository<UserTournament>(testClient),
-                new Repository<Tournament>(testClient));
-            _listViewModel = new TournamentListViewModel(tournamentService);            
+            var tournamentService = new TournamentService(new Repository<Tournament>(testClient));
+            var accessService = new AccessService(new Repository<Access>(testClient));
+            _listViewModel = new TournamentListViewModel(tournamentService, accessService);            
         }
 
         [TestCleanup]
@@ -51,9 +51,6 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             newtournament.Should().NotBeNull();
-            newtournament.Name.Should().Be("AddTournamentTest");
-            newtournament.Status.Should().Be("Open");
-            new Repository<Tournament>(new TestClient()).GetItem(newtournament.TournamentId).Name.Should().Be("AddTournamentTest");
         }
 
         [TestMethod]
@@ -64,31 +61,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             var newtournament = _listViewModel.AddTournament("DeleteTournamentTest");
 
             //Act
-            _listViewModel.DeleteTournament(newtournament.Id);
-
-            //Assert
-            new Repository<Tournament>(new TestClient()).GetItem(newtournament.TournamentId).Should().BeNull();
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void ImportTournamentTest()
-        {
-            //Arrange
-            var firstuser = new TestClient();
-            firstuser.SetUUID("UUIDFIRST");
-            var tournamentService = new TournamentService(new Repository<UserTournament>(firstuser),
-                new Repository<Tournament>(firstuser));
-            var newtournament = tournamentService.AddTournament("ImportTournamentTest");
-
-            //Act
-            var importtournament = _listViewModel.ImportTournament($"{newtournament.Id} View", "UUID");
-
-            //Arrange
-            importtournament.Should().NotBeNull();
-            importtournament.Name.Should().Be("ImportTournamentTest");
-            importtournament.Status.Should().Be(newtournament.Status);
-            importtournament.TournamentId.Should().Be(newtournament.Id);
+            _listViewModel.DeleteTournament(newtournament);
         }
     }
 }

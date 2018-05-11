@@ -1,4 +1,5 @@
 ﻿using CricketScoreSheetPro.Core.Model;
+using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,35 @@ namespace CricketScoreSheetPro.Core.ViewModel
     public class TournamentListViewModel
     {
         private readonly ITournamentService _tournamentService;
+        private readonly IAccessService _accessService;
 
-        public TournamentListViewModel(ITournamentService tournamentService)
+        public TournamentListViewModel(ITournamentService tournamentService, IAccessService accessService)
         {
             _tournamentService = tournamentService ?? throw new ArgumentNullException($"TournamentService is null, cannot get tournaments.");
+            _accessService = accessService ?? throw new ArgumentNullException($"AccessService is null, cannot get tournaments.");
         }
 
-        public List<UserTournament> Tournaments => _tournamentService.GetUserTournaments().ToList();
+        public List<Tournament> Tournaments => _tournamentService.GetTournamentList().ToList();
 
-        public UserTournament AddTournament(string tournamentName)
+        public List<Tournament> ImportedTournaments()
         {
-            var newtournament = _tournamentService.AddTournament(tournamentName);
+            var access = _accessService.GetAccessList().FirstOrDefault(a => a.DocumentType == nameof(Tournament));
+            var importedTournaments = new List<Tournament>();
+            foreach(var t in access.Documents)
+            {
+                importedTournaments.Add(_tournamentService.GetTournament(t.Id));
+            }
+            return importedTournaments;
+        }
+
+        public string AddTournament(string tournamentName)
+        {
+            var newtournament = _tournamentService.AddTournament(new Tournament
+            {
+                Name = tournamentName,
+                Status = "Open",
+                StartDate = DateTime.Today
+            });
             return newtournament;
         }
 
@@ -28,11 +47,22 @@ namespace CricketScoreSheetPro.Core.ViewModel
             _tournamentService.DeleteTournament(id);
         }
 
-        public UserTournament ImportTournament(string id_accesstype, string uuid)
+        public string AddAccess(string uuid, string tournamentId, AccessType accessType)
         {
-            var val = id_accesstype.Split(' ');
-            var importedtournament = _tournamentService.ImportTournament(val[0], (AccessType) Enum.Parse(typeof(AccessType), val[1]));
-            return importedtournament;
+            var tournamentaccess = _accessService.AddAccess(new Access
+            {
+                DocumentType = nameof(Tournament),
+                Documents = new List<DocumentReference>
+                {
+                    new DocumentReference
+                    {
+                        AccessType = accessType,
+                        Id = tournamentId
+                    }
+                }
+            });
+
+            return tournamentaccess;
         }
     }
 }

@@ -64,7 +64,7 @@ namespace CricketScoreSheetPro.Droid
 
         protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            IEnumerable<UserTournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
+            IEnumerable<Access> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
             TournamentsAdapter.RefreshTournaments(tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }

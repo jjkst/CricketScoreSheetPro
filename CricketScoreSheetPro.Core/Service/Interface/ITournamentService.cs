@@ -4,12 +4,11 @@ using System.Collections.Generic;
 namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface ITournamentService
-    {        
-        UserTournament AddTournament(string tournamentName);        
-        UserTournament ImportTournament(string id, AccessType accessType);
+    {
+        string AddTournament(Tournament tournament);
         void DeleteTournament(string id);
-        IList<UserTournament> GetUserTournaments();
+        IList<Tournament> GetTournamentList();
         Tournament GetTournament(string tournamentId);
-        bool UpdateTournament(Tournament tournamentdetail);
+        bool UpdateTournament(Tournament access);
     }
 }

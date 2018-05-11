@@ -293,12 +293,6 @@
     <AndroidResource Include="Resources\drawable\ic_vm_plus_dk.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CricketScoreSheetPro.Core\CricketScoreSheetPro.Core.csproj">
-      <Project>{9cb6b988-71eb-4047-94a0-828fc3654258}</Project>
-      <Name>CricketScoreSheetPro.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\action_add.png" />
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +338,12 @@
     <AndroidResource Include="Resources\drawable\tournamenticon_tinted.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CricketScoreSheetPro.Core\CricketScoreSheetPro.Core.csproj">
+      <Project>{9cb6b988-71eb-4047-94a0-828fc3654258}</Project>
+      <Name>CricketScoreSheetPro.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />

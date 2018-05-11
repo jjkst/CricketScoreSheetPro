@@ -53,7 +53,7 @@ namespace CricketScoreSheetPro.Droid
             Overs = new List<string> { "Ten10", "Twenty20", "ThirtyFive35", "Forty40", "Fifty50", "Custom" };
             if (isTournament)
             {
-                Tournaments = 
+                //Tournaments = 
             }           
         }
 

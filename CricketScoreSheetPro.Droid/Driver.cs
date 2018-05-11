@@ -17,7 +17,7 @@ namespace CricketScoreSheetPro.Droid
         private TournamentService SetTournamentService()
         {
             if (tournamentService == null)
-                tournamentService = new TournamentService(new Repository<UserTournament>(Client),
+                tournamentService = new TournamentService(new Repository<Access>(Client),
                 new Repository<Tournament>(Client));
             return tournamentService;
         }

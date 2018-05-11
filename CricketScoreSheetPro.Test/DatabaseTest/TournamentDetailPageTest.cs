@@ -16,7 +16,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TournamentDetailPageTest()
         {
             var testClient = new TestClient();
-            var tournamentService = new TournamentService(new Repository<UserTournament>(testClient),
+            var tournamentService = new TournamentService(new Repository<Access>(testClient),
                 new Repository<Tournament>(testClient));
             var tournament = tournamentService.AddTournament("TournamentDetailPageTest");
             UserTournamentId = tournament.Id;
@@ -55,7 +55,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             updated.Should().BeTrue();
-            var repo = new Repository<UserTournament>(new TestClient()).GetItem(UserTournamentId);
+            var repo = new Repository<Access>(new TestClient()).GetItem(UserTournamentId);
             repo.Name.Should().Be("UpdateTournamentName");
             repo.Status.Should().Be("InProgress");
         }

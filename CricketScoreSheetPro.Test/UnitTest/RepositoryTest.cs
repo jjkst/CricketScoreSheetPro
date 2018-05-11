@@ -41,7 +41,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
         {
             //Arrange
             var mockClient = new Mock<IClient>();
-            mockClient.Setup(c => c.GetDatabase()).Returns(new Manager().GetDatabase("rock"));
+            mockClient.Setup(c => c.GetDatabase()).Returns(new Database("rock"));
             mockClient.Setup(c => c.GetUUID()).Returns(string.Empty);
 
             //Act

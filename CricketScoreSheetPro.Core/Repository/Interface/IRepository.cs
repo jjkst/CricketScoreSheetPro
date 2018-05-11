@@ -8,7 +8,7 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
 {
     public interface IRepository<T>
     {
-        T Create(Dictionary<string, object> property);
+        string Create(T val);
 
         bool Update(string id, T val);
 

@@ -14,8 +14,9 @@ namespace CricketScoreSheetPro.Droid
         {
             if (_database == null)
             {
-                var manager = new Manager(new DirectoryInfo(Helper.InternalPath), Manager.DefaultOptions);
-                _database = manager.GetDatabase("cricketscoresheetprodb");
+                //var manager = new Manager(new DirectoryInfo(Helper.InternalPath), Manager.DefaultOptions);
+                //_database = manager.GetDatabase("cricketscoresheetprodb");
+                _database = new Database("cricketscoresheetprodb");
             }
             return _database;
         }
