@@ -74,7 +74,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             {
                 var document = Database.GetDocument(id);
                 var mutableDoc = document.ToMutable();
-                mutableDoc.SetValue("value", obj);
+                mutableDoc.SetValue("value", JsonConvert.SerializeObject(obj));
                 Database.Save(mutableDoc);
                 result = true;
             }

@@ -11,51 +11,56 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TournamentDetailPageTest
     {
         private TournamentViewModel _viewModel;
-        private string UserTournamentId;
 
         public TournamentDetailPageTest()
         {
             var testClient = new TestClient();
             var tournamentService = new TournamentService(new Repository<Tournament>(testClient));
-            var tournamentId = tournamentService.AddTournament(new Tournament { Name = "TournamentDetailPageTest" });
+            var tournamentId = tournamentService.AddTournament(
+                new Tournament
+                {
+                    Name = "TournamentDetailPageTest",
+                    Status = "Open"
+                });
             _viewModel = new TournamentViewModel(tournamentService, tournamentId);
         }
 
-        [TestCleanup]
-        public void MethodCleanup()
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTournamentDetailTest()
         {
-            var database = new Repository<object>(new TestClient());
-            database.DeleteDatabase();
+            //Act
+            var tournamentdetail = _viewModel.Tournament;
+
+            //Assert
+            tournamentdetail.Name.Should().Be("TournamentDetailPageTest");
+            tournamentdetail.Status.Should().Be("Open");
         }
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void GetTournamentDetailTest()
-        //{
-        //    //Act
-        //    var tournamentdetail = _viewModel.Tournament;
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void UpdateTournament()
+        {
+            //Arrange
+            _viewModel.Tournament.Name = "UpdateTournamentName";
+            _viewModel.Tournament.Status = "InProgress";
 
-        //    //Assert
-        //    tournamentdetail.Name.Should().Be("TournamentDetailPageTest");
-        //    tournamentdetail.Status.Should().Be("Open");
-        //}
+            //Act
+            var updated = _viewModel.UpdateTournament();
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void UpdateTournament()
-        //{
-        //    //Arrange
-        //    _viewModel.Tournament.Name = "UpdateTournamentName";
-        //    _viewModel.Tournament.Status = "InProgress";
+            //Assert
+            updated.Should().BeTrue();
+        }
 
-        //    //Act
-        //    var updated = _viewModel.UpdateTournament();
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void ProvideTournamentAccess()
+        {
+            //Act
+            var access = _viewModel.ProvideAccess(AccessType.Write);
 
-        //    //Assert
-        //    updated.Should().BeTrue();
-        //    //var repo = new Repository<Access>(new TestClient()).GetItem(UserTournamentId);
-        //    //repo.Name.Should().Be("UpdateTournamentName");
-        //    //repo.Status.Should().Be("InProgress");
-        //}
+            //Assert
+            access.Should().Be($"{_viewModel.Tournament.Id} Write");
+        }
     }
 }
