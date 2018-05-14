@@ -7,7 +7,7 @@ namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface IUmpireService
     {
-        Umpire AddUmpire(string Umpire);
+        string AddUmpire(string Umpire);
         void DeleteUmpire(string id);
         IList<Umpire> GetUmpires();
         Umpire GetUmpire(string Id);

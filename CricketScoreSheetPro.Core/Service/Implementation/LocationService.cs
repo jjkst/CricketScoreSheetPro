@@ -15,19 +15,15 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             _locationRepository = locationRepository ?? throw new ArgumentNullException($"UmpireRepository is null");
         }
 
-        public Location AddLocation(string location)
+        public string AddLocation(string location)
         {
             if (string.IsNullOrEmpty(location)) throw new ArgumentNullException($"Umpire name is empty");
-            var locationproperties = new Dictionary<string, object>
+            var newLocation = new Location
             {
-                { "type", nameof(Umpire)},
-                { "value", new Umpire
-                            {
-                                Name = location,
-                                AddDate = DateTime.Today
-                            }}
+                Name = location,
+                AddDate = DateTime.Today
             };
-            var locationAdd = _locationRepository.Create(locationproperties);
+            var locationAdd = _locationRepository.Create(newLocation);
             return locationAdd;
         }
 

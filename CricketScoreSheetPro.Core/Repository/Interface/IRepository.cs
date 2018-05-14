@@ -14,8 +14,6 @@ namespace CricketScoreSheetPro.Core.Repository.Interface
 
         IList<T> GetList();
 
-        IList<T> GetListByProperty(string propertyName, string propertyValue);
-
         T GetItem(string id);
 
         void Delete(string id);

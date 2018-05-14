@@ -4,6 +4,7 @@ using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Test.DatabaseTest
 {
@@ -15,31 +16,9 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TournamentPageTest()
         {
             var testClient = new TestClient();
-            var tournamentService = new TournamentService(new Repository<Tournament>(testClient));
-            var accessService = new AccessService(new Repository<Access>(testClient));
-            _listViewModel = new TournamentListViewModel(tournamentService, accessService);            
-        }
-
-        [TestCleanup]
-        public void MethodCleanup()
-        {
-            var database = new Repository<object>(new TestClient());
-            database.DeleteDatabase();
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void GetTournamentListTest()
-        {
-            //Arrange
-            _listViewModel.AddTournament("GetTournamentListTest");
-            
-            //Act           
-            var existingTournaments = _listViewModel.Tournaments;
-
-            //Assert
-            existingTournaments.Should().NotBeNull();
-            existingTournaments.Count.Should().Be(1);
+            _listViewModel = new TournamentListViewModel(
+                new TournamentService(new Repository<Tournament>(testClient)),
+                new AccessService(new Repository<Access>(testClient)));            
         }
 
         [TestMethod]
@@ -50,7 +29,23 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             var newtournament = _listViewModel.AddTournament("AddTournamentTest");
 
             //Assert
-            newtournament.Should().NotBeNull();
+            newtournament.Should().NotBeNullOrEmpty();
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTournamentListTest()
+        {
+            //Arrange
+            var name = "GetTournamentListTest";
+            _listViewModel.AddTournament(name);
+            
+            //Act           
+            var existingTournaments = _listViewModel.Tournaments;
+
+            //Assert
+            existingTournaments.Should().NotBeNull();
+            existingTournaments.Count(t=>t.Name == name).Should().BeGreaterOrEqualTo(1);
         }
 
         [TestMethod]
@@ -63,5 +58,36 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Act
             _listViewModel.DeleteTournament(newtournament);
         }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void AddAccessTest()
+        {
+            //Arrange
+            var secondclient = new TestClient();
+            secondclient.SetUUID("UUID2");
+            var viewmodel = new TournamentListViewModel(
+                new TournamentService(new Repository<Tournament>(secondclient)),
+                new AccessService(new Repository<Access>(secondclient)));
+            var addtournament = viewmodel.AddTournament("ImportTournamanet");
+
+            //Act          
+            var access = _listViewModel.AddAccess(addtournament, AccessType.Moderator);
+
+            //Assert
+            access.Should().NotBeNullOrEmpty();
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void ImportedTournamentTest()
+        {
+            //Act 
+            var importedTournaments = _listViewModel.ImportedTournaments();
+
+            //Assert
+            importedTournaments.Should().NotBeNull();
+        }
+
     }
 }

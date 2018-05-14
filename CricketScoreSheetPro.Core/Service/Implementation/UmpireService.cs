@@ -16,17 +16,13 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             _umpireRepository = umpireRepository ?? throw new ArgumentNullException($"UmpireRepository is null");
         }
 
-        public Umpire AddUmpire(string umpirename)
+        public string AddUmpire(string umpirename)
         {
             if (string.IsNullOrEmpty(umpirename)) throw new ArgumentNullException($"Umpire name is empty");
-            var newumpireproperties = new Dictionary<string, object>
+            var newumpireproperties = new Umpire
             {
-                { "type", nameof(Umpire)},
-                { "value", new Umpire
-                            {
-                                Name = umpirename,
-                                AddDate = DateTime.Today
-                            }}
+                Name = umpirename,
+                AddDate = DateTime.Today
             };
             var umpireAdd = _umpireRepository.Create(newumpireproperties);
             return umpireAdd;

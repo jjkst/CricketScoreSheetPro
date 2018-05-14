@@ -17,38 +17,28 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             _teamRepository = teamRepository ?? throw new ArgumentNullException($"teamRepository is null");
         }
 
-        public Team AddTeam(string teamName)
+        public string AddTeam(Team team)
         {
-            if (string.IsNullOrEmpty(teamName)) throw new ArgumentException($"Team name is empty");
-            var newteamproperties = new Dictionary<string, object>
-            {
-                { "type", nameof(Team)},
-                { "value", new Team
-                            {
-                                Name = teamName,
-                                AccessType = AccessType.Moderator,
-                                Owner = true,
-                                AddDate = DateTime.Today
-                            }}
-            };
-            var teamAdded = _teamRepository.Create(newteamproperties);
+            if (team == null) throw new ArgumentNullException($"team is null");
+            var teamAdded = _teamRepository.Create(team);
             return teamAdded;
         }
 
-        public void DeleteTeam(string teamid)
+        public void DeleteTeam(string teamId)
         {
-            if (string.IsNullOrEmpty(teamid)) throw new ArgumentException($"Team ID is null");
-            _teamRepository.Delete(teamid);
+            if (string.IsNullOrEmpty(teamId)) throw new ArgumentException($"Team ID is null");
+            _teamRepository.Delete(teamId);
         }
 
         public Team GetTeam(string teamId)
         {
             if (string.IsNullOrEmpty(teamId)) throw new ArgumentException($"Team ID is null");
             var team = _teamRepository.GetItem(teamId);
+            if (team == null) throw new ArgumentException($"Document does not exist.");
             return team;
         }
 
-        public IList<Team> GetTeams()
+        public IList<Team> GetTeamList()
         {
             var result = _teamRepository.GetList();
             return result;
@@ -56,12 +46,8 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public bool UpdateTeam(Team team)
         {
-            if (team == null) throw new ArgumentException($"Team is null");
-
-            //update team
-            var updatedteam = _teamRepository.Update(team.Id, team);
-
-            return updatedteam;
+            if (team == null) throw new ArgumentException($"Tournament is null");
+            return _teamRepository.Update(team.Id, team);
         }
     }
 }

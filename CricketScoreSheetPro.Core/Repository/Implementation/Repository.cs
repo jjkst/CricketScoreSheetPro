@@ -25,7 +25,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             var mutableDoc = new MutableDocument();
             mutableDoc.SetString("uuid", UUID);
             mutableDoc.SetString("type", typeof(T).Name);
-            mutableDoc.SetValue("value", obj);
+            mutableDoc.SetValue("value", JsonConvert.SerializeObject(obj));
             Database.Save(mutableDoc);
             return mutableDoc.Id;
         }
@@ -40,6 +40,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         public virtual T GetItem(string id)
         {
             var document = Database.GetDocument(id);
+            if (document == null) throw new ArgumentException($"Document does not exist.");
             var rawvalue = document.ToMutable().GetValue("value");
             if (string.IsNullOrEmpty(rawvalue.ToString())) return null;
             var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
@@ -78,24 +79,6 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             }
             return result;
         }
-
-        public virtual IList<T> GetListByProperty(string propertyName, string propertyValue)
-        {
-            //GenerateViewByProperty(propertyName, propertyValue);
-            //var query = Database.GetView("listbyproperty").CreateQuery();
-            //query.Descending = true;
-            //var v = Database.CreateAllDocumentsQuery().Run();
-
-            //var result = new List<T>();
-            //var rows = query.Run();
-            //foreach (var row in rows)
-            //{
-            //    var rawvalue = row.Value;
-            //    result.Add(JsonConvert.DeserializeObject<T>(rawvalue.ToString()));
-            //}
-            return new List<T>(); ;
-        }
-
  
         public void DeleteDatabase()
         {

@@ -7,10 +7,16 @@ namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface IPlayerService
     {
-        Player AddPlayer(string playerName);
+        string AddPlayer(Player player);
         void DeletePlayer(string id);
-        IList<Player> GetPlayers();
+        IList<Player> GetPlayerList();
         Player GetPlayer(string playerId);
-        bool UpdatePlayer(Player playerdetail);
+        bool UpdatePlayer(Player player);
+
+        string AddPlayerInning(PlayerInning player);
+        void DeletePlayerInning(string id);
+        IList<PlayerInning> GetPlayerInningList();
+        PlayerInning GetPlayerInning(string playerId);
+        bool UpdatePlayerInning(PlayerInning player);
     }
 }

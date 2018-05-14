@@ -16,7 +16,6 @@ namespace CricketScoreSheetPro.Test
             if(_database == null)
             {
                 Couchbase.Lite.Support.NetDesktop.Activate();
-                //var defaultDirectory = Service.GetService<IDefaultDirectoryResolver>().DefaultDirectory();
                 var config = new DatabaseConfiguration();
                 _database = new Database("testdb", config);
             }

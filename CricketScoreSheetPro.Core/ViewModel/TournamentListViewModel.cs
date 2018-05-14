@@ -1,5 +1,4 @@
 ﻿using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             _tournamentService.DeleteTournament(id);
         }
 
-        public string AddAccess(string uuid, string tournamentId, AccessType accessType)
+        public string AddAccess(string tournamentId, AccessType accessType)
         {
             var tournamentaccess = _accessService.AddAccess(new Access
             {

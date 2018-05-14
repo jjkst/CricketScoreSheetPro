@@ -7,7 +7,7 @@ namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface ILocationService
     {
-        Location AddLocation(string location);
+        string AddLocation(string location);
         void DeleteLocation(string id);
         IList<Location> GetLocations();
         Location GetLocation(string Id);

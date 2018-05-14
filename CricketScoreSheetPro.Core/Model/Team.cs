@@ -9,8 +9,6 @@ namespace CricketScoreSheetPro.Core.Model
 
         public string Name { get; set; }
 
-        public bool Owner { get; set; }
-
         public AccessType AccessType { get; set; }
 
         public DateTime AddDate { get; set; }

@@ -107,7 +107,7 @@ namespace CricketScoreSheetPro.Droid
         {
             var newteam = ViewModel.AddTeam(inputText);
             var detailActivity = new Intent(this.Activity, typeof(TeamDetailActivity));
-            detailActivity.PutExtra("TeamId", newteam.Id);
+            detailActivity.PutExtra("TeamId", newteam);
             StartActivity(detailActivity);
         }
     }

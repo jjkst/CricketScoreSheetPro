@@ -21,10 +21,5 @@ namespace CricketScoreSheetPro.Core.ViewModel
             var updated = _teamService.UpdateTeam(Team);
             return updated;
         }
-
-        public void AddPlayers(string playername)
-        {
-            Team.Players.Add(playername);
-        }
     }
 }

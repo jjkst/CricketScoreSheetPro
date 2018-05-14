@@ -1,16 +1,14 @@
 ﻿using CricketScoreSheetPro.Core.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CricketScoreSheetPro.Core.Service.Interface
 {
     public interface ITeamService
     {
-        Team AddTeam(string teamName);
+        string AddTeam(Team team);
         void DeleteTeam(string id);
-        IList<Team> GetTeams();
+        IList<Team> GetTeamList();
         Team GetTeam(string teamId);
-        bool UpdateTeam(Team teamdetail);
+        bool UpdateTeam(Team team);
     }
 }

@@ -28,47 +28,47 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             database.DeleteDatabase();
         }
 
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void GetTeamListTest()
-        {
-            //Arrange
-            _listViewModel.AddTeam("GetTeamListTest");
+        //[TestMethod]
+        //[TestCategory("IntegrationTest")]
+        //public void GetTeamListTest()
+        //{
+        //    //Arrange
+        //    _listViewModel.AddTeam("GetTeamListTest");
 
-            //Act           
-            var existingTeams = _listViewModel.Teams;
+        //    //Act           
+        //    var existingTeams = _listViewModel.Teams;
 
-            //Assert
-            existingTeams.Should().NotBeNull();
-            existingTeams.Count(t=>t.Name == "GetTeamListTest").Should().Be(1);
-        }
+        //    //Assert
+        //    existingTeams.Should().NotBeNull();
+        //    existingTeams.Count(t=>t.Name == "GetTeamListTest").Should().Be(1);
+        //}
 
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void AddTeamTest()
-        {
-            //Act
-            var newteam = _listViewModel.AddTeam("AddTeamTest");
+        //[TestMethod]
+        //[TestCategory("IntegrationTest")]
+        //public void AddTeamTest()
+        //{
+        //    //Act
+        //    var newteam = _listViewModel.AddTeam("AddTeamTest");
 
-            //Assert
-            newteam.Should().NotBeNull();
-            newteam.Name.Should().Be("AddTeamTest");
-            new Repository<Team>(new TestClient()).GetItem(newteam.Id).Name.Should().Be("AddTeamTest");
-        }
+        //    //Assert
+        //    newteam.Should().NotBeNull();
+        //    newteam.Name.Should().Be("AddTeamTest");
+        //    new Repository<Team>(new TestClient()).GetItem(newteam.Id).Name.Should().Be("AddTeamTest");
+        //}
 
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void DeleteTeamTest()
-        {
-            //Arrange
-            var newteam = _listViewModel.AddTeam("DeleteTeamTest");
+        //[TestMethod]
+        //[TestCategory("IntegrationTest")]
+        //public void DeleteTeamTest()
+        //{
+        //    //Arrange
+        //    var newteam = _listViewModel.AddTeam("DeleteTeamTest");
 
-            //Act
-            _listViewModel.DeleteTeam(newteam.Id);
+        //    //Act
+        //    _listViewModel.DeleteTeam(newteam.Id);
 
-            //Assert
-            new Repository<Team>(new TestClient()).GetItem(newteam.Id).Should().BeNull();
-        }
+        //    //Assert
+        //    new Repository<Team>(new TestClient()).GetItem(newteam.Id).Should().BeNull();
+        //}
 
     }
 }

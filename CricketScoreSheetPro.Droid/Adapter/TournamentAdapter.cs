@@ -12,11 +12,11 @@ namespace CricketScoreSheetPro.Droid.Adapter
     {
         public event EventHandler<string> ItemViewClick;
         public event EventHandler<string> ItemDeleteClick;
-        private List<Access> _tournaments;
+        private List<Tournament> _tournaments;
 
-        public TournamentAdapter(List<Access> tournaments)
+        public TournamentAdapter(List<Tournament> tournaments)
         {
-            _tournaments = tournaments.OrderByDescending(d => d.AddDate).ToList();
+            _tournaments = tournaments.OrderByDescending(d => d.StartDate).ToList();
         }
 
         public override int ItemCount => _tournaments.Count;
@@ -32,8 +32,8 @@ namespace CricketScoreSheetPro.Droid.Adapter
             vh.Name.Text = _tournaments[position].Name;
             vh.Status.Text = _tournaments[position].Status;
 
-            if (_tournaments[position].AccessType != AccessType.Moderator)
-                vh.Delete.Visibility = ViewStates.Gone;
+            //if (_tournaments[position].AccessType != AccessType.Moderator)
+            //    vh.Delete.Visibility = ViewStates.Gone;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -43,14 +43,14 @@ namespace CricketScoreSheetPro.Droid.Adapter
             return new TournamentViewHolder(itemView, OnViewClick, OnDeleteClick);
         }
 
-        public void RefreshTournaments(IEnumerable<Access> tournaments)
+        public void RefreshTournaments(IEnumerable<Tournament> tournaments)
         {
             _tournaments = tournaments.ToList();
         }
 
         private void OnViewClick(int position)
         {
-            ItemViewClick?.Invoke(this, _tournaments[position].TournamentId);
+            ItemViewClick?.Invoke(this, _tournaments[position].Id);
         }
 
         private void OnDeleteClick(int position)

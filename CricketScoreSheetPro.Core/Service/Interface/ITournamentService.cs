@@ -9,6 +9,6 @@ namespace CricketScoreSheetPro.Core.Service.Interface
         void DeleteTournament(string id);
         IList<Tournament> GetTournamentList();
         Tournament GetTournament(string tournamentId);
-        bool UpdateTournament(Tournament access);
+        bool UpdateTournament(Tournament tournament);
     }
 }
