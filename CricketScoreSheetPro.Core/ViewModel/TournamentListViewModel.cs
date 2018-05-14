@@ -21,7 +21,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public List<Tournament> ImportedTournaments()
         {
-            var access = _accessService.GetAccessList().FirstOrDefault(a => a.DocumentType == nameof(Tournament));
+            var access = _accessService.GetAccessList().LastOrDefault(a => a.DocumentType == nameof(Tournament));
             var importedTournaments = new List<Tournament>();
             foreach(var t in access.Documents)
             {

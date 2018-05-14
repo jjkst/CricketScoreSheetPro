@@ -18,7 +18,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             var testClient = new TestClient();
             _listViewModel = new TournamentListViewModel(
                 new TournamentService(new Repository<Tournament>(testClient)),
-                new AccessService(new Repository<Access>(testClient)));            
+                new AccessService(new Repository<Access>(testClient)));     
         }
 
         [TestMethod]

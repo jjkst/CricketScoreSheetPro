@@ -1,8 +1,5 @@
 ﻿using Couchbase.Lite;
-using Couchbase.Lite.DI;
 using CricketScoreSheetPro.Core;
-using System;
-using System.IO;
 
 namespace CricketScoreSheetPro.Test
 {
@@ -13,7 +10,7 @@ namespace CricketScoreSheetPro.Test
 
         public Database GetDatabase()
         {
-            if(_database == null)
+            if (_database == null)
             {
                 Couchbase.Lite.Support.NetDesktop.Activate();
                 var config = new DatabaseConfiguration();

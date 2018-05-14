@@ -13,8 +13,7 @@ namespace CricketScoreSheetPro.Core.Helper
 
         public static string GetGenericObjectPropertyValue(object obj, string propertyName)
         {
-            Type t = obj.GetType();
-            foreach (var propInfo in t.GetProperties())
+            foreach (var propInfo in obj.GetType().GetProperties())
             {
                 if (propInfo.Name == propertyName)
                 {
@@ -24,14 +23,13 @@ namespace CricketScoreSheetPro.Core.Helper
             return string.Empty;
         }
 
-        public static Dictionary<string, object> UpdateGenericObjectProperty(Dictionary<string, object> obj, object value)
+        public static object UpdateGenericObjectProperty(object obj, object value)
         {
-            Type t = obj["value"].GetType();
-            foreach (var propInfo in t.GetProperties())
+            foreach (var propInfo in obj.GetType().GetProperties())
             {
                 if (propInfo.Name == "Id")
                 {
-                    propInfo.SetValue(obj["value"], value, null);
+                    propInfo.SetValue(obj, value, null);
                     break;
                 }
             }

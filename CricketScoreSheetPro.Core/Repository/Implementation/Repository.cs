@@ -24,9 +24,14 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
         {
             var mutableDoc = new MutableDocument();
             mutableDoc.SetString("uuid", UUID);
-            mutableDoc.SetString("type", typeof(T).Name);
-            mutableDoc.SetValue("value", JsonConvert.SerializeObject(obj));
+            mutableDoc.SetString("type", typeof(T).Name);                       
             Database.Save(mutableDoc);
+
+            //Update Id
+            var objwithId = Helper.Function.UpdateGenericObjectProperty(obj, mutableDoc.Id);
+            mutableDoc.SetValue("value", JsonConvert.SerializeObject(objwithId));
+            Database.Save(mutableDoc);
+
             return mutableDoc.Id;
         }
 
