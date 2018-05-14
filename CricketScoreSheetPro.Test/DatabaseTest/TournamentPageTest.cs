@@ -2,8 +2,10 @@
 using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
+using CricketScoreSheetPro.Test.Extension;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace CricketScoreSheetPro.Test.DatabaseTest
@@ -12,13 +14,20 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TournamentPageTest
     {
         private TournamentListViewModel _listViewModel;
+        private TestClient Client;
 
         public TournamentPageTest()
         {
-            var testClient = new TestClient();
+            Client = new TestClient();
             _listViewModel = new TournamentListViewModel(
-                new TournamentService(new Repository<Tournament>(testClient)),
-                new AccessService(new Repository<Access>(testClient)));     
+                new TournamentService(new Repository<Tournament>(Client)),
+                new AccessService(new Repository<Access>(Client)));     
+        }
+
+        [TestCleanup]
+        public void MethodCleanup()
+        {
+            new Repository<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -50,6 +59,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [ExpectedExceptionExtension(typeof(ArgumentNullException), "Document does not exist.")]
         public void DeleteTournamentTest()
         {
             //Arrange
@@ -57,6 +67,9 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Act
             _listViewModel.DeleteTournament(newtournament);
+
+            //Assert
+            new Repository<Tournament>(new TestClient()).GetItem(newtournament).Should().BeNull();
         }
 
         [TestMethod]
@@ -82,11 +95,14 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         [TestCategory("IntegrationTest")]
         public void ImportedTournamentTest()
         {
+            //Arrange
+            AddAccessTest();
+
             //Act 
             var importedTournaments = _listViewModel.ImportedTournaments();
 
             //Assert
-            importedTournaments.Should().NotBeNull();
+            importedTournaments.Count(t=>t.Name == "ImportTournamanet").Should().BeGreaterOrEqualTo(1);
         }
 
     }

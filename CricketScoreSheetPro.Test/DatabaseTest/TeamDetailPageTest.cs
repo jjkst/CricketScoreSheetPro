@@ -12,64 +12,50 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TeamDetailPageTest
     {
         private TeamViewModel _viewModel;
-        private string UserTeamId;
+        private TestClient Client;
 
-        //public TeamDetailPageTest()
-        //{
-        //    var testClient = new TestClient();
-        //    var teamService = new TeamService(new Repository<Team>(testClient));
-        //    var team = teamService.AddTeam("TeamDetailPageTest");
-        //    UserTeamId = team.Id;
-        //    _viewModel = new TeamViewModel(teamService, team.Id);
-        //}
+        public TeamDetailPageTest()
+        {
+            Client = new TestClient();
+            var teamService = new TeamService(new Repository<Team>(Client));
+            var teamId = teamService.AddTeam(
+                new Team
+                {
+                    Name = "TeamDetailPageTest"
+                });
+            _viewModel = new TeamViewModel(teamService, teamId);
+        }
 
-        //[TestCleanup]
-        //public void MethodCleanup()
-        //{
-        //    var database = new Repository<object>(new TestClient());
-        //    database.DeleteDatabase();
-        //}
+        [TestCleanup]
+        public void MethodCleanup()
+        {
+            new Repository<object>(Client).DeleteDatabase();
+        }
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void GetTeamDetailTest()
-        //{
-        //    //Act
-        //    var teamdetail = _viewModel.Team;
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTeamDetailTest()
+        {
+            //Act
+            var teamdetail = _viewModel.Team;
 
-        //    //Assert
-        //    teamdetail.Name.Should().Be("TeamDetailPageTest");
-        //}
+            //Assert
+            teamdetail.Name.Should().Be("TeamDetailPageTest");
+        }
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void UpdateTeam()
-        //{
-        //    //Arrange
-        //    _viewModel.Team.Name = "UpdateTeamName";
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void UpdateTeam()
+        {
+            //Arrange
+            _viewModel.Team.Name = "UpdateTeamName";
 
-        //    //Act
-        //    var updated = _viewModel.UpdateTeam();
+            //Act
+            var updated = _viewModel.UpdateTeam();
 
-        //    //Assert
-        //    updated.Should().BeTrue();
-        //    var repo = new Repository<Team>(new TestClient()).GetItem(UserTeamId);
-        //    repo.Name.Should().Be("UpdateTeamName");
-        //}
-
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void AddPlayerSaved()
-        //{
-        //    //Arrange
-        //    _viewModel.AddPlayers("AddPlayer");
-
-        //    //Act
-        //    _viewModel.UpdateTeam();
-
-        //    //Assert
-        //    var repo = new Repository<Team>(new TestClient()).GetItem(_viewModel.Team.Id);
-        //    repo.Players.Should().Contain("AddPlayer");
-        //}
+            //Assert
+            updated.Should().BeTrue();
+            new Repository<Team>(new TestClient()).GetItem(_viewModel.Team.Id).Name.Should().Be("UpdateTeamName");
+        }
     }
 }

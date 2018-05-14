@@ -31,21 +31,20 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             var objwithId = Helper.Function.UpdateGenericObjectProperty(obj, mutableDoc.Id);
             mutableDoc.SetValue("value", JsonConvert.SerializeObject(objwithId));
             Database.Save(mutableDoc);
-
             return mutableDoc.Id;
         }
 
         public virtual void Delete(string id)
         {
             var document = Database.GetDocument(id);
-            if (document == null) throw new ArgumentException($"Document does not exist.");
+            if (document == null) throw new ArgumentNullException($"Document does not exist.");
             Database.Delete(document);
         }
 
         public virtual T GetItem(string id)
         {
             var document = Database.GetDocument(id);
-            if (document == null) throw new ArgumentException($"Document does not exist.");
+            if (document == null) throw new ArgumentNullException($"Document does not exist.");
             var rawvalue = document.ToMutable().GetValue("value");
             if (string.IsNullOrEmpty(rawvalue.ToString())) return null;
             var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
@@ -84,10 +83,15 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             }
             return result;
         }
- 
+
         public void DeleteDatabase()
         {
-            Database.Delete();
+            var query = QueryBuilder.Select(SelectResult.Property("_id")).From(DataSource.Database(Database));
+            foreach (var row in query.Execute())
+            {
+                var document = Database.GetDocument(row["_id"].ToString());
+                Database.Delete(document);
+            }
         }
     }
 }

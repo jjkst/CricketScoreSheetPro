@@ -4,6 +4,7 @@ using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
+using CricketScoreSheetPro.Test.Extension;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,62 +14,63 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TeamPageTest
     {
         private TeamListViewModel _listViewModel;
+        private TestClient Client;
 
         public TeamPageTest()
         {
-            var testClient = new TestClient();
-            var teamService = new TeamService(new Repository<Team>(testClient));
-            _listViewModel = new TeamListViewModel(teamService);
+            Client = new TestClient();
+            _listViewModel = new TeamListViewModel(
+                new TeamService(new Repository<Team>(Client)),
+                new AccessService(new Repository<Access>(Client)));
         }
 
         [TestCleanup]
         public void MethodCleanup()
         {
-            var database = new Repository<object>(new TestClient());
-            database.DeleteDatabase();
+            new Repository<object>(Client).DeleteDatabase();
         }
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void GetTeamListTest()
-        //{
-        //    //Arrange
-        //    _listViewModel.AddTeam("GetTeamListTest");
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void AddTeamTest()
+        {
+            //Act
+            var newteam = _listViewModel.AddTeam("AddTeamTest");
 
-        //    //Act           
-        //    var existingTeams = _listViewModel.Teams;
+            //Assert
+            newteam.Should().NotBeNullOrEmpty();
+        }
 
-        //    //Assert
-        //    existingTeams.Should().NotBeNull();
-        //    existingTeams.Count(t=>t.Name == "GetTeamListTest").Should().Be(1);
-        //}
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTeamListTest()
+        {
+            //Arrange
+            var name = "GetTeamListTest";
+            _listViewModel.AddTeam(name);
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void AddTeamTest()
-        //{
-        //    //Act
-        //    var newteam = _listViewModel.AddTeam("AddTeamTest");
+            //Act           
+            var existingTeams = _listViewModel.Teams;
 
-        //    //Assert
-        //    newteam.Should().NotBeNull();
-        //    newteam.Name.Should().Be("AddTeamTest");
-        //    new Repository<Team>(new TestClient()).GetItem(newteam.Id).Name.Should().Be("AddTeamTest");
-        //}
+            //Assert
+            existingTeams.Should().NotBeNullOrEmpty();
+            existingTeams.Count(t => t.Name == name).Should().BeGreaterOrEqualTo(1);
+        }
 
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //public void DeleteTeamTest()
-        //{
-        //    //Arrange
-        //    var newteam = _listViewModel.AddTeam("DeleteTeamTest");
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        [ExpectedExceptionExtension(typeof(ArgumentNullException), "Document does not exist.")]
+        public void DeleteTeamTest()
+        {
+            //Arrange
+            var newteam = _listViewModel.AddTeam("DeleteTeamTest");
 
-        //    //Act
-        //    _listViewModel.DeleteTeam(newteam.Id);
+            //Act
+            _listViewModel.DeleteTeam(newteam);
 
-        //    //Assert
-        //    new Repository<Team>(new TestClient()).GetItem(newteam.Id).Should().BeNull();
-        //}
+            //Assert
+            new Repository<Team>(new TestClient()).GetItem(newteam).Should().BeNull();
+        }
 
     }
 }

@@ -11,11 +11,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
     public class TournamentDetailPageTest
     {
         private TournamentViewModel _viewModel;
+        private TestClient Client;
 
         public TournamentDetailPageTest()
         {
-            var testClient = new TestClient();
-            var tournamentService = new TournamentService(new Repository<Tournament>(testClient));
+            Client = new TestClient();
+            var tournamentService = new TournamentService(new Repository<Tournament>(Client));
             var tournamentId = tournamentService.AddTournament(
                 new Tournament
                 {
@@ -23,6 +24,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
                     Status = "Open"
                 });
             _viewModel = new TournamentViewModel(tournamentService, tournamentId);
+        }
+
+        [TestCleanup]
+        public void MethodCleanup()
+        {
+            new Repository<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -50,6 +57,9 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             updated.Should().BeTrue();
+            var updatedTournament = new Repository<Tournament>(new TestClient()).GetItem(_viewModel.Tournament.Id);
+            updatedTournament.Name.Should().Be("UpdateTournamentName");
+            updatedTournament.Status.Should().Be("InProgress");
         }
 
         [TestMethod]

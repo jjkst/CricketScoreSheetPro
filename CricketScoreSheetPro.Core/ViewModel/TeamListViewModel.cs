@@ -11,10 +11,10 @@ namespace CricketScoreSheetPro.Core.ViewModel
         private readonly ITeamService _teamService;
         private readonly IAccessService _accessService;
 
-        public TeamListViewModel(ITeamService teamService)
+        public TeamListViewModel(ITeamService teamService, IAccessService accessService)
         {
             _teamService = teamService ?? throw new ArgumentNullException($"TeamService is null, cannot get teams.");
-            //_accessService = accessService ?? throw new ArgumentNullException($"AccessService is null, cannot get tournaments.");
+            _accessService = accessService ?? throw new ArgumentNullException($"AccessService is null, cannot get tournaments.");
         }
 
         public List<Team> Teams => _teamService.GetTeamList().ToList();
