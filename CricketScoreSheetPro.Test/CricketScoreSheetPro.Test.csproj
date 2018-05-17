@@ -105,6 +105,7 @@
     <Compile Include="DatabaseTest\TournamentPageTest.cs" />
     <Compile Include="DatabaseTest\TeamPageTest.cs" />
     <Compile Include="DatabaseTest\TeamDetailPageTest.cs" />
+    <Compile Include="DatabaseTest\MatchPageTest.cs" />
     <Compile Include="Extension\ExpectedExceptionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClient.cs" />

@@ -11,6 +11,8 @@ namespace CricketScoreSheetPro.Core.ViewModel
     {
         public bool IsTournament { get; set; }
 
+        private readonly IMatchService _matchService;
+
         private readonly ITeamService _teamService;
 
         private readonly ILocationService _locationService;
@@ -23,8 +25,9 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public List<Umpire> Umpires => _umpireService.GetUmpires().ToList();
 
-        public NewGameViewModel(ITeamService teamService, ILocationService locationService, IUmpireService umpireService)
+        public NewGameViewModel(IMatchService matchService, ITeamService teamService, ILocationService locationService, IUmpireService umpireService)
         {
+            this._matchService = matchService;
             this._teamService = teamService;
             this._locationService = locationService;
             this._umpireService = umpireService;
@@ -45,7 +48,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             return _teamService.AddTeam(new Team { Name = teamname });
         }
 
-        public Match AddMatch(string hometeamname, string awayteamname, string overs_tournaments, string location, string primaryumpire, string secondaryumpire)
+        public string AddMatch(string hometeamname, string awayteamname, string overs_tournaments, string location, string primaryumpire, string secondaryumpire)
         {
             var hometeam = Teams.FirstOrDefault(n => n.Name == hometeamname);
             if (hometeam == null) throw new NullReferenceException("Home team name is not added");
@@ -83,7 +86,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
             };
             
 
-            return match;
+            return _matchService.AddMatch(match);
         }
     }
 }
