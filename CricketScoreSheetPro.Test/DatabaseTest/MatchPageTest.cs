@@ -29,19 +29,22 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void GetMatchListTest()
         {
             //Arrange
+            var hometeamid = new DataSeedService<Team>(Client).Create(new Team { Name = "HomeTeam" });
+            var awayteamid = new DataSeedService<Team>(Client).Create(new Team { Name = "AwayTeam" });
+
             var newgame = new NewGameViewModel(
                 Client,
                 new DataSeedService<Match>(Client),
                 new DataSeedService<Team>(Client),
                 new DataSeedService<Location>(Client),
                 new DataSeedService<Umpire>(Client));
-            newgame.AddMatch("HomeTeam", "AwayTeam", "10", "Richmod,VA","PrimUmpire","SecondUmpire");
+            var match = newgame.AddMatch("HomeTeam", "AwayTeam", "10", "Richmod,VA","PrimUmpire","SecondUmpire");
 
             //Act
             var matches = _listViewModel.Matches;
 
             //Assert
-            matches.Count.Should().BeGreaterOrEqualTo(1); ;
+            matches.Count.Should().BeGreaterOrEqualTo(1); 
         }
     }
 }
