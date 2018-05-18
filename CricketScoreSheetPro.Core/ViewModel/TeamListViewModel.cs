@@ -8,24 +8,24 @@ namespace CricketScoreSheetPro.Core.ViewModel
 {
     public class TeamListViewModel 
     {
-        private readonly ITeamService _teamService;
-        private readonly IAccessService _accessService;
+        private readonly IDataSeedService<Team> _teamService;
+        private readonly IDataSeedService<Access> _accessService;
 
-        public TeamListViewModel(ITeamService teamService, IAccessService accessService)
+        public TeamListViewModel(IDataSeedService<Team> teamService, IDataSeedService<Access> accessService)
         {
             _teamService = teamService ?? throw new ArgumentNullException($"TeamService is null, cannot get teams.");
             _accessService = accessService ?? throw new ArgumentNullException($"AccessService is null, cannot get tournaments.");
         }
 
-        public List<Team> Teams => _teamService.GetTeamList().ToList();
+        public List<Team> Teams => _teamService.GetList().ToList();
 
-        public List<Team> ImportedTeams(ITournamentService tournamentService)
+        public List<Team> ImportedTeams(IDataSeedService<Tournament> tournamentService)
         {
-            var access = _accessService.GetAccessList().FirstOrDefault(a => a.DocumentType == nameof(Tournament));
+            var access = _accessService.GetList().FirstOrDefault(a => a.DocumentType == nameof(Tournament));
             var importedTeams = new List<Team>();
             foreach (var t in access.Documents)
             {
-                var importedtournament = tournamentService.GetTournament(t.Id);
+                var importedtournament = tournamentService.GetItem(t.Id);
                 importedTeams.AddRange(importedtournament.Teams);
             }
             return importedTeams;
@@ -33,7 +33,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public string AddTeam(string teamName)
         {
-            var newteam = _teamService.AddTeam(new Team
+            var newteam = _teamService.Create(new Team
             {
                 Name = teamName,
                 AddDate = DateTime.Today
@@ -43,7 +43,7 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public void DeleteTeam(string id)
         {
-            _teamService.DeleteTeam(id);
+            _teamService.Delete(id);
         }
 
     }

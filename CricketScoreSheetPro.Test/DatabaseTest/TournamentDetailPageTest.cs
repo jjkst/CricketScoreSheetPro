@@ -1,5 +1,4 @@
 ﻿using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -16,8 +15,8 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TournamentDetailPageTest()
         {
             Client = new TestClient();
-            var tournamentService = new TournamentService(new Repository<Tournament>(Client));
-            var tournamentId = tournamentService.AddTournament(
+            var tournamentService = new DataSeedService<Tournament>(Client);
+            var tournamentId = tournamentService.Create(
                 new Tournament
                 {
                     Name = "TournamentDetailPageTest",
@@ -29,7 +28,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         [TestCleanup]
         public void MethodCleanup()
         {
-            new Repository<object>(Client).DeleteDatabase();
+            new DataSeedService<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -57,7 +56,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             updated.Should().BeTrue();
-            var updatedTournament = new Repository<Tournament>(new TestClient()).GetItem(_viewModel.Tournament.Id);
+            var updatedTournament = new DataSeedService<Tournament>(new TestClient()).GetItem(_viewModel.Tournament.Id);
             updatedTournament.Name.Should().Be("UpdateTournamentName");
             updatedTournament.Status.Should().Be("InProgress");
         }

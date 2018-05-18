@@ -13,11 +13,11 @@ namespace CricketScoreSheetPro.Core.Model
 
         public DateTime AddDate { get; set; }
 
-        public IList<string> Players { get; set; }
+        public IList<Player> Players { get; set; }
 
         public Team()
         {
-            Players = new List<string>();
+            Players = new List<Player>();
         }
     }
 }

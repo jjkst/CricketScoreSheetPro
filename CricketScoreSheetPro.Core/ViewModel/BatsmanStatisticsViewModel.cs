@@ -8,12 +8,12 @@ namespace CricketScoreSheetPro.Core.ViewModel
 {
     public class BatsmanStatisticsViewModel
     {
-        private readonly IPlayerService _playerService;
+        private readonly IDataSeedService<PlayerInning> _playerInningService;
 
-        public BatsmanStatisticsViewModel(IPlayerService playerService)
+        public BatsmanStatisticsViewModel(IDataSeedService<PlayerInning> playerInningService)
         {
-            _playerService = playerService ?? throw new ArgumentNullException($"playerService is null, cannot get match.");
-            var playerinning = _playerService.GetPlayerInningList();
+            _playerInningService = playerInningService ?? throw new ArgumentNullException($"playerService is null, cannot get match.");
+            var playerinnings = _playerInningService.GetList();
             BatsmanStatistics = new PlayerStatistics();
         }
 

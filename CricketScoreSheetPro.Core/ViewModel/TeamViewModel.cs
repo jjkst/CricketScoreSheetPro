@@ -6,19 +6,19 @@ namespace CricketScoreSheetPro.Core.ViewModel
 {
     public class TeamViewModel
     {
-        private readonly ITeamService _teamService;
+        private readonly IDataSeedService<Team> _teamService;
 
-        public TeamViewModel(ITeamService teamService, string teamId)
+        public TeamViewModel(IDataSeedService<Team> teamService, string teamId)
         {
             _teamService = teamService ?? throw new ArgumentNullException($"TeamService is null, cannot get teams.");
-            Team = _teamService.GetTeam(teamId) ?? throw new ArgumentNullException($"Team Id is not exist");
+            Team = _teamService.GetItem(teamId) ?? throw new ArgumentNullException($"Team Id is not exist");
         }
 
         public Team Team { get; private set; }
 
         public bool UpdateTeam()
         {
-            var updated = _teamService.UpdateTeam(Team);
+            var updated = _teamService.Update(Team.Id, Team);
             return updated;
         }
     }

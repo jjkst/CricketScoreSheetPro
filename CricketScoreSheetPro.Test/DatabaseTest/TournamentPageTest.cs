@@ -1,5 +1,4 @@
 ﻿using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Test.Extension;
@@ -19,15 +18,14 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TournamentPageTest()
         {
             Client = new TestClient();
-            _listViewModel = new TournamentListViewModel(
-                new TournamentService(new Repository<Tournament>(Client)),
-                new AccessService(new Repository<Access>(Client)));     
+            _listViewModel = new TournamentListViewModel(new DataSeedService<Tournament>(Client),
+                new DataSeedService<Access>(Client));     
         }
 
         [TestCleanup]
         public void MethodCleanup()
         {
-            new Repository<object>(Client).DeleteDatabase();
+            new DataSeedService<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -69,7 +67,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             _listViewModel.DeleteTournament(newtournament);
 
             //Assert
-            new Repository<Tournament>(new TestClient()).GetItem(newtournament).Should().BeNull();
+            new DataSeedService<Tournament>(new TestClient()).GetItem(newtournament).Should().BeNull();
         }
 
         [TestMethod]
@@ -79,9 +77,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Arrange
             var secondclient = new TestClient();
             secondclient.SetUUID("UUID2");
-            var viewmodel = new TournamentListViewModel(
-                new TournamentService(new Repository<Tournament>(secondclient)),
-                new AccessService(new Repository<Access>(secondclient)));
+            var viewmodel = new TournamentListViewModel(new DataSeedService<Tournament>(secondclient), new DataSeedService<Access>(secondclient));
             var addtournament = viewmodel.AddTournament("ImportTournamanet");
 
             //Act          

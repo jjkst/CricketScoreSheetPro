@@ -6,12 +6,12 @@ namespace CricketScoreSheetPro.Core.ViewModel
 {
     public class MatchViewModel
     {
-        private readonly IMatchService _matchService;
+        private readonly IDataSeedService<Match> _matchService;
 
-        public MatchViewModel(IMatchService matchService, string matchId)
+        public MatchViewModel(IDataSeedService<Match> matchService, string matchId)
         {
             _matchService = matchService ?? throw new ArgumentNullException($"matchService is null, cannot get match.");
-            Match = _matchService.GetMatch(matchId) ?? throw new ArgumentNullException($"Match Id is not exist");
+            Match = _matchService.GetItem(matchId) ?? throw new ArgumentNullException($"Match Id is not exist");
         }
 
         public Match Match { get; private set; }

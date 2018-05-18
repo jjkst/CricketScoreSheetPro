@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using CricketScoreSheetPro.Test.Extension;
@@ -19,15 +18,13 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TeamPageTest()
         {
             Client = new TestClient();
-            _listViewModel = new TeamListViewModel(
-                new TeamService(new Repository<Team>(Client)),
-                new AccessService(new Repository<Access>(Client)));
+            _listViewModel = new TeamListViewModel(new DataSeedService<Team>(Client), new DataSeedService<Access>(Client));
         }
 
         [TestCleanup]
         public void MethodCleanup()
         {
-            new Repository<object>(Client).DeleteDatabase();
+            new DataSeedService<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -69,7 +66,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             _listViewModel.DeleteTeam(newteam);
 
             //Assert
-            new Repository<Team>(new TestClient()).GetItem(newteam).Should().BeNull();
+            new DataSeedService<Team>(new TestClient()).GetItem(newteam).Should().BeNull();
         }
 
     }

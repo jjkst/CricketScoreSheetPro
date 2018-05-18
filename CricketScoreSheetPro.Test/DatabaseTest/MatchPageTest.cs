@@ -1,6 +1,4 @@
-﻿using System;
-using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
+﻿using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -17,15 +15,13 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public MatchPageTest()
         {
             Client = new TestClient();
-            _listViewModel = new MatchListViewModel(
-                new MatchService(new Repository<Match>(Client)),
-                new AccessService(new Repository<Access>(Client)));
+            _listViewModel = new MatchListViewModel(new DataSeedService<Match>(Client), new DataSeedService<Access>(Client));
         }
 
         [TestCleanup]
         public void MethodCleanup()
         {
-            new Repository<object>(Client).DeleteDatabase();
+            new DataSeedService<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -34,10 +30,11 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         {
             //Arrange
             var newgame = new NewGameViewModel(
-                new MatchService(new Repository<Match>(Client)),
-                new TeamService(new Repository<Team>(Client)),
-                new LocationService(new Repository<Location>(Client)),
-                new UmpireService(new Repository<Umpire>(Client)));
+                Client,
+                new DataSeedService<Match>(Client),
+                new DataSeedService<Team>(Client),
+                new DataSeedService<Location>(Client),
+                new DataSeedService<Umpire>(Client));
             newgame.AddMatch("HomeTeam", "AwayTeam", "10", "Richmod,VA","PrimUmpire","SecondUmpire");
 
             //Act

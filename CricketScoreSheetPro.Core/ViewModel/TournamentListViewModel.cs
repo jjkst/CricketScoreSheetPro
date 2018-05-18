@@ -8,31 +8,31 @@ namespace CricketScoreSheetPro.Core.ViewModel
 {
     public class TournamentListViewModel
     {
-        private readonly ITournamentService _tournamentService;
-        private readonly IAccessService _accessService;
+        private readonly IDataSeedService<Tournament> _tournamentService;
+        private readonly IDataSeedService<Access> _accessService;
 
-        public TournamentListViewModel(ITournamentService tournamentService, IAccessService accessService)
+        public TournamentListViewModel(IDataSeedService<Tournament> tournamentService, IDataSeedService<Access> accessService)
         {
             _tournamentService = tournamentService ?? throw new ArgumentNullException($"TournamentService is null, cannot get tournaments.");
             _accessService = accessService ?? throw new ArgumentNullException($"AccessService is null, cannot get tournaments.");
         }
 
-        public List<Tournament> Tournaments => _tournamentService.GetTournamentList().ToList();
+        public List<Tournament> Tournaments => _tournamentService.GetList().ToList();
 
         public List<Tournament> ImportedTournaments()
         {
-            var access = _accessService.GetAccessList().LastOrDefault(a => a.DocumentType == nameof(Tournament));
+            var access = _accessService.GetList().LastOrDefault(a => a.DocumentType == nameof(Tournament));
             var importedTournaments = new List<Tournament>();
             foreach(var t in access.Documents)
             {
-                importedTournaments.Add(_tournamentService.GetTournament(t.Id));
+                importedTournaments.Add(_tournamentService.GetItem(t.Id));
             }
             return importedTournaments;
         }
 
         public string AddTournament(string tournamentName)
         {
-            var newtournament = _tournamentService.AddTournament(new Tournament
+            var newtournament = _tournamentService.Create(new Tournament
             {
                 Name = tournamentName,
                 Status = "Open",
@@ -43,12 +43,12 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
         public void DeleteTournament(string id)
         {
-            _tournamentService.DeleteTournament(id);
+            _tournamentService.Delete(id);
         }
 
         public string AddAccess(string tournamentId, AccessType accessType)
         {
-            var tournamentaccess = _accessService.AddAccess(new Access
+            var tournamentaccess = _accessService.Create(new Access
             {
                 DocumentType = nameof(Tournament),
                 Documents = new List<DocumentReference>

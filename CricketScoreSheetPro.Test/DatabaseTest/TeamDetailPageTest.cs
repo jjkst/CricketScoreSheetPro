@@ -1,6 +1,4 @@
-﻿using System;
-using CricketScoreSheetPro.Core.Model;
-using CricketScoreSheetPro.Core.Repository.Implementation;
+﻿using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
@@ -17,8 +15,8 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public TeamDetailPageTest()
         {
             Client = new TestClient();
-            var teamService = new TeamService(new Repository<Team>(Client));
-            var teamId = teamService.AddTeam(
+            var teamService = new DataSeedService<Team>(Client);
+            var teamId = teamService.Create(
                 new Team
                 {
                     Name = "TeamDetailPageTest"
@@ -29,7 +27,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         [TestCleanup]
         public void MethodCleanup()
         {
-            new Repository<object>(Client).DeleteDatabase();
+            new DataSeedService<object>(Client).DeleteDatabase();
         }
 
         [TestMethod]
@@ -55,7 +53,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             updated.Should().BeTrue();
-            new Repository<Team>(new TestClient()).GetItem(_viewModel.Team.Id).Name.Should().Be("UpdateTeamName");
+            new DataSeedService<Team>(new TestClient()).GetItem(_viewModel.Team.Id).Name.Should().Be("UpdateTeamName");
         }
     }
 }

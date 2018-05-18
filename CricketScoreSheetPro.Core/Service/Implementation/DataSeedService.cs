@@ -1,18 +1,18 @@
 ﻿using Couchbase.Lite;
 using Couchbase.Lite.Query;
-using CricketScoreSheetPro.Core.Repository.Interface;
+using CricketScoreSheetPro.Core.Service.Interface;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace CricketScoreSheetPro.Core.Repository.Implementation
+namespace CricketScoreSheetPro.Core.Service.Implementation
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class DataSeedService<T> : IDataSeedService<T>
     {
         private Database Database;
         internal string UUID;
 
-        public Repository(IClient client)
+        public DataSeedService(IClient client)
         {
             if (client == null) throw new ArgumentNullException("Database client is not set.");
             Database = client.GetDatabase() ?? throw new ArgumentNullException("Database is not set.");
@@ -46,7 +46,7 @@ namespace CricketScoreSheetPro.Core.Repository.Implementation
             var document = Database.GetDocument(id);
             if (document == null) throw new ArgumentNullException($"Document does not exist.");
             var rawvalue = document.ToMutable().GetValue("value");
-            if (string.IsNullOrEmpty(rawvalue.ToString())) return null;
+            if (string.IsNullOrEmpty(rawvalue.ToString())) return default(T);
             var result = JsonConvert.DeserializeObject<T>(rawvalue.ToString());
             return result;
         }

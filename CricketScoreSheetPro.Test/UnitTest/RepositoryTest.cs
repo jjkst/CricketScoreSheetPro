@@ -1,10 +1,10 @@
-﻿using System;
-using Couchbase.Lite;
+﻿using Couchbase.Lite;
 using CricketScoreSheetPro.Core;
-using CricketScoreSheetPro.Core.Repository.Implementation;
+using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Test.Extension;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 
 namespace CricketScoreSheetPro.Test.UnitTest
 {
@@ -17,7 +17,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
         public void RepositoryTest_Null()
         {
             //Act
-            var baseRepo = new Repository<object>(null);
+            var baseRepo = new DataSeedService<object>(null);
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
             mockClient.Setup(c => c.GetDatabase()).Returns(db);
 
             //Act
-            var baseRepo = new Repository<object>(mockClient.Object);
+            var baseRepo = new DataSeedService<object>(mockClient.Object);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
             mockClient.Setup(c => c.GetUUID()).Returns(string.Empty);
 
             //Act
-            var baseRepo = new Repository<object>(mockClient.Object);
+            var baseRepo = new DataSeedService<object>(mockClient.Object);
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
         {
             //Arrange
             var mockClient = new Mock<IClient>();
-            var baseRepo = new Repository<object>(mockClient.Object);
+            var baseRepo = new DataSeedService<object>(mockClient.Object);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace CricketScoreSheetPro.Test.UnitTest
         public void CreateTest_Null()
         {
             //Arrange
-            var baseRepo = new Repository<object>(new TestClient());
+            var baseRepo = new DataSeedService<object>(new TestClient());
 
             //Act
             var val = baseRepo.Create(null);
