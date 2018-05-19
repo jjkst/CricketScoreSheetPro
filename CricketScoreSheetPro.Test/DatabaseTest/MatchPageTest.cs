@@ -3,6 +3,7 @@ using CricketScoreSheetPro.Core.Service.Implementation;
 using CricketScoreSheetPro.Core.ViewModel;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace CricketScoreSheetPro.Test.DatabaseTest
 {
@@ -29,8 +30,12 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         public void GetMatchListTest()
         {
             //Arrange
-            var hometeamid = new DataSeedService<Team>(Client).Create(new Team { Name = "HomeTeam" });
-            var awayteamid = new DataSeedService<Team>(Client).Create(new Team { Name = "AwayTeam" });
+            var hometeamid = new DataSeedService<Team>(Client).Create(new Team { Name = "HomeTeam" ,
+                Players = new List<Player> { new Player { Name = "HomePlayerName" } }
+            });
+            var awayteamid = new DataSeedService<Team>(Client).Create(new Team { Name = "AwayTeam" ,
+                Players = new List<Player> { new Player { Name = "AwayPlayerName" } }
+            });
 
             var newgame = new NewGameViewModel(
                 Client,
@@ -38,7 +43,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
                 new DataSeedService<Team>(Client),
                 new DataSeedService<Location>(Client),
                 new DataSeedService<Umpire>(Client));
-            var match = newgame.AddMatch("HomeTeam", "AwayTeam", "10", "Richmod,VA","PrimUmpire","SecondUmpire");
+            var match = newgame.AddMatch(hometeamid, awayteamid, "10", "Richmod,VA","PrimUmpire","SecondUmpire");
 
             //Act
             var matches = _listViewModel.Matches;

@@ -56,5 +56,9 @@ namespace CricketScoreSheetPro.Core.Model
 
         public int Stumpings { get; set; }
 
+        public PlayerStatistics(List<PlayerInning> playerInnings)
+        {
+
+        }
     }
 }

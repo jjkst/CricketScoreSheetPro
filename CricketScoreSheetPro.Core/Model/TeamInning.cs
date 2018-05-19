@@ -4,7 +4,6 @@
     {
         public string Id { get; set; }
 
-        //Index
         public string TeamId { get; set; }
 
         public string TeamName { get; set; }
@@ -12,9 +11,6 @@
         public string MatchId { get; set; }
 
         public string TournamentId { get; set; }
-
-        //Index
-        public string Team_TournamentId { get; set; }
 
         public int Runs { get; set; }
 

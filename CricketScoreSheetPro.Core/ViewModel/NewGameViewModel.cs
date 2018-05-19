@@ -4,7 +4,6 @@ using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CricketScoreSheetPro.Core.ViewModel
 {
@@ -75,12 +74,12 @@ namespace CricketScoreSheetPro.Core.ViewModel
             return _tournamentService.GetList().ToList();
         }
 
-        public Match AddMatch(string hometeamname, string awayteamname, string oversOrTournamentId, string location, 
+        public Match AddMatch(string hometeamid, string awayteamid, string oversOrTournamentId, string location, 
             string primaryumpire, string secondaryumpire)
         {
-            var hometeam = Teams.FirstOrDefault(n => n.Name == hometeamname);
+            var hometeam = _teamService.GetItem(hometeamid);
             if (hometeam == null) throw new NullReferenceException("Home team name is not added");
-            var awayteam = Teams.FirstOrDefault(n => n.Name == awayteamname);
+            var awayteam = _teamService.GetItem(awayteamid);
             if (awayteam == null) throw new NullReferenceException("Away team name is not added");
 
             int overs;
@@ -107,46 +106,56 @@ namespace CricketScoreSheetPro.Core.ViewModel
 
             var matchId = _matchService.Create(match);
 
+            var matchIdKey = new KeyValuePair<string, string>("matchId", matchId);
+            var tournamentIdKey = new KeyValuePair<string, string>("tournamentId", tournamentId);
+
             // Creating team innings and player innings and update match
             var teamInningService = new DataSeedService<TeamInning>(_client);
             var playerInningService = new DataSeedService<PlayerInning>(_client);
 
             var hometeaminningId = teamInningService.Create(new TeamInning
             {
-                MatchId = matchId,
-                TeamId = hometeam.Id,
                 TeamName = hometeam.Name,
-                TournamentId = tournamentId
-            });
+            }, new KeyValuePair<string, string>[]
+                {
+                    matchIdKey, tournamentIdKey,
+                    new KeyValuePair<string, string>("teamId", hometeam.Id)
+                });
+
             foreach (var homeplayer in hometeam.Players)
             {
-                playerInningService.Create(new PlayerInning
+                var homeplayerinningId = playerInningService.Create(new PlayerInning
                 {
-                    MatchId = matchId,
-                    PlayerId = homeplayer.Id,
                     PlayerName = homeplayer.Name,
-                    TeamId = hometeam.Id,
-                    TournamentId = tournamentId
-                });
+                }, new KeyValuePair<string, string>[]
+                    {
+                        matchIdKey, tournamentIdKey,
+                        new KeyValuePair<string, string>("teamId", hometeam.Id),
+                        new KeyValuePair<string, string>("playerId", homeplayer.Id)
+                    });
+                var d = playerInningService.GetItem(homeplayerinningId);
             }
 
             var awayteaminningId = teamInningService.Create(new TeamInning
             {
-                MatchId = matchId,
-                TeamId = awayteam.Id,
                 TeamName = awayteam.Name,
-                TournamentId = tournamentId
-            });
+            }, new KeyValuePair<string, string>[]
+                {
+                    matchIdKey, tournamentIdKey,
+                    new KeyValuePair<string, string>("teamId", awayteam.Id)
+                });
+
             foreach (var awayplayer in awayteam.Players)
             {
-                playerInningService.Create(new PlayerInning
+                var awayplayerinningId = playerInningService.Create(new PlayerInning
                 {
-                    MatchId = matchId,
-                    PlayerId = awayplayer.Id,
                     PlayerName = awayplayer.Name,
-                    TeamId = awayteam.Id,
-                    TournamentId = tournamentId
-                });
+                }, new KeyValuePair<string, string>[]
+                    {
+                        matchIdKey, tournamentIdKey,
+                        new KeyValuePair<string, string>("teamId", awayteam.Id),
+                        new KeyValuePair<string, string>("playerId", awayplayer.Id)
+                    });
             }
 
             //Update Match

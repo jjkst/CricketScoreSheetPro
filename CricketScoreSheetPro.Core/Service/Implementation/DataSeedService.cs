@@ -3,6 +3,7 @@ using Couchbase.Lite.Query;
 using CricketScoreSheetPro.Core.Service.Interface;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace CricketScoreSheetPro.Core.Service.Implementation
@@ -34,6 +35,22 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
             return mutableDoc.Id;
         }
 
+        public virtual string Create(T obj, params KeyValuePair<string, string>[] pairs)
+        {
+            var mutableDoc = new MutableDocument();
+            mutableDoc.SetString("uuid", UUID);
+            mutableDoc.SetString("type", typeof(T).Name);
+            foreach(var pair in pairs)
+                mutableDoc.SetString(pair.Key, pair.Value);
+            Database.Save(mutableDoc);
+
+            //Update Id
+            var objwithId = Helper.Function.UpdateGenericObjectProperty(obj, mutableDoc.Id);
+            mutableDoc.SetValue("value", JsonConvert.SerializeObject(objwithId));
+            Database.Save(mutableDoc);
+            return mutableDoc.Id;
+        }
+
         public virtual void Delete(string id)
         {
             var document = Database.GetDocument(id);
@@ -55,7 +72,8 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
         {
             var query = QueryBuilder.Select(SelectResult.Property("value"))
                 .From(DataSource.Database(Database))
-                .Where(Expression.Property("type").EqualTo(Expression.String(typeof(T).Name)));
+                .Where(Expression.Property("uuid").EqualTo(Expression.String(UUID))
+                    .And(Expression.Property("type").EqualTo(Expression.String(typeof(T).Name))));
 
             var result = new List<T>();
             foreach (var row in query.Execute())
@@ -92,6 +110,20 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
                 var document = Database.GetDocument(row["_id"].ToString());
                 Database.Delete(document);
             }
+        }
+
+        public IList<T> GetFilteredList(IExpression filter)
+        {
+            var query = QueryBuilder.Select(SelectResult.Property("value")).From(DataSource.Database(Database));
+                //.Where(filter);                
+
+            var result = new List<T>();
+            foreach (var row in query.Execute())
+            {
+                var rawvalue = row.GetValue("value");
+                result.Add(JsonConvert.DeserializeObject<T>(rawvalue.ToString()));
+            }
+            return result;
         }
     }
 }

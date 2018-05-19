@@ -1,8 +1,9 @@
-﻿using CricketScoreSheetPro.Core.Model;
+﻿using Couchbase.Lite.Query;
+using CricketScoreSheetPro.Core.Model;
 using CricketScoreSheetPro.Core.Service.Interface;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace CricketScoreSheetPro.Core.ViewModel
 {
@@ -10,11 +11,16 @@ namespace CricketScoreSheetPro.Core.ViewModel
     {
         private readonly IDataSeedService<PlayerInning> _playerInningService;
 
-        public BatsmanStatisticsViewModel(IDataSeedService<PlayerInning> playerInningService)
+        public BatsmanStatisticsViewModel(IDataSeedService<PlayerInning> playerInningService, string filter)
         {
             _playerInningService = playerInningService ?? throw new ArgumentNullException($"playerService is null, cannot get match.");
-            var playerinnings = _playerInningService.GetList();
-            BatsmanStatistics = new PlayerStatistics();
+
+            IExpression condition = Expression.Property("type").EqualTo(Expression.String("PlayerInning"));
+            if(filter == "only tournament matches")
+                condition.Add(Expression.Property("tournamentId").IsNot(Expression.String(string.Empty)));
+            List<PlayerInning> playerinnings = _playerInningService.GetFilteredList(condition).ToList();
+            List<PlayerInning> playerinnings2 = _playerInningService.GetList().ToList();
+            BatsmanStatistics = new PlayerStatistics(playerinnings);
         }
 
         public PlayerStatistics BatsmanStatistics { get; private set; }
