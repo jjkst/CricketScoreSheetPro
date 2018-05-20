@@ -19,7 +19,6 @@ namespace CricketScoreSheetPro.Core.ViewModel
             if(filter == "only tournament matches")
                 condition.Add(Expression.Property("tournamentId").IsNot(Expression.String(string.Empty)));
             List<PlayerInning> playerinnings = _playerInningService.GetFilteredList(condition).ToList();
-            List<PlayerInning> playerinnings2 = _playerInningService.GetList().ToList();
             BatsmanStatistics = new PlayerStatistics(playerinnings);
         }
 

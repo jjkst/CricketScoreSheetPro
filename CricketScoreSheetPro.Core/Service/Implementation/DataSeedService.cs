@@ -114,8 +114,8 @@ namespace CricketScoreSheetPro.Core.Service.Implementation
 
         public IList<T> GetFilteredList(IExpression filter)
         {
-            var query = QueryBuilder.Select(SelectResult.Property("value")).From(DataSource.Database(Database));
-                //.Where(filter);                
+            var query = QueryBuilder.Select(SelectResult.Property("value")).From(DataSource.Database(Database))
+                .Where(filter);                
 
             var result = new List<T>();
             foreach (var row in query.Execute())

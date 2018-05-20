@@ -31,10 +31,10 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
         {
             //Arrange
             var hometeamid = new DataSeedService<Team>(Client).Create(new Team { Name = "HomeTeam" ,
-                Players = new List<Player> { new Player { Name = "HomePlayerName" } }
+                Players = new List<string> { "HomePlayerName" }
             });
             var awayteamid = new DataSeedService<Team>(Client).Create(new Team { Name = "AwayTeam" ,
-                Players = new List<Player> { new Player { Name = "AwayPlayerName" } }
+                Players = new List<string> { "AwayPlayerName" } 
             });
 
             var newgame = new NewGameViewModel(

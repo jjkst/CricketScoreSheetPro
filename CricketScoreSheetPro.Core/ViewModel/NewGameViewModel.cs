@@ -122,18 +122,17 @@ namespace CricketScoreSheetPro.Core.ViewModel
                     new KeyValuePair<string, string>("teamId", hometeam.Id)
                 });
 
-            foreach (var homeplayer in hometeam.Players)
+            foreach (var homeplayername in hometeam.Players)
             {
                 var homeplayerinningId = playerInningService.Create(new PlayerInning
                 {
-                    PlayerName = homeplayer.Name,
+                    PlayerName = homeplayername,
                 }, new KeyValuePair<string, string>[]
                     {
                         matchIdKey, tournamentIdKey,
                         new KeyValuePair<string, string>("teamId", hometeam.Id),
-                        new KeyValuePair<string, string>("playerId", homeplayer.Id)
+                        new KeyValuePair<string, string>("playerId", $"{hometeam.Id}:{homeplayername}")
                     });
-                var d = playerInningService.GetItem(homeplayerinningId);
             }
 
             var awayteaminningId = teamInningService.Create(new TeamInning
@@ -145,16 +144,16 @@ namespace CricketScoreSheetPro.Core.ViewModel
                     new KeyValuePair<string, string>("teamId", awayteam.Id)
                 });
 
-            foreach (var awayplayer in awayteam.Players)
+            foreach (var awayplayername in awayteam.Players)
             {
                 var awayplayerinningId = playerInningService.Create(new PlayerInning
                 {
-                    PlayerName = awayplayer.Name,
+                    PlayerName = awayplayername,
                 }, new KeyValuePair<string, string>[]
                     {
                         matchIdKey, tournamentIdKey,
                         new KeyValuePair<string, string>("teamId", awayteam.Id),
-                        new KeyValuePair<string, string>("playerId", awayplayer.Id)
+                        new KeyValuePair<string, string>("playerId", $"{awayteam.Id}:{awayplayername}")
                     });
             }
 
