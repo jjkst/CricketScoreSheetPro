@@ -18,10 +18,11 @@ namespace CricketScoreSheetPro.Core.ViewModel
             IExpression condition = Expression.Property("type").EqualTo(Expression.String("PlayerInning"));
             if(filter == "only tournament matches")
                 condition.Add(Expression.Property("tournamentId").IsNot(Expression.String(string.Empty)));
+
             List<PlayerInning> playerinnings = _playerInningService.GetFilteredList(condition).ToList();
-            BatsmanStatistics = new PlayerStatistics(playerinnings);
+            BatsmanStatistics = playerinnings.GroupBy(pi => pi.PlayerId).Select(p => new PlayerStatistics(p.ToList())).ToList();
         }
 
-        public PlayerStatistics BatsmanStatistics { get; private set; }
+        public List<PlayerStatistics> BatsmanStatistics { get; private set; }
     }
 }
