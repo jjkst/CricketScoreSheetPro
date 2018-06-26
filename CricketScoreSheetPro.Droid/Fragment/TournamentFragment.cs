@@ -64,14 +64,14 @@ namespace CricketScoreSheetPro.Droid
 
         protected override void SearchText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            IEnumerable<Access> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
+            IEnumerable<Tournament> tournaments = ViewModel.Tournaments.Where(t => t.Name.ToLower().Contains(SearchEditText.Text.ToLower()));
             TournamentsAdapter.RefreshTournaments(tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
 
         private void ImportTournament()
         {
-            var importtournament = ViewModel.ImportTournament("", Driver.UniqueUserId);
+            var importtournament = ViewModel.ImportedTournaments();
             TournamentsAdapter.RefreshTournaments(ViewModel.Tournaments);
             TournamentsRecyclerView.SetAdapter(TournamentsAdapter);
         }
@@ -113,7 +113,7 @@ namespace CricketScoreSheetPro.Droid
         {
             var newtournament = ViewModel.AddTournament(inputText);
             var detailActivity = new Intent(this.Activity, typeof(TournamentDetailActivity));
-            detailActivity.PutExtra("TournamentId", newtournament.TournamentId);
+            detailActivity.PutExtra("TournamentId", newtournament);
             StartActivity(detailActivity);
         }
     }

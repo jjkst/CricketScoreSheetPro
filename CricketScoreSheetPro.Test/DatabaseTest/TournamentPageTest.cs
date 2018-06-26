@@ -38,23 +38,7 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Assert
             newtournament.Should().NotBeNullOrEmpty();
         }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void GetTournamentListTest()
-        {
-            //Arrange
-            var name = "GetTournamentListTest";
-            _listViewModel.AddTournament(name);
-            
-            //Act           
-            var existingTournaments = _listViewModel.Tournaments;
-
-            //Assert
-            existingTournaments.Should().NotBeNull();
-            existingTournaments.Count(t=>t.Name == name).Should().BeGreaterOrEqualTo(1);
-        }
-
+        
         [TestMethod]
         [TestCategory("IntegrationTest")]
         [ExpectedExceptionExtension(typeof(ArgumentNullException), "Document does not exist.")]
@@ -68,6 +52,22 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
 
             //Assert
             new DataSeedService<Tournament>(new TestClient()).GetItem(newtournament).Should().BeNull();
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void GetTournamentListTest()
+        {
+            //Arrange
+            var name = "GetTournamentListTest";
+            _listViewModel.AddTournament(name);
+
+            //Act           
+            var existingTournaments = _listViewModel.Tournaments;
+
+            //Assert
+            existingTournaments.Should().NotBeNull();
+            existingTournaments.Count(t => t.Name == name).Should().BeGreaterOrEqualTo(1);
         }
 
         [TestMethod]

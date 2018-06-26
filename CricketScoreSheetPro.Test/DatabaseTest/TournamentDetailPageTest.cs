@@ -71,5 +71,6 @@ namespace CricketScoreSheetPro.Test.DatabaseTest
             //Assert
             access.Should().Be($"{_viewModel.Tournament.Id} Write");
         }
+
     }
 }
