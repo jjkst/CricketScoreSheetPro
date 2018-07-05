@@ -22,16 +22,12 @@
     <menu>
       <item
         android:id="@+id/nav_teamstatistics"
+        android:icon="@drawable/teamstats"
         android:title="@string/TeamStatisticsFragment" />
       <item
-        android:id="@+id/nav_batsmanstatistics"
-        android:title="@string/BatsmanStatisticsFragment" />
-	    <item
-        android:id="@+id/nav_bowlerstatistics"
-        android:title="@string/BowlerStatisticsFragment" />
-	    <item
-        android:id="@+id/nav_fielderstatistics"
-        android:title="@string/FielderStatisticsFragment" />
+        android:id="@+id/nav_playerstatistics"
+        android:icon="@drawable/playerstats"
+        android:title="@string/PlayerStatisticsFragment" />
     </menu>
   </item>
 </menu>

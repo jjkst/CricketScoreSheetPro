@@ -84,18 +84,10 @@ namespace CricketScoreSheetPro.Droid
                     ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
                     ft.Replace(Resource.Id.content_frame, new TournamentFragment(), nameof(TournamentFragment));
                     break; 
-                case (Resource.Id.nav_batsmanstatistics):                    
+                case (Resource.Id.nav_playerstatistics):                    
                     ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
                     ft.Replace(Resource.Id.content_frame, new TournamentFragment(), nameof(TournamentFragment));
-                    break; 
-                case (Resource.Id.nav_bowlerstatistics):                    
-                    ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
-                    ft.Replace(Resource.Id.content_frame, new TournamentFragment(), nameof(TournamentFragment));
-                    break; 
-                case (Resource.Id.nav_fielderstatistics):                    
-                    ft.Detach(FragmentManager.FindFragmentById(Resource.Id.content_frame));
-                    ft.Replace(Resource.Id.content_frame, new TournamentFragment(), nameof(TournamentFragment));
-                    break; 
+                    break;                 
             }
             ft.Commit();
             _drawerLayout.CloseDrawers();

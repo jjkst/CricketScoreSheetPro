@@ -2290,26 +2290,26 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f020056
 			public const int avd_hide_password = 2130837590;
 			
-			// aapt resource value: 0x7f020081
-			public const int avd_hide_password_1 = 2130837633;
-			
-			// aapt resource value: 0x7f020082
-			public const int avd_hide_password_2 = 2130837634;
-			
 			// aapt resource value: 0x7f020083
-			public const int avd_hide_password_3 = 2130837635;
+			public const int avd_hide_password_1 = 2130837635;
+			
+			// aapt resource value: 0x7f020084
+			public const int avd_hide_password_2 = 2130837636;
+			
+			// aapt resource value: 0x7f020085
+			public const int avd_hide_password_3 = 2130837637;
 			
 			// aapt resource value: 0x7f020057
 			public const int avd_show_password = 2130837591;
 			
-			// aapt resource value: 0x7f020084
-			public const int avd_show_password_1 = 2130837636;
-			
-			// aapt resource value: 0x7f020085
-			public const int avd_show_password_2 = 2130837637;
-			
 			// aapt resource value: 0x7f020086
-			public const int avd_show_password_3 = 2130837638;
+			public const int avd_show_password_1 = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int avd_show_password_2 = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int avd_show_password_3 = 2130837640;
 			
 			// aapt resource value: 0x7f020058
 			public const int buttonstyle = 2130837592;
@@ -2398,11 +2398,11 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f020074
 			public const int notification_icon_background = 2130837620;
 			
-			// aapt resource value: 0x7f02007f
-			public const int notification_template_icon_bg = 2130837631;
+			// aapt resource value: 0x7f020081
+			public const int notification_template_icon_bg = 2130837633;
 			
-			// aapt resource value: 0x7f020080
-			public const int notification_template_icon_low_bg = 2130837632;
+			// aapt resource value: 0x7f020082
+			public const int notification_template_icon_low_bg = 2130837634;
 			
 			// aapt resource value: 0x7f020075
 			public const int notification_tile_bg = 2130837621;
@@ -2411,28 +2411,34 @@ namespace CricketScoreSheetPro.Droid
 			public const int notify_panel_notification_icon_bg = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int search = 2130837623;
+			public const int playerstats = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int spinnerStyle = 2130837624;
+			public const int search = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int teamicon = 2130837625;
+			public const int spinnerStyle = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int titleBarStyle = 2130837626;
+			public const int teamicon = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int tooltip_frame_dark = 2130837627;
+			public const int teamstats = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int tooltip_frame_light = 2130837628;
+			public const int titleBarStyle = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int tournamenticon = 2130837629;
+			public const int tooltip_frame_dark = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int tournamenticon_tinted = 2130837630;
+			public const int tooltip_frame_light = 2130837630;
+			
+			// aapt resource value: 0x7f02007f
+			public const int tournamenticon = 2130837631;
+			
+			// aapt resource value: 0x7f020080
+			public const int tournamenticon_tinted = 2130837632;
 			
 			static Drawable()
 			{
@@ -2822,20 +2828,14 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f070028
 			public const int multiply = 2131165224;
 			
-			// aapt resource value: 0x7f0700eb
-			public const int nav_batsmanstatistics = 2131165419;
-			
-			// aapt resource value: 0x7f0700ec
-			public const int nav_bowlerstatistics = 2131165420;
-			
-			// aapt resource value: 0x7f0700ed
-			public const int nav_fielderstatistics = 2131165421;
-			
 			// aapt resource value: 0x7f0700e6
 			public const int nav_home = 2131165414;
 			
 			// aapt resource value: 0x7f0700e9
 			public const int nav_matches = 2131165417;
+			
+			// aapt resource value: 0x7f0700eb
+			public const int nav_playerstatistics = 2131165419;
 			
 			// aapt resource value: 0x7f0700e8
 			public const int nav_teams = 2131165416;
@@ -3474,32 +3474,23 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f0a0027
 			public const int ApplicationName = 2131361831;
 			
-			// aapt resource value: 0x7f0a002e
-			public const int BatsmanStatisticsFragment = 2131361838;
-			
-			// aapt resource value: 0x7f0a003f
-			public const int BatsmanStats = 2131361855;
-			
-			// aapt resource value: 0x7f0a002f
-			public const int BowlerStatisticsFragment = 2131361839;
-			
-			// aapt resource value: 0x7f0a0040
-			public const int BowlerStats = 2131361856;
-			
 			// aapt resource value: 0x7f0a003d
-			public const int CompletedMatches = 2131361853;
+			public const int BatsmanStats = 2131361853;
 			
-			// aapt resource value: 0x7f0a0036
-			public const int EntryFeeHeader = 2131361846;
+			// aapt resource value: 0x7f0a003e
+			public const int BowlerStats = 2131361854;
+			
+			// aapt resource value: 0x7f0a003b
+			public const int CompletedMatches = 2131361851;
+			
+			// aapt resource value: 0x7f0a0034
+			public const int EntryFeeHeader = 2131361844;
 			
 			// aapt resource value: 0x7f0a0029
 			public const int ExcludeList = 2131361833;
 			
-			// aapt resource value: 0x7f0a0038
-			public const int FacilitiesHeader = 2131361848;
-			
-			// aapt resource value: 0x7f0a0030
-			public const int FielderStatisticsFragment = 2131361840;
+			// aapt resource value: 0x7f0a0036
+			public const int FacilitiesHeader = 2131361846;
 			
 			// aapt resource value: 0x7f0a0028
 			public const int IncludeList = 2131361832;
@@ -3507,32 +3498,35 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f0a002c
 			public const int MatchFragment = 2131361836;
 			
-			// aapt resource value: 0x7f0a0041
-			public const int Menu = 2131361857;
+			// aapt resource value: 0x7f0a003f
+			public const int Menu = 2131361855;
 			
-			// aapt resource value: 0x7f0a0032
-			public const int NameHeader = 2131361842;
+			// aapt resource value: 0x7f0a0030
+			public const int NameHeader = 2131361840;
 			
-			// aapt resource value: 0x7f0a003c
-			public const int PlayersHeader = 2131361852;
+			// aapt resource value: 0x7f0a002e
+			public const int PlayerStatisticsFragment = 2131361838;
 			
-			// aapt resource value: 0x7f0a0037
-			public const int PrizesHeader = 2131361847;
-			
-			// aapt resource value: 0x7f0a003e
-			public const int SavedMatches = 2131361854;
-			
-			// aapt resource value: 0x7f0a0033
-			public const int SponsorHeader = 2131361843;
+			// aapt resource value: 0x7f0a003a
+			public const int PlayersHeader = 2131361850;
 			
 			// aapt resource value: 0x7f0a0035
-			public const int StartDateHeader = 2131361845;
+			public const int PrizesHeader = 2131361845;
 			
-			// aapt resource value: 0x7f0a0034
-			public const int StatusHeader = 2131361844;
+			// aapt resource value: 0x7f0a003c
+			public const int SavedMatches = 2131361852;
 			
-			// aapt resource value: 0x7f0a003b
-			public const int TeamDetailActivity = 2131361851;
+			// aapt resource value: 0x7f0a0031
+			public const int SponsorHeader = 2131361841;
+			
+			// aapt resource value: 0x7f0a0033
+			public const int StartDateHeader = 2131361843;
+			
+			// aapt resource value: 0x7f0a0032
+			public const int StatusHeader = 2131361842;
+			
+			// aapt resource value: 0x7f0a0039
+			public const int TeamDetailActivity = 2131361849;
 			
 			// aapt resource value: 0x7f0a002b
 			public const int TeamFragment = 2131361835;
@@ -3540,17 +3534,17 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f0a002d
 			public const int TeamStatisticsFragment = 2131361837;
 			
-			// aapt resource value: 0x7f0a003a
-			public const int TeamsHeader = 2131361850;
+			// aapt resource value: 0x7f0a0038
+			public const int TeamsHeader = 2131361848;
 			
-			// aapt resource value: 0x7f0a0031
-			public const int TournamentDetailActivity = 2131361841;
+			// aapt resource value: 0x7f0a002f
+			public const int TournamentDetailActivity = 2131361839;
 			
 			// aapt resource value: 0x7f0a002a
 			public const int TournamentFragment = 2131361834;
 			
-			// aapt resource value: 0x7f0a0039
-			public const int VenuesHeader = 2131361849;
+			// aapt resource value: 0x7f0a0037
+			public const int VenuesHeader = 2131361847;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int abc_action_bar_home_description = 2131361792;
@@ -3639,26 +3633,26 @@ namespace CricketScoreSheetPro.Droid
 			// aapt resource value: 0x7f0a0010
 			public const int abc_toolbar_collapse_description = 2131361808;
 			
-			// aapt resource value: 0x7f0a0044
-			public const int action_addbatsman = 2131361860;
-			
-			// aapt resource value: 0x7f0a0045
-			public const int action_addbowler = 2131361861;
+			// aapt resource value: 0x7f0a0042
+			public const int action_addbatsman = 2131361858;
 			
 			// aapt resource value: 0x7f0a0043
-			public const int action_addplayer = 2131361859;
+			public const int action_addbowler = 2131361859;
 			
-			// aapt resource value: 0x7f0a0047
-			public const int action_help = 2131361863;
+			// aapt resource value: 0x7f0a0041
+			public const int action_addplayer = 2131361857;
 			
-			// aapt resource value: 0x7f0a0048
-			public const int action_other = 2131361864;
-			
-			// aapt resource value: 0x7f0a0042
-			public const int action_score = 2131361858;
+			// aapt resource value: 0x7f0a0045
+			public const int action_help = 2131361861;
 			
 			// aapt resource value: 0x7f0a0046
-			public const int action_search = 2131361862;
+			public const int action_other = 2131361862;
+			
+			// aapt resource value: 0x7f0a0040
+			public const int action_score = 2131361856;
+			
+			// aapt resource value: 0x7f0a0044
+			public const int action_search = 2131361860;
 			
 			// aapt resource value: 0x7f0a001e
 			public const int appbar_scrolling_view_behavior = 2131361822;

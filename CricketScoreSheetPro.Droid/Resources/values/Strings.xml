@@ -8,10 +8,8 @@
 	<string name="TournamentFragment">Tournaments</string>
 	<string name="TeamFragment">Teams</string>
 	<string name="MatchFragment">Matches</string>
-	<string name="TeamStatisticsFragment">Team Statistics</string>
-	<string name="BatsmanStatisticsFragment">Batsman Statistics</string>
-	<string name="BowlerStatisticsFragment">Bowler Statistics</string>
-	<string name="FielderStatisticsFragment">Fielder Statistics</string>
+	<string name="TeamStatisticsFragment">Team Stats</string>
+	<string name="PlayerStatisticsFragment">Player Stats</string>
 	
 	<string name="TournamentDetailActivity">Tournament Detail</string>
 	<string name="NameHeader">Name</string>
